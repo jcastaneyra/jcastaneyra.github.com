@@ -1,0 +1,1826 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title>JCastaneyra blog</title>
+  <link href="http://www.jcastaneyra.com/atom.xml" rel="self"/>
+  <link href="http://www.jcastaneyra.com/"/>
+  <updated>2011-09-18T14:13:08-05:00</updated>
+  <id>http://www.jcastaneyra.com/</id>
+  <author>
+    <name>Jose Castaneyra</name>
+    
+  </author>
+
+  
+  <entry>
+    <title>Installing RabbitMQ + Stomp in Ubuntu/Mac</title>
+    <link href="http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/"/>
+    <updated>2010-05-30T00:00:00-05:00</updated>
+    <id>http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac</id>
+    <content type="html">&lt;p&gt;&lt;a name=&quot;rabbitmq_stomp_english&quot;&gt;&lt;/a&gt; &lt;a href=&quot;#rabbitmq_stomp_spanish&quot;&gt;En español&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.jcastaneyra.com/wp-content/uploads/2010/05/RabbitMQLogo-300x79.png&quot; alt=&quot;Screenshot of RabbitMQ logo&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the project I&amp;#8217;m working now it was needed to have RabbitMQ running with Stomp as a message queue for Orbited, we know that Orbited comes with MorbidQ, but in our system we already had running RabbitMQ and used by other processes, so, two queue systems at the same time were not needed.&lt;/p&gt;
+
+&lt;p&gt;But, searching for Stomp over RabbitMQ info or some kind of tutorial was difficult and painful, a friend of mine would say &amp;#8220;a real pain in the ass&amp;#8221;, there was info but not too clear. For that reason here is another note to myself, just in case.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;RabbitMQ 1.6.0 installed, &lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;here there are some steps&lt;/a&gt; to install it.&lt;/li&gt;
+&lt;li&gt;Mercurial is needed to download Stomp code&lt;/li&gt;
+&lt;li&gt;Download Stomp code&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;hg clone -r rabbitmq_v1_6_0 http://hg.rabbitmq.com/rabbitmq-stomp&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Compile Stomp (use your RabbitMQ include directory, maybe in Linux /usr/lib/erlang/lib/rabbitmq_server-1.6.0/include, in Mac I have it here /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/include)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;cd rabbitmq-stomp
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;make RABBIT_SERVER_INCLUDE_DIR=/usr/lib/erlang/lib/rabbitmq_server-1.6.0/include&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Copy your compiled Stomp to the Erlang libraries&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo mkdir -p /usr/lib/erlang/lib/rabbitmq-stomp
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;sudo cp -R * /usr/lib/erlang/lib/rabbitmq-stomp&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Add the Stomp configuration for RabbitMQ (also use your correct directory here, in Linux /usr/lib/erlang/lib/rabbitmq-stomp/ebin and in my Mac /usr/local/lib/erlang/lib/rabbitmq-stomp/ebin)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;8&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;9&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;10&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;11&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;12&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;13&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;14&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;15&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo vim /etc/rabbitmq/rabbitmq.conf
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;#Add the lines below
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;NODENAME=rabbit
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;NODE_IP_ADDRESS=0.0.0.0
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;NODE_PORT=5672
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;LOG_BASE=/var/log/rabbitmq
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;MNESIA_BASE=/var/lib/rabbitmq/mnesia
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;SERVER_START_ARGS=&#8217;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;     -pa /usr/lib/erlang/lib/rabbitmq-stomp/ebin
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;     -rabbit
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;       stomp_listeners [{&quot;0.0.0.0&quot;,61613}]
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;       extra_startup_steps [{&quot;STOMP-listeners&quot;,rabbit_stomp,kickstart,[]}]&#8217;&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;And that&amp;#8217;s it, if you start RabbitMQ will see how STOMP-Listeners are starting (In Linux you maybe will need to stop RabbitMQ with the following command sudo /etc/init.d/rabbitmq-server stop before running the next step, in my Mac I use this command to start RabbitMQ sudo /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/sbin/rabbitmq-server)&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;8&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;9&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;10&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;11&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;12&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;13&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;14&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;15&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;16&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;17&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;18&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;19&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;20&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;deploy@localhost:~$ sudo rabbitmq-server 
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;RabbitMQ 1.6.0 (AMQP 8-0)
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Copyright (C) 2007-2009 LShift Ltd., Cohesive Financial Technologies LLC., and Rabbit Technologies Ltd.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Licensed under the MPL.  See http://www.rabbitmq.com/
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;node        : rabbit@localhost
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;log         : /var/log/rabbitmq/rabbit.log
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;sasl log    : /var/log/rabbitmq/rabbit-sasl.log
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;database dir: /var/lib/rabbitmq/mnesia/rabbit
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting database             &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting core processes       &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting recovery             &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting persister            &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting guid generator       &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting builtin applications &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting TCP listeners        &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting STOMP-listeners      &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;broker running&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;&lt;a name=&quot;rabbitmq_stomp_spanish&quot;&gt;&lt;/a&gt; &lt;a href=&quot;#rabbitmq_stomp_english&quot;&gt;In english&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.jcastaneyra.com/wp-content/uploads/2010/05/RabbitMQLogo-300x79.png&quot; alt=&quot;Screenshot of RabbitMQ logo&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;En el proyecto en el que estoy trabajando era necesario tener corriendo RabbitMQ con Stomp para poder hacer conexiones con Orbited, Orbited ya incluye MorbidQ, pero en este caso ya teníamos corriendo RabbitMQ para otros procesos y no era necesario tener un segundo sistema de queues.&lt;/p&gt;
+
+&lt;p&gt;Sorprendentemente, encontrar información de cómo agregar Stomp a RabbitMQ resultó algo doloroso, si había información pero como que no indicaba bien que pasos seguir. Entonces como parte de mis notas personales estoy agregando esta receta por si se llega a ofrecer de nueva cuenta.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Tener instalado RabbitMQ 1.6.0, &lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;aquí hay unos pasos&lt;/a&gt; para instalarlo.&lt;/li&gt;
+&lt;li&gt;Tener instalado Mercurial para bajar el código de Stomp&lt;/li&gt;
+&lt;li&gt;Bajar el código de Stomp&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;hg clone -r rabbitmq_v1_6_0 http://hg.rabbitmq.com/rabbitmq-stomp&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Compilar Stomp (apuntando al directorio de include donde se encuentra RabbitMQ, en Linux /usr/lib/erlang/lib/rabbitmq_server-1.6.0/include y en Mac yo lo tengo en /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/include)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;cd rabbitmq-stomp
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;make RABBIT_SERVER_INCLUDE_DIR=/usr/lib/erlang/lib/rabbitmq_server-1.6.0/include&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Copiar Stomp compilado al directorio de librerías de Erlang&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo mkdir -p /usr/lib/erlang/lib/rabbitmq-stomp
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;sudo cp -R * /usr/lib/erlang/lib/rabbitmq-stomp&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Agregar la configuración de Stomp a RabbitMQ (también apuntar al directorio correcto en la configuración, en Linux /usr/lib/erlang/lib/rabbitmq-stomp/ebin y en mi Mac /usr/local/lib/erlang/lib/rabbitmq-stomp/ebin)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;8&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;9&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;10&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;11&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;12&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;13&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;14&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;15&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo vim /etc/rabbitmq/rabbitmq.conf
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;#Add the lines below
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;NODENAME=rabbit
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;NODE_IP_ADDRESS=0.0.0.0
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;NODE_PORT=5672
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;LOG_BASE=/var/log/rabbitmq
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;MNESIA_BASE=/var/lib/rabbitmq/mnesia
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;SERVER_START_ARGS=&#8217;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;  -pa /usr/lib/erlang/lib/rabbitmq-stomp/ebin
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;  -rabbit
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;    stomp_listeners [{&quot;0.0.0.0&quot;,61613}]
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;    extra_startup_steps [{&quot;STOMP-listeners&quot;,rabbit_stomp,kickstart,[]}]&#8217;&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Listo, si intentan arrancar RabbitMQ se verá que dice que está levantando los STOMP-Listeners (En Linux talvez necesiten terminar el proceso con sudo /etc/init.d/rabbitmq-server stop antes de correr lo siguiente, y en Mac para levantar el servidor yo ejecuto sudo /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/sbin/rabbitmq-server)&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;8&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;9&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;10&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;11&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;12&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;13&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;14&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;15&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;16&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;17&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;18&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;19&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;20&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;deploy@localhost:~$ sudo rabbitmq-server 
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;RabbitMQ 1.6.0 (AMQP 8-0)
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Copyright (C) 2007-2009 LShift Ltd., Cohesive Financial Technologies LLC., and Rabbit Technologies Ltd.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Licensed under the MPL.  See http://www.rabbitmq.com/
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;node        : rabbit@localhost
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;log         : /var/log/rabbitmq/rabbit.log
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;sasl log    : /var/log/rabbitmq/rabbit-sasl.log
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;database dir: /var/lib/rabbitmq/mnesia/rabbit
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting database             &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting core processes       &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting recovery             &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting persister            &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting guid generator       &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting builtin applications &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting TCP listeners        &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;starting STOMP-listeners      &#8230;done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;broker running&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Bundler gem and Daemons error (The default Gemfile was not found)</title>
+    <link href="http://www.jcastaneyra.com/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/"/>
+    <updated>2010-02-12T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found</id>
+    <content type="html">&lt;p&gt;&lt;a name=&quot;bundler_gem_daemons_error_english&quot;&gt;&lt;/a&gt; (&lt;a href=&quot;#bundler_gem_daemons_error_spanish&quot;&gt;En español&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Some days ago we deployed an application with rails, in this application we are using some daemons (with daemons gem) to take care about some business processes, and recently to have more control with all gems used by our application we started to use bundler.&lt;/p&gt;
+
+&lt;p&gt;Almost all was done, so, at the moment to start the daemons, we get the following error:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;/usr/lib/ruby/gems/1.8/gems/bundler-0.9.3/lib/bundler.rb:122:in `default_gemfile&#8217;: The default Gemfile was not found (Bundler::GemfileNotFound)
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;    from /usr/lib/ruby/gems/1.8/gems/bundler-0.9.3/lib/bundler.rb:64:in `setup&#8217;&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;So, looking for this error in google we didn&amp;#8217;t get anything, and looking into the bundler gem code the solution to this problems was:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;BUNDLE_GEMFILE&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Gemfile&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;The complete daemon code here:&lt;/p&gt;
+
+&lt;div&gt;&lt;script src=&#8217;https://gist.github.com/302390.js?file=&#8217;&gt;&lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;&lt;code&gt;require &#8216;rubygems&#8217;
+require &#8216;daemons&#8217;
+#require File.join(File.dirname(__FILE__), &#8216;daemons_extension&#8217;)
+
+ENV[&#8216;RAILS_ENV&#8217;] ||= &#8216;development&#8217;
+ENV[&#8216;BUNDLE_GEMFILE&#8217;] ||= File.join(Dir.pwd, &#8216;Gemfile&#8217;)
+
+options = {
+  :app_name  =&amp;gt; &#8216;mail_consumer&#8217;,
+  :dir_mode  =&amp;gt; :script,
+  :dir       =&amp;gt; &#8216;../log&#8217;,
+  :backtrace =&amp;gt; true,
+  :mode      =&amp;gt; :load,
+  :monitor   =&amp;gt; true
+}
+
+Daemons.run(File.join(File.dirname(__FILE__), &#8216;mail_consumer.rb&#8217;), options)
+&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;a name=&quot;bundler_gem_daemons_error_spanish&quot;&gt;&lt;/a&gt; (&lt;a href=&quot;#bundler_gem_daemons_error_english&quot;&gt;In english&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Hace algunos días hicimos el deployment de una aplicación con rails, con esta aplicación corremos algunos demonios (con la gema daemons) que se hacen cargo de algunas operaciones de negocio, y recientemente para tener más control de las gemas que utilizamos empezamos a usar bundler.&lt;/p&gt;
+
+&lt;p&gt;Ya se tenía todo listo, al momento de correr los demonios nos encontramos con el siguiente error:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;sr&quot;&gt;/usr/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gems&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gems&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bundler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bundler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;122&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:in&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`default_gemfile&amp;#39;: The default Gemfile was not found (Bundler::GemfileNotFound)&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;sb&quot;&gt;   from /usr/lib/ruby/gems/1.8/gems/bundler-0.9.3/lib/bundler.rb:64:in `&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Cabe mencionar que buscando en google no se encontró nada de como resolver el problema, así que indagando un poco en el código de bundler, llegamos a la siguiente solución, que fue agregar la siguiente línea al código que levanta nuestro demonio.&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;BUNDLE_GEMFILE&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Gemfile&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;El código completo del demonio es el siguiente:&lt;/p&gt;
+
+&lt;div&gt;&lt;script src=&#8217;https://gist.github.com/302390.js?file=&#8217;&gt;&lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;&lt;code&gt;require &#8216;rubygems&#8217;
+require &#8216;daemons&#8217;
+#require File.join(File.dirname(__FILE__), &#8216;daemons_extension&#8217;)
+
+ENV[&#8216;RAILS_ENV&#8217;] ||= &#8216;development&#8217;
+ENV[&#8216;BUNDLE_GEMFILE&#8217;] ||= File.join(Dir.pwd, &#8216;Gemfile&#8217;)
+
+options = {
+  :app_name  =&amp;gt; &#8216;mail_consumer&#8217;,
+  :dir_mode  =&amp;gt; :script,
+  :dir       =&amp;gt; &#8216;../log&#8217;,
+  :backtrace =&amp;gt; true,
+  :mode      =&amp;gt; :load,
+  :monitor   =&amp;gt; true
+}
+
+Daemons.run(File.join(File.dirname(__FILE__), &#8216;mail_consumer.rb&#8217;), options)
+&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
+
+
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Table names case insensitive for MySQL Linux</title>
+    <link href="http://www.jcastaneyra.com/2010/01/07/table-names-case-insensitive-for-mysql-linux/"/>
+    <updated>2010-01-07T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2010/01/07/table-names-case-insensitive-for-mysql-linux</id>
+    <content type="html">&lt;p&gt;Hola a todos, feliz año 2010, que tal se pasaron estas fechas? descansaron bastante? Pues yo más o menos, unos ratos descansaba y otros trabajaba, y para variar me encontré con esto en el trabajo.&lt;/p&gt;
+
+&lt;p&gt;Resulta que estaba montando un servidor de Weblogic y MySQL en Linux, para instalar una aplicación que originalmente estaba con Weblogic y Oracle, y resulta que al cargar las tablas de esta aplicación en MySQL empecé a encontrarme problemas con los nombres de las tablas (entre otras cosas, como los tipos de datos entre Oracle y MySQL), yo no sabía que MySQL por default en Linux es case sensitive, por lo que me di a la tarea de investigar y buscar como deshabilitar esta función.&lt;/p&gt;
+
+&lt;p&gt;Es necesario editar el archivo my.cnf que se puede encontrar en /etc o bien en /etc/mysql, e inmediatamente después de la sección [mysqld], agregar lo siguiente:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;lower_case_table_names=1&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Guardamos el archivo y reiniciamos MySQL, con esto al momento de crear nuevas tablas estas se harán en minúsculas, y ya no tendremos problemas de si son mayúsculas o minúsculas.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Como crear un archivo zip con ruby</title>
+    <link href="http://www.jcastaneyra.com/2009/11/16/como-crear-un-archivo-zip-con-ruby/"/>
+    <updated>2009-11-16T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2009/11/16/como-crear-un-archivo-zip-con-ruby</id>
+    <content type="html">&lt;p&gt;Hace unos días me encontré con el problema de generar archivos Zip que contuvieran archivos de un curso de SCORM, ¿Cómo hacerlo?, lo primero que me vino a la mente fue Ruby!!!&lt;/p&gt;
+
+&lt;p&gt;La gema que me sirvió para esto fue rubyzip, y con el siguiente fragmento de código se realizaron los archivos zip:&lt;/p&gt;
+
+&lt;div&gt;&lt;script src=&#8217;https://gist.github.com/235735.js?file=&#8217;&gt;&lt;/script&gt;
+&lt;noscript&gt;&lt;pre&gt;&lt;code&gt;require &#8216;rubygems&#8217;
+require &#8216;zip/zip&#8217;
+require &#8216;zip/zipfilesystem&#8217;
+
+current_path = Dir.pwd
+      
+scorm_file = current_path + &amp;quot;/&amp;quot; + tmp_dir + &#8216;/&#8217; + course + &amp;quot;/#{scorm_module}.zip&amp;quot;
+# module_path is where scorm files are (files to zip)
+Dir.chdir(module_path)
+files_to_zip = Dir[&amp;quot;**/*&amp;quot;]
+      
+Zip::ZipFile.open(scorm_file, Zip::ZipFile::CREATE) do |zipfile|
+  files_to_zip.each { |f| zipfile.add( f, f) }
+end
+      
+Dir.chdir(current_path)&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Espero que les sirva como a mi.&lt;/p&gt;
+
+&lt;p&gt;Links:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://ruby-doc.org/core/classes/Dir.html&quot;&gt;http://ruby-doc.org/core/classes/Dir.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://ruby-doc.org/core/classes/FileUtils.html&quot;&gt;http://ruby-doc.org/core/classes/FileUtils.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://rubyzip.sourceforge.net/&quot;&gt;http://rubyzip.sourceforge.net/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Etiquetando código en git/Tagging code in git</title>
+    <link href="http://www.jcastaneyra.com/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/"/>
+    <updated>2009-11-05T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git</id>
+    <content type="html">&lt;p&gt;&lt;a name=&quot;tagging_code_git_spanish&quot;&gt;&lt;strong&gt;Etiquetando código en git&lt;/strong&gt;&lt;/a&gt; (&lt;a href=&quot;#tagging_code_git_english&quot;&gt;English&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Resulta que al estar trabajando con nuestro código queremos marcar o etiquetar nuestro código en cierto momento de tiempo, algo así como versionar nuestro código.&lt;/p&gt;
+
+&lt;p&gt;A decir verdad no soy un experto en git, pero esto es lo que me ha funcionado. Primero que nada tendríamos que etiquetar nuestro código (ponerle una marca), para esto usamos el comando git tag:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;git tag -a -m &quot;My old and ugly style&quot; old_style&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Para ver nuestros tags locales tenemos que ejecutar&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;git tag -l&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Pero como le agregué una descripción a mi tag ejecuto lo siguiente para poder ver el tag junto con su descripción&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;git tag -l -n1&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Con esto tenemos agregado el tag localmente, pero como yo trabajo con un repositorio remoto, para subir mi tag tengo que hacer&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;git push origin &#8211;tags&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Ya tengo una etiqueta en mi código, ahora supongamos que pasan dos semanas y que quiero ver algo en mi viejo y feo estilo, sólo tendría que hacer lo siguiente:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;git checkout -f -b mybranch old_style&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Así tendría un nuevo branch con mi código que tiene la etiqueta de old_style.&lt;/p&gt;
+
+&lt;p&gt;Links:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://ariejan.net/2009/09/05/git-tag-mini-cheat-sheet-revisited/?doing_wp_cron&quot;&gt;http://ariejan.net/2009/09/05/git-tag-mini-cheat-sheet-revisited/?doing_wp_cron&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://polywww.in2p3.fr/~gaycken/Calice/Software/my_git_workflow.html&quot;&gt;http://polywww.in2p3.fr/~gaycken/Calice/Software/my_git_workflow.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;&lt;a name=&quot;tagging_code_git_english&quot;&gt;&lt;strong&gt;Tagging code in git&lt;/strong&gt;&lt;/a&gt; (&lt;a href=&quot;#tagging_code_git_spanish&quot;&gt;Español&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;When we are working with our code in some time of the project we want to mark or tag the code in order to have control until that time of the project and code, something like versioning.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;m not a git expert, but this worked for me. First of all, we need to tag our code, use this command:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;git tag -a -m &quot;My old and ugly style&quot; old_style&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;In order to see all local tags&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;git tag -l&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Since I added a description to my tag it&amp;#8217;s needed to execute the following to see the description&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;git tag -l -n1&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Until now we have this tag added locally, but if we work with a remote repository we are going to push the tag&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;git push origin &#8211;tags&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;I already have this tag in my code, now suppose that some weeks have been passed and you want to see something in your old and ugly style, you would need to do:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;git checkout -f -b mybranch old_style&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;With this command you would have a new branch with the code tagged with old_style.&lt;/p&gt;
+
+&lt;p&gt;Links:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://ariejan.net/2009/09/05/git-tag-mini-cheat-sheet-revisited/?doing_wp_cron&quot;&gt;http://ariejan.net/2009/09/05/git-tag-mini-cheat-sheet-revisited/?doing_wp_cron&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://polywww.in2p3.fr/~gaycken/Calice/Software/my_git_workflow.html&quot;&gt;http://polywww.in2p3.fr/~gaycken/Calice/Software/my_git_workflow.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Enviando correo de manera asíncrona en Rails usando Workling, Workling-Mailer y RabbitMQ</title>
+    <link href="http://www.jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/"/>
+    <updated>2009-06-10T00:00:00-05:00</updated>
+    <id>http://www.jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq</id>
+    <content type="html">&lt;p&gt;&lt;a name=&quot;async_mailer_spanish&quot;&gt;&lt;strong&gt;Enviando correo de manera asíncrona en Rails usando Workling, Workling-Mailer y RabbitMQ&lt;/strong&gt;&lt;/a&gt; (&lt;a href=&quot;#async_mailer_english&quot;&gt;English&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;El trabajar con message queues es bastante interesante, ya que podemos mandar procesos al background y que estos sean procesados de manera asíncrona, un ejemplo podría ser el envío de correos, aunque también podría servir para realizar otras tareas, por ejemplo, como el envío de mensajes sms, generación de reportes, generación de pdf&amp;#8217;s, etc.&lt;/p&gt;
+
+&lt;p&gt;En esta ocasión les quiero presentar como enviar correos de manera asíncrona haciendo una aplicación sencilla haciendo uso de los puglins Workling y workling-mailer y del sistema RabbitMQ, en teoría, con esto se podría ajustar esta solución fácilmente a cualquier otro proceso que se quiera realizar de manera asíncrona.&lt;/p&gt;
+
+&lt;h2&gt;Aplicación base&lt;/h2&gt;
+
+&lt;p&gt;Se crea una aplicación básica con restful_authentication, y con la opción de activación.&lt;/p&gt;
+
+&lt;p&gt;Lo primero que hacemos es crear la aplicación en rails&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;rails mail_async_example -d mysql
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;rm public/index.html
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;script/plugin install git://github.com/technoweenie/restful-authentication.git
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;script/generate authenticated user sessions &#8211;include-activation&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Creamos nuestra base de datos y migramos&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;rake db:create
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;rake db:migrate&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Y hacemos unos pequeños cambios al código de la aplicación para enviar correo según las instrucciones de restful_authentication, así que agregamos lo suguiente:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;c1&quot;&gt;#config/routes.rb&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activate&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;activate/:activation_code&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:controller&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;users&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:action&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;activate&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:activation_code&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;c1&quot;&gt;#config/environment.rb&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;active_record&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;observers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:user_observer&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Con esto ya tendríamos nuestra aplicación básica la cuál podríamos probar de inmediato apuntando en el browser a http://localhost:3000/signup&lt;/p&gt;
+
+&lt;p&gt;Y agregando algunas cosillas extras, a app/controller/application_controller.rb agregamos la línea:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AuthenticatedSystem&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Esta misma línea que agregamos al Application controller la removemos de app/controller/sessions_controller.rb y de app/controllers/users_controller.rb&lt;/p&gt;
+
+&lt;p&gt;Y creamos un nuevo controlador&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;portal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Modificamos config/routes.rb para agregar al último como página root&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:controller&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;portal&amp;quot;&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Por último agregamos un layout para nuestra aplicación:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;8&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;9&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;10&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;11&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;12&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;13&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;14&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;15&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;16&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;17&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;18&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;19&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;20&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;21&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;22&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;23&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;24&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;25&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;26&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;27&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;28&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;29&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;erb&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;!&#8211;app/views/layouts/application.html.erb&#8211;!&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;!DOCTYPE html PUBLIC &amp;quot;-//W3C//DTD XHTML 1.0 Transitional//EN&amp;quot;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;       &amp;quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;html xmlns=&amp;quot;http://www.w3.org/1999/xhtml&amp;quot; xml:lang=&amp;quot;en&amp;quot; lang=&amp;quot;en&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;  &amp;lt;meta http-equiv=&amp;quot;content-type&amp;quot; content=&amp;quot;text/html;charset=UTF-8&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;  &amp;lt;title&amp;gt;Contracts: &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action_name&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stylesheet_link_tag&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;scaffold&amp;#39;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current_user&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;   &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;link_to&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Logout&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logout_path&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;   &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;link_to&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Login&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;login_path&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;   &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;link_to&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Sign up&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signup_path&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:warning&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:notice&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;-%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;      &amp;lt;div class=&amp;quot;flash &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_s&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;-%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&amp;quot;&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;-%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;-%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;-%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;h2&gt;Instalando amqp, workling y workling_mailer&lt;/h2&gt;
+
+&lt;p&gt;Ahora bien, antes de instalar Workling, para poder trabajar con RabbitMQ es necesario instalar la gema de amqp, esta gema requiere también de la gema de EventMachine, por lo que al instalar amqp también instalará EventMachine.&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;erb&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;gem sources -a http://gems.github.com/&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;sudo gem install tmm1-amqp &#8211;no-rdoc &#8211;no-ri&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Vemos nuestro listado de gemas&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;erb&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;sudo gem list&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Ahora si, a instalar workling y workling_mailer&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;erb&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;script/plugin install git://github.com/purzelrakete/workling.git&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;script/plugin install git://github.com/langalex/workling_mailer.git&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Para poder utilizar workling con RabbitMQ agregamos al final de config/environment.rb&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;after_initialize&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Remote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;invoker&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Remote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Invokers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EventmachineSubscriber&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Remote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dispatcher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Remote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Runners&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ClientRunner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Remote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dispatcher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Clients&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AmqpClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Posteriormente en app/models/user_mailer.rb añadimos&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AsynchMail&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;A la fecha de hoy el plugin de workling tiene un pequeño issue, para resolverlo hacemos lo siguiente en el archivo lib/workling/clients/memcache_queue_client.rb y verificar que contiene:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;memcache&amp;#39;&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Al principio del archivo, si no lo tienes agrégalo.&lt;/p&gt;
+
+&lt;p&gt;Como el amqp corre sobre un ciclo de EventMachine es necesario correr nuestra aplicación con Thin, ya que este servidor soporta EventMachine sin ningún problema. Para instalar Thin corremos&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&#8211;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdoc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&#8211;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ri&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;h2&gt;Instalando RabbitMQ&lt;/h2&gt;
+
+&lt;p&gt;Checar la instalación &lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;aquí&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;A correr todos&lt;/h2&gt;
+
+&lt;p&gt;Nos aseguramos de que el RabbitMQ esté corriendo.&lt;/p&gt;
+
+&lt;p&gt;Iniciamos el cliente de workling&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;workling_client&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;E iniciamos el servidor thin&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;thin&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Apuntamos nuestro browser a http://localhost:3000 y nos registramos con un usuario, al verificar el log de desarrollo veremos que el correo ahora es enviado después de todas las últimas operaciones registradas en el log. Podemos probar quitando la línea de include AsynchMail del UserMailer y ver lo que hace, o bien haciendo nuevo proceso que sea pesado y que se realice en background.&lt;/p&gt;
+
+&lt;p&gt;Referencias:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f&quot;&gt;http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/purzelrakete/workling/&quot;&gt;http://github.com/purzelrakete/workling/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/langalex/workling_mailer/&quot;&gt;http://github.com/langalex/workling_mailer/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/tmm1/amqp/&quot;&gt;http://github.com/tmm1/amqp/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/technoweenie/restful-authentication/&quot;&gt;http://github.com/technoweenie/restful-authentication/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.rabbitmq.com&quot;&gt;http://www.rabbitmq.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://code.macournoyer.com/thin/&quot;&gt;http://code.macournoyer.com/thin/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;Instalando RabbitMQ&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;&lt;a name=&quot;async_mailer_english&quot;&gt;&lt;strong&gt;Sending mails in asynchronous way in Rails using Workling, Workling-Mailer and RabbitMQ&lt;/strong&gt;&lt;/a&gt; (&lt;a href=&quot;#async_mailer_spanish&quot;&gt;Español&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Working with message queues is so interesting, since we can put processes in the background in order to be processed in asynchronous way, imagine this to send several mails, or maybe for heavy tasks as sms messages, report generation, pdf generation, etc.&lt;/p&gt;
+
+&lt;p&gt;So, with this post I want you to show how to send mails in asynchronous way, we are going to make a small application using Workling, Workling-mailer and as message queue RabbitMQ, actually we could adjust this solution to any other problem with async process requirement.&lt;/p&gt;
+
+&lt;h2&gt;Base application&lt;/h2&gt;
+
+&lt;p&gt;We create a simple application with restful_authentication and activation option.&lt;/p&gt;
+
+&lt;p&gt;First of all we create the rails app&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;rails&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mail_async_example&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mysql&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plugin&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:/&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;technoweenie&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;restful&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;authentication&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;git&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;authenticated&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sessions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&#8211;&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activation&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Now with rake we create and migrate DB&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;rake&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:create&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;rake&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:migrate&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Following the restful_authentication instructions to send mail we add this:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;c1&quot;&gt;#config/routes.rb&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activate&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;activate/:activation_code&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:controller&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;users&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:action&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;activate&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:activation_code&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;c1&quot;&gt;#config/environment.rb&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;active_record&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;observers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:user_observer&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Our base app is working now, so to test it we get the url http://localhost:3000/signup in the browser.&lt;/p&gt;
+
+&lt;p&gt;Add this in app/controller/application_controller.rb:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AuthenticatedSystem&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;The same line added to Application controller is removed from app/controller/sessions_controller.rb and app/controllers/users_controller.rb&lt;/p&gt;
+
+&lt;p&gt;We create a new controller for portal index&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;portal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;And modify config/routes.rb to add portal as root&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:controller&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;portal&amp;quot;&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;And last we create a layout for our application:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;8&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;9&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;10&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;11&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;12&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;13&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;14&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;15&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;16&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;17&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;18&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;19&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;20&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;21&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;22&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;23&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;24&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;25&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;26&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;27&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;28&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;29&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;erb&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;!&#8211;app/views/layouts/application.html.erb&#8211;!&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;!DOCTYPE html PUBLIC &amp;quot;-//W3C//DTD XHTML 1.0 Transitional//EN&amp;quot;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;       &amp;quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;html xmlns=&amp;quot;http://www.w3.org/1999/xhtml&amp;quot; xml:lang=&amp;quot;en&amp;quot; lang=&amp;quot;en&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;  &amp;lt;meta http-equiv=&amp;quot;content-type&amp;quot; content=&amp;quot;text/html;charset=UTF-8&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;  &amp;lt;title&amp;gt;Contracts: &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action_name&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stylesheet_link_tag&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;scaffold&amp;#39;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current_user&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;   &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;link_to&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Logout&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;logout_path&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;   &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;link_to&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Login&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;login_path&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;   &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;link_to&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Sign up&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signup_path&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:warning&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:notice&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;-%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;      &amp;lt;div class=&amp;quot;flash &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_s&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;-%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&amp;quot;&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;-%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;-%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;-%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;h2&gt;Installing amqp, workling and workling_mailer&lt;/h2&gt;
+
+&lt;p&gt;Now, before using Workling, we need RabbitMQ and amqp is needed, this gem also requires EventMachine gem, so, both gems are installed when amqp is installed.&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;erb&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;gem sources -a http://gems.github.com/&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;sudo gem install tmm1-amqp &#8211;no-rdoc &#8211;no-ri&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;List your installed gems&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;erb&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;sudo gem list&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Now, install workling and workling_mailer&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;erb&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;script/plugin install git://github.com/purzelrakete/workling.git&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;x&quot;&gt;script/plugin install git://github.com/langalex/workling_mailer.git&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Add this to config/environment.rb to allow workling to use RabbitMQ&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;after_initialize&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Remote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;invoker&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Remote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Invokers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EventmachineSubscriber&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Remote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dispatcher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Remote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Runners&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ClientRunner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Remote&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dispatcher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Workling&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Clients&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AmqpClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;To app/models/user_mailer.rb add this&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AsynchMail&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Until today I&amp;#8217;ve seen a little issue with workling, to solve it we do the folloging in this file lib/workling/clients/memcache_queue_client.rb; verify that you have:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;memcache&amp;#39;&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Add it if you don&amp;#8217;t have it.&lt;/p&gt;
+
+&lt;p&gt;Amqp runs in an EventMachine cycle, so it is needed to run our app with Thin, since Thin supports EventMachine without any problem. To install Thin run&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&#8211;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rdoc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&#8211;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ri&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;h2&gt;Installing RabbitMQ&lt;/h2&gt;
+
+&lt;p&gt;Follow the instructions here &lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;aquí&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Everybody runs&lt;/h2&gt;
+
+&lt;p&gt;Cool, naw we ensure that RabbitMQ is running.&lt;/p&gt;
+
+&lt;p&gt;Start workling client&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;workling_client&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;And start Thin server&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;ruby&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;n&quot;&gt;thin&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Point with your browser to http://localhost:3000 and sign up a new user, then verify your log and will see that email is sent and registered to the end of log after all operations. We can test removing include AsynchMail from UserMailer and see what happens, it would be great if you test some application with a heavy process working in the background.&lt;/p&gt;
+
+&lt;p&gt;Links:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f&quot;&gt;http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/purzelrakete/workling/&quot;&gt;http://github.com/purzelrakete/workling/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/langalex/workling_mailer/&quot;&gt;http://github.com/langalex/workling_mailer/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/tmm1/amqp/&quot;&gt;http://github.com/tmm1/amqp/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/technoweenie/restful-authentication/&quot;&gt;http://github.com/technoweenie/restful-authentication/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.rabbitmq.com&quot;&gt;http://www.rabbitmq.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://code.macournoyer.com/thin/&quot;&gt;http://code.macournoyer.com/thin/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;Instalando RabbitMQ&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Instalando RabbitMQ</title>
+    <link href="http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/"/>
+    <updated>2009-06-07T00:00:00-05:00</updated>
+    <id>http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq</id>
+    <content type="html">&lt;p&gt;&lt;a name=&quot;rabbitmq_spanish&quot;/&gt;&lt;strong&gt;Instalando RabbitMQ&lt;/strong&gt;&lt;/a&gt; (&lt;a href=&quot;#rabbitmq_english&quot;&gt;English&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;RabbitMQ es un sistema de message queue (MQ), el cual provee comunicaciones asíncronas, es decir que el productor y consumidor no tienen la necesidad de interactuar con los mensajes al mismo tiempo, además de que es una implementación del protocolo AMQP (Advanced Message Queuing Protocol), un protocolo para mensajeo de alto rendimiento, y por último decir que RabbitMQ está desarrollado con Erlang, Erlang es un lenguaje de programación funcional.&lt;/p&gt;
+
+&lt;h2&gt;En Ubuntu 9.04&lt;/h2&gt;
+
+&lt;p&gt;La instalación de RabbitMQ en Ubuntu 9.04 es tan simple como correr el comando&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo aptitude install rabbitmq-server&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Y con el cual si no has instalado Erlang te mostrará que paquetes tendrá que instalar para que lo tengas también.&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;8&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;9&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;10&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;11&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;12&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;13&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;14&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;15&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;jcastaneyra@ubuntu:~/sources$ sudo aptitude install rabbitmq-server
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;[sudo] password for jcastaneyra:
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Reading package lists&#8230; Done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Building dependency tree
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Reading state information&#8230; Done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Reading extended state information
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Initializing package states&#8230; Done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Writing extended state information&#8230; Done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;The following NEW packages will be installed:
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;erlang-base{a} erlang-nox{a} libltdl7{a} odbcinst1debian1{a} unixodbc{a}
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;The following partially installed packages will be configured:
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;rabbitmq-server
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;0 packages upgraded, 5 newly installed, 0 to remove and 8 not upgraded.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Need to get 28.6MB of archives. After unpacking 46.9MB will be used.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Do you want to continue? [Y/n/?]&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Una vez instalado ya está corriendo.&lt;/p&gt;
+
+&lt;h2&gt;En Mac leopard&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;UPDATE (27/05/2010)&lt;/em&gt;: Desde hace un rato que ya estoy usando Homebrew para instalar cosas en Mac, ya existe una fórmula para instalar también RabbitMQ  y por supuesto Erlang, para más información visitar &lt;a href=&quot;http://github.com/mxcl/homebrew&quot;&gt;http://github.com/mxcl/homebrew&lt;/a&gt; y seguir las instrucciones para instalar Homebrew. Con RabbitMQ, incluso si se quiere una versión específica de RabbitMQ se puede modificar la fórmula :)&lt;/p&gt;
+
+&lt;p&gt;La instalación es a través de los MacPorts, hay que bajar el instalador de la página www.macports.org/install.php, pero para poder compilar es necesario tener XCode instalado. Los MacPorts son instalados en /opt, por lo que hay que asegurarnos que se tengamos agregados los paths necesarios en el profile para ejecutar los comandos de MacPorts.&lt;/p&gt;
+
+&lt;p&gt;En mi caso en .profile (pero también puede ser el .bash_login) debe estar algo así (si no está lo agrego):&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;# MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate PATH variable for use with MacPorts.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;# Finished adapting your PATH environment variable for use with MacPorts.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;# MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate MANPATH variable for use with MacPorts.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;export MANPATH=/opt/local/share/man:$MANPATH
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;# Finished adapting your MANPATH environment variable for use with MacPorts.&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Una vez que están los MacPorts hay que instalar primero erlang, así que ejecutamos&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo port install erlang&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Y esperamos un buen rato a que se instale.&lt;/p&gt;
+
+&lt;p&gt;Una vez instalado erlang, bajamos la última versión de RabbitMQ&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;mkdir /tmp/rabbitmq &amp;&amp; cd /tmp/rabbitmq
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;curl -O http://www.rabbitmq.com/releases/rabbitmq-server/v1.5.5/rabbitmq-server-generic-unix-1.5.5.tar.gz
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;tar xvzf rabbitmq-server-generic-unix-1.5.5.tar.gz
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;sudo mv rabbitmq_server-1.5.5/ /opt/local/lib/erlang/lib&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Ahora ya lo podemos ejecutar.&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo /opt/local/lib/erlang/lib/rabbitmq_server-1.5.5/sbin/rabbitmq-server&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;h2&gt;Recursos&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.rabbitmq.com&quot;&gt;http://www.rabbitmq.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/&quot;&gt;http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;&lt;a name=&quot;rabbitmq_english&quot;/&gt;&lt;strong&gt;Installing RabbitMQ&lt;/strong&gt;&lt;/a&gt; (&lt;a href=&quot;#rabbitmq_spanish&quot;&gt;Español&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;RabbitMQ is a complete and highly reliable Enterprise Messaging system, it provides asynchronous communications,  meaning that the sender and receiver of the message do not need to interact with the message queue at the same time, also it is a AMQP implementation (Advanced Message Queuing Protocol) a protocol for high performance messaging, and last RabbitMQ is developed with Erlang, a functional programming language.&lt;/p&gt;
+
+&lt;h2&gt;In Ubuntu 9.04&lt;/h2&gt;
+
+&lt;p&gt;RabbitMQ instalation in Ubuntu 9.04 is so simple, it is just needed to run a command&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo aptitude install rabbitmq-server&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;With this also install all packages needed by rabbitmq, Erlang is installed also.&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;8&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;9&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;10&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;11&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;12&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;13&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;14&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;15&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;jcastaneyra@ubuntu:~/sources$ sudo aptitude install rabbitmq-server
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;[sudo] password for jcastaneyra:
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Reading package lists&#8230; Done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Building dependency tree
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Reading state information&#8230; Done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Reading extended state information
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Initializing package states&#8230; Done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Writing extended state information&#8230; Done
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;The following NEW packages will be installed:
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;erlang-base{a} erlang-nox{a} libltdl7{a} odbcinst1debian1{a} unixodbc{a}
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;The following partially installed packages will be configured:
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;rabbitmq-server
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;0 packages upgraded, 5 newly installed, 0 to remove and 8 not upgraded.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Need to get 28.6MB of archives. After unpacking 46.9MB will be used.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;Do you want to continue? [Y/n/?]&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Once the installation is finished RabbitMQ will be running.&lt;/p&gt;
+
+&lt;h2&gt;In Mac leopard&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;UPDATE (27/05/2010)&lt;/em&gt;: I am using Homebrew to install some stuff in Mac from some months ago, Homebrew has a formula to install RabbitMQ and also Erlang, for more info please visit &lt;a href=&quot;http://github.com/mxcl/homebrew&quot;&gt;http://github.com/mxcl/homebrew&lt;/a&gt; for install instructions. Also if you want to install a different version of RabbitMQ you can do it just editing the formula :)&lt;/p&gt;
+
+&lt;p&gt;RabbitMQ installation is done through MacPorts, you need to download the MacPorts installer from www.macports.org/install.php, also XCode is needed. MacPorts are installed in /opt, for that reason we put these paths in the .profile file (could be .bash_login), if you don&amp;#8217;t have these paths add them to your profile file:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;6&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;7&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;# MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate PATH variable for use with MacPorts.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;# Finished adapting your PATH environment variable for use with MacPorts.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;# MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate MANPATH variable for use with MacPorts.
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;export MANPATH=/opt/local/share/man:$MANPATH
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;# Finished adapting your MANPATH environment variable for use with MacPorts.&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;In order to install erlang execute the following command:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo port install erlang&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;You need to wait some time, maybe several minutes :)&lt;/p&gt;
+
+&lt;p&gt;Once you have erlang installed, we download the last RabbitMQ version&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;mkdir /tmp/rabbitmq &amp;&amp; cd /tmp/rabbitmq
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;curl -O http://www.rabbitmq.com/releases/rabbitmq-server/v1.5.5/rabbitmq-server-generic-unix-1.5.5.tar.gz
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;tar xvzf rabbitmq-server-generic-unix-1.5.5.tar.gz
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;sudo mv rabbitmq_server-1.5.5/ /opt/local/lib/erlang/lib&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Now we execute rabbitmq-server with this&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8221;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo /opt/local/lib/erlang/lib/rabbitmq_server-1.5.5/sbin/rabbitmq-server&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;h2&gt;Links&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.rabbitmq.com&quot;&gt;http://www.rabbitmq.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/&quot;&gt;http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Mostrando el branch de git en el prompt de la consola</title>
+    <link href="http://www.jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/"/>
+    <updated>2009-05-20T00:00:00-05:00</updated>
+    <id>http://www.jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola</id>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Mostrando el branch de git en el prompt de la consola&lt;/strong&gt; (In english below)&lt;/p&gt;
+
+&lt;p&gt;Tiene aproximadamente dos meses que empecé a trabajar con git, y la experiencia ha sido muy buena, bastante interesante, pero con los primeros tutoriales que empecé a ver noté que los aliases ayudan a hacer más ágil el trabajo con git, curiosamente hasta este momento no los he usado, creo que ha llegado la hora de agregarlos en mi configuración. Así que al final de mi archivo $HOME/.gitconfig agrego:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[color]
+        ui = auto
+[alias]
+        ci = commit
+        co = checkout
+        st = status
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Por cierto, que la parte de [color] es para mostrar con colores mis cambios cuando le doy git status, aunque ahora con estos cambios ya le podría dar git st.&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;Otra cosa que noté en mis inicios con git fue que en un screencast de peepcode, en el prompt de la consola aparecía el branch en el que se encontraba trabajando, en ese entonces busqué como hacerlo pero no tuve éxito hasta ahora, entonces para lograr esto hay que agregar un archivo con funciones .bash_functions&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# git-related functions in here
+
+git_branch () {
+  GIT_BRANCH=&quot;$(git branch &#8211;no-color 2&amp;gt; /dev/null | sed -e &#8216;/^[^*]/d&#8217; -e &#8216;s/* \(.*\)/\1/&#8217;)&quot;
+  if [[ -n &quot;$GIT_BRANCH&quot; ]] ; then
+    echo &quot;:($GIT_BRANCH) &quot;
+  fi
+}
+empty_branch () {
+  name=&quot;$1&quot;
+  if [[ -n &quot;$name&quot; ]] ; then
+    echo &quot;This will create a new empty branch in the current&quot;
+    echo -n &quot;git repository called &#8216;${name}&#8217; &#8230; Continue? [y/N] &quot;
+    read VERIFY
+    if [[ &quot;$VERIFY&quot; = &quot;Y&quot; || &quot;$VERIFY&quot; = &quot;y&quot; ]]; then
+      echo &quot;creating branch &#8216;$name&#8217;&quot;
+      git symbolic-ref HEAD refs/heads/$name
+      rm .git/index
+      git clean -fdx
+      echo &quot;you should be on your new empty branch! &quot;
+      echo &quot;add/commit files as usual! &quot;
+      echo &quot;( your new branch will show up after you commit something to it )&quot;
+    else
+      echo -n &quot;&quot;
+    fi
+  else
+    echo &quot;Creates a new empty branch in your git repository.&quot;
+    echo &quot;&quot;
+    echo &quot;Usage: empty_branch [name_of_new_branch]&quot;
+  fi
+}
+
+# vim:set ft=sh:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Y dependiendo del archivo de configuración del shell que estén usando agregar en él esto:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# if .bash_functions if a file then source it
+# if .bash_functions is a directory, then sourec all its files
+if [ -f ~/.bash_functions ]; then
+  . ~/.bash_functions
+fi
+if [ -d ~/.bash_functions ]; then
+  for function in ~/.bash_functions/*; do . $function; done
+fi
+
+# bash prompt
+prompt () {
+  PS1=&quot;\[\e[34m\]\u\[\e[37m\]@\[\e[36m\]\h\[\e[37m\]:\[\e[31m\]\w\[\e[37m\]$(git_branch)$ &quot;
+}
+PROMPT_COMMAND=prompt
+export PROMPT_COMMAND
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;En mi caso, en leopard yo estoy usando .profile, pero podría ser .bash_rc o algún otro profile de shell. Ya para cargar la info del profile habría que ejecutar source .profile ó bien salirse de la consola y volverla a abrir para que cargue la nueva configuración.&lt;/p&gt;
+
+&lt;p&gt;Todavía falta mucho por aprender de git, pero creo que voy por buen camino, también he aprendido bastante de los flujos que siguen algunos equipos de trabajo ágiles, son muy interesantes.&lt;/p&gt;
+
+&lt;h2&gt;Recursos:&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://git.or.cz/gitwiki/Aliases&quot;&gt;Aliases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bash_functions/git&quot;&gt;.bash_functions file from Remi&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bashrc&quot;&gt;.bash_rc file from Remi&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://reinh.com/blog/2009/03/02/a-git-workflow-for-agile-teams.html&quot;&gt;Git workflow for agile teams&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Showing the git branch in the console prompt&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;I have working with git since started two months ago, the experience have been too good, I must say awesome, when I started to work I saw that you could use aliases with git, it is funny but since then I&amp;#8217;ve never used aliases, so now it&amp;#8217;s time to add them to my configuration file $HOME/.gitconfig&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[color]
+        ui = auto
+[alias]
+        ci = commit
+        co = checkout
+        st = status
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This [color] section enable colors when I execute git status and see my changes, but now with my aliases I could write git st.&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;Another nice stuff that I noticed when started to work with git and I was watching a Peepcode screencast was that in the console prompt appeared the git branch, in that moment I googled it but no results got, until now that I found how to do this; one file with the git functions is created .bash_functions&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# git-related functions in here
+
+git_branch () {
+  GIT_BRANCH=&quot;$(git branch &#8211;no-color 2&amp;gt; /dev/null | sed -e &#8216;/^[^*]/d&#8217; -e &#8216;s/* \(.*\)/\1/&#8217;)&quot;
+  if [[ -n &quot;$GIT_BRANCH&quot; ]] ; then
+    echo &quot;:($GIT_BRANCH) &quot;
+  fi
+}
+empty_branch () {
+  name=&quot;$1&quot;
+  if [[ -n &quot;$name&quot; ]] ; then
+    echo &quot;This will create a new empty branch in the current&quot;
+    echo -n &quot;git repository called &#8216;${name}&#8217; &#8230; Continue? [y/N] &quot;
+    read VERIFY
+    if [[ &quot;$VERIFY&quot; = &quot;Y&quot; || &quot;$VERIFY&quot; = &quot;y&quot; ]]; then
+      echo &quot;creating branch &#8216;$name&#8217;&quot;
+      git symbolic-ref HEAD refs/heads/$name
+      rm .git/index
+      git clean -fdx
+      echo &quot;you should be on your new empty branch! &quot;
+      echo &quot;add/commit files as usual! &quot;
+      echo &quot;( your new branch will show up after you commit something to it )&quot;
+    else
+      echo -n &quot;&quot;
+    fi
+  else
+    echo &quot;Creates a new empty branch in your git repository.&quot;
+    echo &quot;&quot;
+    echo &quot;Usage: empty_branch [name_of_new_branch]&quot;
+  fi
+}
+
+# vim:set ft=sh:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And depending which shell are you using you add this into it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# if .bash_functions if a file then source it
+# if .bash_functions is a directory, then sourec all its files
+if [ -f ~/.bash_functions ]; then
+  . ~/.bash_functions
+fi
+if [ -d ~/.bash_functions ]; then
+  for function in ~/.bash_functions/*; do . $function; done
+fi
+
+# bash prompt
+prompt () {
+  PS1=&quot;\[\e[34m\]\u\[\e[37m\]@\[\e[36m\]\h\[\e[37m\]:\[\e[31m\]\w\[\e[37m\]$(git_branch)$ &quot;
+}
+PROMPT_COMMAND=prompt
+export PROMPT_COMMAND
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I&amp;#8217;m using .profile in leopard, but could be .bash_rc. Now to load this new changes from your profile it&amp;#8217;s need to execute source .profile or you also could close your console window and open a new one.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;ve learned a lot until now but I still need to learn more (even english :) ), I&amp;#8217;ve learned also from agile workflows that helps with your work.&lt;/p&gt;
+
+&lt;h2&gt;Notes:&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://git.or.cz/gitwiki/Aliases&quot;&gt;Aliases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bash_functions/git&quot;&gt;.bash_functions file from Remi&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bashrc&quot;&gt;.bash_rc file from Remi&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://reinh.com/blog/2009/03/02/a-git-workflow-for-agile-teams.html&quot;&gt;Git workflow for agile teams&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;Another note:&lt;/p&gt;
+
+&lt;p&gt;This is my first try to write in english, I definitely need to learn to be more fluid in my english writing also speaking, but it&amp;#8217;s needed to start in some place. So if this is not understandable you can give some feedback, thanks.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Segunda reunión de MXOR</title>
+    <link href="http://www.jcastaneyra.com/2009/03/17/segunda-reunion-de-mxor/"/>
+    <updated>2009-03-17T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2009/03/17/segunda-reunion-de-mxor</id>
+    <content type="html">&lt;p&gt;El día de ayer fue la segunda reunión de nuestro grupo de Rails MXOR, en el cuál se hablaron de diversos tópicos en general, pero como todos estamos interesados en aprender de estos tópicos llegamos a la idea de trabajar en un proyecto en donde se pueda trabajar con las cosas que nos interesan y que de esto surgan una serie de artículos los cuales puedan servirnos a nosotros como referencia y a las personas interesadas en Rails y de todo lo que está al rededor.&lt;/p&gt;
+
+&lt;p&gt;Sobre los tópicos que nos resultaron interesantes son:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Instalación de Linux desde cero y con los necesario para Rails&lt;/li&gt;
+&lt;li&gt;Version de Rails, VM&amp;#8217;s&lt;/li&gt;
+&lt;li&gt;Uso de Git con el proyecto&lt;/li&gt;
+&lt;li&gt;RedMine como administrador de proyecto&lt;/li&gt;
+&lt;li&gt;BDD&lt;/li&gt;
+&lt;li&gt;Autenticación&lt;/li&gt;
+&lt;li&gt;Servidores Web, App Servers&lt;/li&gt;
+&lt;li&gt;Prototype, scriptaculous, JQuery (Edgar dice que es más ligero)&lt;/li&gt;
+&lt;li&gt;CSS (blueprint, haml)&lt;/li&gt;
+&lt;li&gt;Deployment&lt;/li&gt;
+&lt;li&gt;Cache&lt;/li&gt;
+&lt;li&gt;Plugins de consulta&lt;/li&gt;
+&lt;li&gt;I18N&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;En la reunión se hizo una lluvia de ideas sobre que proyectos trabajar y sobre el proyecto que se eligió también se fueron aterrizando diversas ideas.&lt;/p&gt;
+
+&lt;h2&gt;Problema:&lt;/h2&gt;
+
+&lt;p&gt;Compartir historias de desarrolladores.&lt;/p&gt;
+
+&lt;h2&gt;El contenido:&lt;/h2&gt;
+
+&lt;p&gt;Tutoriales
+Errores
+Categorización de tutoriales
+Categorización de Errores
+Como wiki de errores
+¿Compartir pasos de recetas?
+Solo en español para empezar&lt;/p&gt;
+
+&lt;p&gt;Hasta aquí me quedé en las anotaciones ya que tuve que salir temprano, pero hay un podcast con la sesión de principio a fin. En este momento se está seleccionando un nombre para la aplicación, una vez que se haya elegido el nombre se podrá empezar a trabajar en estos tópicos, idealmente la gente involucrada en cada actividad sería la que esté interesada en aprender y no precisamente la que domine el tema. La lista de nombres al momento es:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;redcipe (3 votos)&lt;/li&gt;
+&lt;li&gt;errecipe (1 voto)&lt;/li&gt;
+&lt;li&gt;devrecipes (0 votos)&lt;/li&gt;
+&lt;li&gt;devcipe (1 voto)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Por supuesto este es un proyecto open source y abierto a la comunidad interesada en Rails, buscando que a partir de esto surgan artículos e información que en un momento dado nos sea de utilidad, una especie de libro que nos sirva de guía en la realización de una aplicación. Para más información acudir a la &lt;a href=&quot;http://mexicoonrails.com.mx/news/12&quot;&gt;página del grupo&lt;/a&gt;.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Scaling Rails</title>
+    <link href="http://www.jcastaneyra.com/2009/02/27/scaling-rails/"/>
+    <updated>2009-02-27T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2009/02/27/scaling-rails</id>
+    <content type="html">&lt;p&gt;Hace un par de semanas aproximadamente buscando información de como hacer escalar aplicaciones Rails me encontré con un material bastante interesante y con información muy valiosa, y lo mejor de todo es que en screencasts, los cuales han sido publicados por Gregg Pollack de &lt;a href=&quot;http://railsenvy.com&quot;&gt;RailsEnvy&lt;/a&gt; con el soporte de &lt;a href=&quot;http://newrelic.com/&quot;&gt;NewRelic&lt;/a&gt;, sería muy bueno que les den una revisada. Los screencasts publicados hasta el momento son:&lt;/p&gt;
+
+&lt;ol&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/01/22/introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/01/22/page-responsiveness&quot;&gt;Page Responsiveness&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/01/22/page-caching&quot;&gt;Page Caching&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/01/22/cache-expiration&quot;&gt;Chache Expiration&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/01/22/new-relic-rpm&quot;&gt;New Relic RPM&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/02/05/episode-5-advanced-page-caching&quot;&gt;Advanced Page Caching&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/02/09/episode-6-action-caching&quot;&gt;Action Caching&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/02/09/episode-7-fragment-caching&quot;&gt;Fragment Caching&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/02/19/episode-8-memcached&quot;&gt;Memcahed&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/02/19/episode-9-taylor-weibley-databases&quot;&gt;Taylor Weibley &amp;amp; Databases&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/02/25/episode-10-client-side-caching&quot;&gt;Client-side Caching&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://railslab.newrelic.com/2009/02/26/episode-11-advanced-http-caching&quot;&gt;Additional HTTP Caching&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Mi participación en el BarCamp 2 México</title>
+    <link href="http://www.jcastaneyra.com/2009/02/10/mi-participacion-en-el-barcamp-2-mexico/"/>
+    <updated>2009-02-10T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2009/02/10/mi-participacion-en-el-barcamp-2-mexico</id>
+    <content type="html">&lt;p&gt;Así es, el pasado sábado hice presencia en el BarCamp 2 México con mi comunidad de &lt;a href=&quot;http://mexicoonrails.com.mx/&quot;&gt;México on Rails&lt;/a&gt; y aporté mi granito de arena con una presentación sobre como instalar Rails en Windows la cuál fue enriquecida por mis compañeros de la comunidad, cómo comunidad y equipo llevamos varias presentaciones al BarCamp, las cuáles se estarán subiendo a nuestro sitio de México On Rails, también les dejo dos reseñas, &lt;a href=&quot;http://mexicoonrails.com.mx/news/7&quot;&gt;una por nuestro compañero de la comunidad @chubas&lt;/a&gt; donde da un resumen de todas las ponencias que dimos como grupo y la &lt;a href=&quot;http://www.tequilavalley.com/2009/02/09/fuimos-mas-de-140-creo-barcamp-mexico-2/&quot;&gt;otra por @tequilavalley&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;La presentación la dejo aquí:&lt;/p&gt;
+
+&lt;div id=&quot;__ss_1012895&quot; style=&quot;width: 425px; text-align: left;&quot;&gt;&lt;a style=&quot;font:14px Helvetica,Arial,Sans-serif;display:block;margin:12px 0 3px 0;text-decoration:underline;&quot; title=&quot;Instalando Rails en Windows&quot; href=&quot;http://www.slideshare.net/jcastaneyra/instalando-rails-en-windows?type=presentation&quot;&gt;Instalando Rails en Windows&lt;/a&gt;&lt;object width=&quot;425&quot; height=&quot;355&quot; data=&quot;http://static.slideshare.net/swf/ssplayer2.swf?doc=mxorrorwindows-1234286003510859-3&amp;amp;stripped_title=instalando-rails-en-windows&quot; type=&quot;application/x-shockwave-flash&quot;&gt;&lt;param name=&quot;allowFullScreen&quot; value=&quot;true&quot; /&gt;&lt;param name=&quot;allowScriptAccess&quot; value=&quot;always&quot; /&gt;&lt;param name=&quot;src&quot; value=&quot;http://static.slideshare.net/swf/ssplayer2.swf?doc=mxorrorwindows-1234286003510859-3&amp;amp;stripped_title=instalando-rails-en-windows&quot; /&gt;&lt;param name=&quot;allowfullscreen&quot; value=&quot;true&quot; /&gt;&lt;/object&gt;
+&lt;div style=&quot;font-size: 11px; font-family: tahoma,arial; height: 26px; padding-top: 2px;&quot;&gt;View more &lt;a style=&quot;text-decoration:underline;&quot; href=&quot;http://www.slideshare.net/&quot;&gt;presentations&lt;/a&gt; from &lt;a style=&quot;text-decoration:underline;&quot; href=&quot;http://www.slideshare.net/jcastaneyra&quot;&gt;jcastaneyra&lt;/a&gt;. (tags: &lt;a style=&quot;text-decoration:underline;&quot; href=&quot;http://slideshare.net/tag/ruby&quot;&gt;ruby&lt;/a&gt; &lt;a style=&quot;text-decoration:underline;&quot; href=&quot;http://slideshare.net/tag/on&quot;&gt;on&lt;/a&gt;)&lt;/div&gt;
+&lt;/div&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Como obtener una imagen ISO de un CD/DVD en Mac</title>
+    <link href="http://www.jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/"/>
+    <updated>2009-01-30T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac</id>
+    <content type="html">&lt;p&gt;Hace poco un compañerito de la comunidad de &lt;a href=&quot;http://www.mexicoonrails.com.mx&quot;&gt;México on Rails&lt;/a&gt; mencionó que tener una Mac es como tener lo mejor de ambos mundos (de Windows y Linux), y he aquí el porqué, resulta que quería obtener una imagen ISO de cierto DVD para respaldarlo y posiblemente después quemarlo, y aquí les muestro al más puro estilo Unix como se puede hacer.&lt;/p&gt;
+
+&lt;p&gt;Primero que nada hay que insertar el CD/DVD a extraer (duh! pero alguien podría no saber :) )&lt;/p&gt;
+
+&lt;p&gt;Y ejecutando el siguiente comando obtenemos el status del CD/DVD a quemar:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;jcastaneyra$ drutil status
+Vendor   Product           Rev
+OPTIARC  DVD RW AD-5630A   1CHQ
+
+Type: DVD-ROM              Name: /dev/disk1
+Sessions: 1                  Tracks: 1
+Overwritable:   00:00:00         blocks:        0 /   0.00MB /   0.00MiB
+Space Free:   00:00:00         blocks:        0 /   0.00MB /   0.00MiB
+Space Used:  330:41:69         blocks:  1488144 /   3.05GB /   2.84GiB
+Writability:
+Book Type: DVD-ROM (v1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Posteriormente desmontamos el CD/DVD:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;jcastaneyra$ diskutil unmountDisk /dev/disk1
+Unmount of all volumes on disk1 was successful
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Y ahora obtenemos la imagen con la utilidad dd:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;jcastaneyra$ dd if=/dev/disk1 of=vista.iso bs=2048
+1488144+0 records in
+1488144+0 records out
+3047718912 bytes transferred in 1209.311307 secs (2520210 bytes/sec)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Después para expulsar el CD/DVD lo que se hace es volverlo a montar (jejeje, talvez puede haber otra forma, posiblemente haya un comando eject, ya no lo probé):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;jcastaneyra$ diskutil mountDisk /dev/disk1
+Volume(s) mounted successfully
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Y por último probamos la imagen ISO:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;jcastaneyra$ hdid vista.iso
+/dev/disk2                                                 /Volumes/VISTA_32_BUSINESS
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Y para poder quemar la imagen ISO se podría utilizar la aplicación &amp;#8220;Utilidad de Discos&amp;#8221;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Comunidades</title>
+    <link href="http://www.jcastaneyra.com/2009/01/29/comunidades/"/>
+    <updated>2009-01-29T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2009/01/29/comunidades</id>
+    <content type="html">&lt;p&gt;El domingo pasado fui a la primer reunión de la comunidad de &lt;a href=&quot;http://www.mexicoonrails.com.mx&quot;&gt;México On Rails&lt;/a&gt;, y también es para mi la primer comunidad en la que estoy, desde hace tiempo había querido integrarme a una comunidad pero en su momento no encontré una cerca a donde estaba viviendo, y también había leído de un buen de gurús de software que recomendaban el unirse a una comunidad que siguieran la tecnología o corriente que uno quería seguir o de la cual aprender, al seguir este consejo me di cuenta a lo que realmente se referían, en esta comunidad de &lt;a href=&quot;http://www.mexicoonrails.com.mx&quot;&gt;México On Rails&lt;/a&gt; a pesar de que fuimos pocas personas, realmente pude ver el talento que hay aquí en México y con personas de todas las edades, la apertura que hay para aprender y compartir conocimiento, y con respecto a esto último, dentro de unos días será el &lt;a href=&quot;http://barcamp.org/BarCampMexico&quot;&gt;Barcamp México&lt;/a&gt; al cual iré y contribuiré con mi granito de arena haciendo una ponencia, algo sencilla, pero la finalidad es compartir y aprender, y enseñando también se aprende mucho, la ponencia será cómo instalar Rails en Windows, por cierto &lt;a href=&quot;http://groups.google.com/group/mxor/browse_thread/thread/b9b872ae2360baf8#&quot;&gt;aquí está la lista de ponencias&lt;/a&gt; que se planean dar por los demás miembros del grupo.&lt;/p&gt;
+
+&lt;p&gt;Por cierto a la otra convivencia de la comunidad a la que me gustaría asistir es la de &lt;a href=&quot;http://shdhmexicocity.org/&quot;&gt;Super Happy Dev House México&lt;/a&gt;, espero poder ir pronto.&lt;/p&gt;
+
+&lt;p&gt;Les dejo unas fotos del primer evento de MXOR (dar click en la foto para ir a Flickr):&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://flickr.com/search/?q=Mexico%20on%20rails&amp;amp;w=41496390%40N00&quot;&gt;&lt;img class=&quot;alignnone&quot; src=&quot;http://farm4.static.flickr.com/3121/3236190410_84a244660c_m.jpg&quot; alt=&quot;&quot; width=&quot;240&quot; height=&quot;180&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Problemas de memoria en mi 256slice</title>
+    <link href="http://www.jcastaneyra.com/2008/12/15/problemas-de-memoria-en-mi-256slice/"/>
+    <updated>2008-12-15T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2008/12/15/problemas-de-memoria-en-mi-256slice</id>
+    <content type="html">&lt;p&gt;No se si ya había comentado, pero mi blog lo tengo en un VPS de slicehost y tengo una &lt;a href=&quot;http://www.slicehost.com&quot;&gt;256slice&lt;/a&gt; es decir una partición virtual con 256 Mb de memoria, y recientemente debido al monto de memoria limitado (talvez debería pensar seriamente en subir el monto de memoria por unos cuántos dolares más al mes, ¿debería?) he experimentado algunos problemas ya que mi servidor se había estado muriendo, y en los logs estaba la evidencia:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Dec 15 08:27:59 ubuntu kernel:  [&amp;lt;ffffffff8025d987&amp;gt;] out_of_memory+0x2e/0x187
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Por lo que me puse a investigar y encontré unos ajustes que se le tienen que hacer a la configuración del servidor apache2:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;IfModule mpm_prefork_module&amp;gt;
+    StartServers          3
+    MinSpareServers       3
+    MaxSpareServers       3
+    ServerLimit          50
+    MaxClients           50
+    MaxRequestsPerChild   1000
+&amp;lt;/IfModule&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Además, también instalé el plugin de wordpress &lt;a href=&quot;http://wordpress.org/extend/plugins/wp-super-cache/&quot;&gt;WP Super cache&lt;/a&gt; para bajarle un poco al proceso de php con la base de datos.&lt;/p&gt;
+
+&lt;p&gt;Espero que esto funcione, estoy intentando esto antes de subir a 512 Mb de memoria, y digo ojalá que esta experiencia pueda ayudar a alguien más que se encuentre en un problema parecido.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Desarrollando en Rails con Vim</title>
+    <link href="http://www.jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/"/>
+    <updated>2008-12-14T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim</id>
+    <content type="html">&lt;p&gt;Cuando empecé a meterme con Rails me encontré con que había unos cuantos IDE&amp;#8217;s para desarrollar en este framework y algunos editores, digo como desarrollador de Java era obvio que esperaba un IDE y los disponibles eran o son &lt;a href=&quot;http://www.netbeans.org&quot;&gt;Netbeans&lt;/a&gt;, &lt;a href=&quot;http://www.aptana.com&quot;&gt;Aptana&lt;/a&gt;, &lt;a href=&quot;http://www.activestate.com/Products/komodo_ide/index.mhtml&quot;&gt;Komodo&lt;/a&gt; y editores como &lt;a href=&quot;http://www.jedit.org&quot;&gt;JEdit&lt;/a&gt;, &lt;a href=&quot;http://macromates.com&quot;&gt;TextMate&lt;/a&gt;, &lt;a href=&quot;http://www.vim.org&quot;&gt;Vim&lt;/a&gt;, &lt;a href=&quot;http://www.gnu.org/software/emacs/&quot;&gt;Emacs&lt;/a&gt;, de los cuales el que de plano vi que era muy usado era el TextMate, en cada screencast que me encontraba veía que lo usaban, sólo había un problema, y digo un problema para mi, era que no era gratuito.&lt;/p&gt;
+
+&lt;p&gt;Al ver esto me preguntaba porque era más usado un editor de texto turbocargado con comandos en la consola y no un IDE, y la respuesta de los expertos era que con la consola de comandos y un editor se tiene más control sobre el proyecto además de la experiencia que esto te deja en lugar de dejar a que el IDE automatice todo.&lt;/p&gt;
+
+&lt;p&gt;Pues bien, debido a una cuestión de $$ me puse a usar un rato Aptana y JEdit, con los cuales tuve buenas experiencias, pero recientemente vi el &lt;a href=&quot;http://weblog.jamisbuck.org/2008/10/10/coming-home-to-vim&quot;&gt;post&lt;/a&gt; de un experto en Rails, creador de &lt;a href=&quot;http://www.capify.org/&quot;&gt;Capistrano&lt;/a&gt;, Jamis Buck y que venía de trabajar con TextMate durante algunos años pero que previamente había trabajado con Vim, y que ahora estaba moviéndose de nueva cuenta a Vim. Jamis Buck como experto en Rails y TextMate, ahora que se estaba moviendo creó un plugin para Vim para tener ciertas funciones que TextMate tiene. Así es que cuando vi este post dije &amp;#8220;de aquí soy&amp;#8221;.&lt;/p&gt;
+
+&lt;p&gt;Vim siempre ha sido un editor muy poderoso, el cual he usado por años pero no como un usuario experto, porque la verdad tiene un buen de comandos, pero ahora estoy tratando de subirme en él para los desarrollos en Rails que estaré haciendo.&lt;/p&gt;
+
+&lt;p&gt;Con el post de Jamis Buck y el plugin que hizo (&lt;a href=&quot;http://github.com/jamis/fuzzyfinder_textmate/tree/master&quot;&gt;FuzzyFinder_TextMate&lt;/a&gt; que extendió de &lt;a href=&quot;http://www.vim.org/scripts/script.php?script_id=1984&quot;&gt;FuzzyFinder&lt;/a&gt;) y a todas las respuestas que recibió en su blog, es como he levantado mi ambiente con Vim, en este caso lo he hecho en la Mac, pero en Linux deber ser casi igual.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&#8217;left &#8217; src=&#8217;http://www.jcastaneyra.com/wp-content/uploads/2008/12/imagen-1-300x277.png&#8217; width=&#8221; height=&#8221; alt=&#8221; title=&#8221;&gt;&lt;/p&gt;
+
+&lt;p&gt;En Leopard primero que nada me instalé MacVim bajándolo de &lt;a href=&quot;http://code.google.com/p/macvim/&quot;&gt;http://code.google.com/p/macvim/&lt;/a&gt; y después con ayuda de los posts de Jamis Buck y de los comments ahí puestos logré levantar mi ambiente (&lt;a href=&quot;http://weblog.jamisbuck.org/2008/10/10/coming-home-to-vim&quot;&gt;Coming home to Vim&lt;/a&gt; y &lt;a href=&quot;http://weblog.jamisbuck.org/2008/11/17/vim-follow-up&quot;&gt;Vim Follow-up&lt;/a&gt;), también en los comments de estos posts encontré a una persona que puso en github su configuración de vim al igual que sus plugins de vim, que por cierto fue de bastante ayuda (&lt;a href=&quot;http://github.com/manalang/vim-config/tree/master&quot;&gt;http://github.com/manalang/vim-config/tree/master&lt;/a&gt;). Se que en internet hay muchos recursos sobre comandos de Vim, pero aquí está uno que me encontré :) &lt;a href=&quot;http://rayninfo.co.uk/vimtips.html&quot;&gt;http://rayninfo.co.uk/vimtips.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;En resumen, Vim es un editor muy potente, tan potente que se pueden hacer cosas que talvez en un IDE no se puedan hacer, para muestra este video.&lt;/p&gt;
+
+&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;http://www.youtube.com/embed/pCiVCiku3cM&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Miscelánea RoR I</title>
+    <link href="http://www.jcastaneyra.com/2008/11/30/miscelanea-ror-i/"/>
+    <updated>2008-11-30T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2008/11/30/miscelanea-ror-i</id>
+    <content type="html">&lt;p&gt;La comunidad de Ruby on Rails se mueve muy, pero muy rapido, y para los que empezamos con este framework se nos hace un poco difícil seguirles el paso, por lo que tenemos que estar lee y lee, y mientras más podamos practicar es mejor.&lt;/p&gt;
+
+&lt;p&gt;Hace como una semana o un poco más, David Heinemeier Hansson, creador de Ruby on Rails publicó en su blog una &lt;a href=&quot;http://www.loudthinking.com/posts/29-the-rails-myths&quot;&gt;serie de posts&lt;/a&gt; hablando de los mitos de RoR, digo, para los que empezamos esto podría ayudarnos, ya que a veces nos detenemos en nuestra profundización precisamente por esos mitos.&lt;/p&gt;
+
+&lt;p&gt;Por otra parte, también leí un &lt;a href=&quot;http://jimneath.org/2008/11/15/speeding-up-rails-development/&quot;&gt;post de Jim Neath&lt;/a&gt; en el que nos da unos tips de como acelerar el desarrollo en Rails, un post que nos puede servir a los novatos que de por si somos lentos (a lo mejor no todos, pero yo si).&lt;/p&gt;
+
+&lt;p&gt;Recuerdo que cuando vi por primera vez el framework de RoR, hace un poco más de tres años (me pregunto porque andaba tan metido en otras cosas y no le hice caso en ese entonces), me di cuenta de que había un video de 15 minutos aprox. en el que explicaban como crear un blog, pues ahora Ryan Bates (creador del sitio &lt;a href=&quot;http://railscasts.com&quot;&gt;railscasts.com&lt;/a&gt;) ha hecho un &lt;a href=&quot;http://www.rubyonrails.org/screencasts&quot;&gt;nuevo video&lt;/a&gt; acerca de como crear un blog, todo novato debería verlo, además de que también estaría bien echarnos un clavado en los videos de &lt;a href=&quot;http://railscasts.com&quot;&gt;railscasts.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div&gt;&lt;/div&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>Leyendo feeds en el iPhone</title>
+    <link href="http://www.jcastaneyra.com/2008/11/30/leyendo-feeds-en-el-iphone/"/>
+    <updated>2008-11-30T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2008/11/30/leyendo-feeds-en-el-iphone</id>
+    <content type="html">&lt;p&gt;Como ya había comentado en un post anterior, les había mencionado que compré el iPhone, ahora vengo a compartir ciertas impresiones sobre este telefonito que tiene gran popularidad, que está muy bien diseñado a pesar de algunas carencias, o de sus excesos (como el precio según algunos, aunque esos algunos después los he visto con teléfonos más caros, y bueno esto del precio más bien depende del país y del plan tarifario de la compañía telefónica, aquí en México si sale caro), aún así, la neta es que está muy fregón, y con el uso que le doy me queda más que perfecto, para leer/enviar correo, seguir mis comentarios en twitter, navegación que si es funcional (aún con su carencia de flash player), ver el movimiento del peso contra el dolar (inguele, y más ahorita), jugar, ver mapas con google maps y el pseudo gps, bueno hasta estar  actualizado con el Facebook, pero sobre todo y para lo que he preparado este post, para leer feeds, y se preguntarán ¿qué es un feed? y digo esto porque muchos de mis conocidos y amigos no saben y no usan los feeds; pues bien, un feed es un alimentador de noticias, o un link que nos tiene actualizados de las noticias de un sitio y que generalmente son leídos por un programa especial y manteniéndonos al tanto de la actividad de cierto sitio, incluso hay clientes de correo que pueden leer estos feeds, por eso también podrían verse como correos, por cierto aquí en mi sitio también tengo mis feeds de noticias. Bueno después de este breviario cultural (que igual y no está del todo bien pero que así me lo imagino) paso a mencionar que, en el iPhone y con la aplicación &lt;a href=&quot;http://www.newsgator.com/individuals/default.aspx&quot;&gt;NetNewsWire&lt;/a&gt; puedo leer de mis feeds y que además la empresa que hace esta app para el iPhone también ofrece el servicio de feeds mediante web y aplicaciones de escritorio para Windows y Mac (sólo faltaría la aplicación de escritorio para Linux), por lo que nuestras noticias pueden ser leídas donde sea, claro que para usar estos servicios hay que registrarse, y después de registrado a suscribirse a cuanto feed quiera uno.&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://www.jcastaneyra.com/wp-content/uploads/2008/11/iphone_nnwmainscreen.jpg&quot;&gt;&lt;img class=&quot;size-medium wp-image-189 aligncenter&quot; title=&quot;iphone_nnwmainscreen&quot; src=&quot;http://www.jcastaneyra.com/wp-content/uploads/2008/11/iphone_nnwmainscreen-139x300.jpg&quot; alt=&quot;&quot; width=&quot;139&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+
+&lt;p&gt;Por ejemplo, en mi caso yo estoy suscrito a feeds de RoR, java, Mac, Noticias del universal y por supuesto a mi propio blog y a los comentarios de mi blog:&lt;/p&gt;
+
+&lt;p&gt;Posts de mi blog:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://feeds.feedburner.com/jcastaneyra&quot;&gt;http://feeds.feedburner.com/jcastaneyra&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Comentarios de mi blog:
+&lt;a href=&quot;http://feeds.feedburner.com/jcastaneyra_comments&quot;&gt;
+http://feeds.feedburner.com/jcastaneyra_comments&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Con estas ligas, con sólo copiarlas y pegarlas en cualquiera de los programas mencionados (escritorio, en web y el iPhone, bueno en el iPhone se tendría que que escribir porque no se puede pegar, ya se, otra carencia más en el iPhone no se puede copiar ni pegar, no todo puede ser perfecto) en la suscripción, con esto ya estaríamos recibiendo noticias, y lo mejor de todo es que los feeds se sincronizan entre todas las plataformas, por ejemplo en el trabajo, y a la hora de comida podría leer noticias de RoR (hay que especificar que es a la hora de la comida, no vaya a pensar el jefe y diga que no trabajo porque me la paso leyendo noticias) y quedarme a la mitad de las noticias y en la noche llegar y con la aplicación de escritorio entrar y que se sincronicen mis feeds mostrándome las noticias que me faltan por leer.&lt;/p&gt;
+
+&lt;p&gt;En resumen, esta aplicación para el iPhone (en conjunto con las demás de web y escritorio) está muy efectiva para todos aquellos que quieran estar actualizados en noticias sobre los tópicos que les apasionen e interesen.&lt;/p&gt;
+
+&lt;p&gt;Y que conste que no recibo ninguna comisión, ¡Ah por cierto!, se me olvidaba mencionar que esta aplicación para el iPhone (y para web y escritorio) es ¡totalmente gratuita!, sólo hay que suscribirse.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Instalando RoR 2.2 RC2 en Leopard</title>
+    <link href="http://www.jcastaneyra.com/2008/11/15/instalando-ror-mas-nueva-de-la-que-trae-leopard/"/>
+    <updated>2008-11-15T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2008/11/15/instalando-ror-mas-nueva-de-la-que-trae-leopard</id>
+    <content type="html">&lt;p&gt;Al día de hoy no tengo una computadora a mi disposición, y como no tengo una, de vez en cuando hago cosas en la compu del trabajo, que no debería, y también a veces me prestan la macbook air, y en la macbook puedo trabajar un poco más, que me gustaría trabajar mucho más en la macbook, pues bien, hace rato ya había trabajado con Ruby on Rails con la versión que trae el leopard, pero hace unos días me dieron ganas de probar la RC de RoR la 2.2 (ya la RC2), para instalarlo tuve que investigar un poquito, ya que no es un proceso de instalación sencillo, tiene algunos trucos, para esto me basé en el post de &lt;a href=&quot;http://danbenjamin.com/articles/2008/02/ruby-rails-leopard&quot;&gt;Dan Benjamin&lt;/a&gt;, pero para variar me hago un resumen a mi mismo, para cuando se me vuelva a ofrecer, así que para más detalle visitar el post, ahí si mencionan que sólo por las dudas sería bueno respaldar la información, yo no lo hice, y todo salió bien.&lt;/p&gt;
+
+&lt;p&gt;Pues bien, para tener instalada una de las últimas versiones de RoR y diferente a las que está instalada por defecto en leopard es necesario tener instalado el XCode 3.0 o superior, este puede ser bajado de developer.apple.com o bien instalándolo del disco que viene con la mac, la verdad no se que disco es, pero con la mac debe de venir un disco (o más no recuerdo).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Primeros pasos&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Primero que nada hay que configurar el path, para esto habrá que abrir una terminal (en este caso con el bash shell), y verificar que esté en mi directorio home, o bien esto puedo realizarse usando el comando:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;cd&lt;/pre&gt;
+
+
+&lt;p&gt;Habrá que editar el archivo .bash_login, yo lo hice con el vi, es posible que este archivo no exista, si no existe lo vamos a crear, y si existe pos editaremos la parte del path, entonces para editarlo o crearlo es con el siguiente comando:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;vi .bash_login&lt;/pre&gt;
+
+
+&lt;p&gt;Al final del archivo se deberá introducir la siguiente línea:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;export PATH=&quot;/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:$PATH&quot;&lt;/pre&gt;
+
+
+&lt;p&gt;Lo siguiente es ejecutar el cambio:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;. .bash_login&lt;/pre&gt;
+
+
+&lt;p&gt;Al path se agregó la ruta donde se encuentra MySQL, para la instalación de MySQL en leopard recuerdo que sólo bajé el paquete directamente de www.mysql.com y seguí las instrucciones que vienen con dicho paquete.&lt;/p&gt;
+
+&lt;p&gt;Se tiene que crear ahora un directorio donde vamos a bajar Ruby y posteriormente compilarlo, entonces habrá que ejecutar los siguientes comandos:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;sudo mkdir -p /usr/local/src
+
+sudo chgrp admin /usr/local/src
+
+sudo chmod -R 775 /usr/local/src
+
+cd /usr/local/src&lt;/pre&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Ruby&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Para bajarlo y compilarlo ejecutamos los siguiente:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;curl -O ftp://ftp.ruby-lang.org/pub/ruby/1.8/ruby-1.8.6-p287.tar.gz
+
+tar xvzf ruby-1.8.6-p287.tar.gz
+
+cd ruby-1.8.6-p287
+
+./configure &#8211;enable-shared &#8211;enable-pthread CFLAGS=-D_XOPEN_SOURCE=1
+
+make
+
+sudo make install
+
+cd ..&lt;/pre&gt;
+
+
+&lt;p&gt;Para verificar que ruby se instaló en el path correcto, escribir:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;which ruby&lt;/pre&gt;
+
+
+&lt;p&gt;Se debería ver:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;/usr/local/bin/ruby&lt;/pre&gt;
+
+
+&lt;p&gt;&lt;strong&gt;RubyGems&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;El siguiente paso es instalar RubyGems (que por cierto Ruby on Rail 2.2 RC2 requiere de RubyGems 1.3.1):&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;curl -O http://files.rubyforge.mmmultiworks.com/rubygems/rubygems-1.3.1.tgz
+
+tar xvzf rubygems-1.3.1.tgz
+
+cd rubygems-1.3.1
+
+sudo /usr/local/bin/ruby setup.rb
+
+cd ..&lt;/pre&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Ruby on Rails&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Para instalar la versión estable de RoR se ejecuta:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;sudo gem install rails&lt;/pre&gt;
+
+
+&lt;p&gt;También instalamos mongrel y capistrano, por si las moscas:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;sudo gem install mongrel
+
+sudo gem install capistrano&lt;/pre&gt;
+
+
+&lt;p&gt;Ahora si, para instalar la versión 2.2 RC2 de RoR ejecutar:&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;sudo gem install rails -s http://gems.rubyonrails.org&lt;/pre&gt;
+
+
+&lt;p&gt;Y por último instalamos la gem para mysql&lt;/p&gt;
+
+&lt;pre lang=&quot;bash&quot;&gt;sudo gem install mysql &#8211; &#8211;with-mysql-dir=/usr/local/mysql&lt;/pre&gt;
+
+
+&lt;p&gt;Recursos:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://danbenjamin.com/articles/2008/02/ruby-rails-leopard&quot;&gt;http://danbenjamin.com/articles/2008/02/ruby-rails-leopard&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://weblog.rubyonrails.com/&quot;&gt;http://weblog.rubyonrails.com/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.67-osx10.5-x86_64.dmg/from/pick#mirrors&quot;&gt;http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.67-osx10.5-x86_64.dmg/from/pick#mirrors&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Ya quedó instalado Ubuntu 8.10 (actualizado sobre 8.04)</title>
+    <link href="http://www.jcastaneyra.com/2008/11/09/ya-quedo-instalado-ubuntu-810-actualizado-sobre-804/"/>
+    <updated>2008-11-09T00:00:00-06:00</updated>
+    <id>http://www.jcastaneyra.com/2008/11/09/ya-quedo-instalado-ubuntu-810-actualizado-sobre-804</id>
+    <content type="html">&lt;p&gt;La semana pasada, instalé Ubuntu 8.10, bueno más bien actualicé sobre mi versión de 8.04, sólo tuve un pequeño problema, que cuando arrancaba no me reconocía la tarjeta de video, y después de un rato me di cuenta, que al hacer la actualización hay ciertos archivos que no sobreescribe, incluso te saca mensajes de que los archivos los va a dejar intactos, uno de esos archivos fue el /boot/grub/menu.lst, por lo que la actualización a 8.10 traía un kernel nuevo, y este kernel nuevo no se encontraba en la lista de kerneles a arrancar.&lt;/p&gt;
+
+&lt;p&gt;Así pues, la solución fue agregar ese nuevo kernel al menu.lst, y con esto quedó solucionado el problema de que no me reconocía la tarjeta de video.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Retrospectiva</title>
+    <link href="http://www.jcastaneyra.com/2008/06/25/retrospectiva/"/>
+    <updated>2008-06-25T00:00:00-05:00</updated>
+    <id>http://www.jcastaneyra.com/2008/06/25/retrospectiva</id>
+    <content type="html">&lt;p&gt;Tenía tiempo que no posteaba algo, hasta hace apenas un par de días que mencioné que ya tengo mi propio dominio, y que dije que era mi &amp;#8220;nuevo blog&amp;#8221; y qué sólo fue mover mi blog anterior a mi propio servidor.&lt;/p&gt;
+
+&lt;p&gt;Y bien, en estos últimos meses pasaron muchas cosas, y de algunas que quiero compartir son, pues primero, que hace como un par de meses o un poco más creo compré una macbook air, pero estoy seguro de que ya habrán escuchado de esta laptop ultraligera, muy bonita, puro lujo, pero bonita, pero no fue para mi jajaja porque me dio por regalar computadoras, jajaja así es, se la regalé a mi novia, es que como todas las mañanas acompaño a mi novia a los taxis y le ayudaba a cargar su mochila con su laptop viejita que pesaba como una desktop y además de todo el instrumental de endodoncista y que para llegar a los taxis caminamos aproximadamente dos cuadras pos si me di cuenta de que necesitabamos algo más ligero, sin pensar lo que ella caminaba en la universidad, y así fue como me decidí a regalarsela, y también la laptop viejita que tenía, una thinkpad T30, se la regalé a mi hermana porque perdió la suya, o se la robaron, o lo que haya sido, pero ya no tenía, y mis papás querían comprarle una, pero viendo la situación con el gasto inminente, preferí regalarsela, tons ahora yo no tengo laptop sólo estoy usando la del trabajo.&lt;/p&gt;
+
+&lt;p&gt;También por otra parte, empecé a meterme más con ruby on rails, porque quiero hacer algunos proyectos personales, y la verdad este framework se me hace muy funcional, simple, y ágil para desarrollar aplicaciones web, la idea en un principio era migrar mi blog a algunos de las aplicaciones de blog que están sobre RoR como mephisto o typo, pero me di cuenta que me iba a tardar un rato en migrarlo, entonces mejor preferí montarlo sobre wordpress en lo que averiguaba como hacerlo sobre RoR y ya con más calma. Que por cierto, los libros de RoR que compré ya casi los termino, ahora quiero seguir aprendiendo más y por supuesto ya empecé con mis proyectos personales.&lt;/p&gt;
+
+&lt;p&gt;En lo que concierne a lo laboral, sucede que hace casi un mes nos cambiaron a otro lugar de trabajo, ahora para llegar a este nuevo lugar tengo que levantarme más temprano porque la hora de entrada ahora si es a las 9, también que para subirse al metro por la zona del centro está cañón, tiene uno que empujar a la gente y en lo que están cerrando las puertas del metro volver a empujar para que no sea uno apachurrado por la puerta. También estamos a punto de entrar a producción con nuestra proyecto, ya casi, sólo un poquito más y listo.&lt;/p&gt;
+
+&lt;p&gt;Todo ha ido bien hasta el momento, espero que siga yendo bien de aquí para delante.&lt;/p&gt;
+</content>
+  </entry>
+  
+</feed>

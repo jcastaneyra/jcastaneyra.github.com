@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Instalando RabbitMQ - JCastaneyra blog</title>
+  <meta name="author" content="Jose Castaneyra">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <link rel="canonical" href="http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/"/>
+  <link href="/favicon.png" rel="shortcut icon" />
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="JCastaneyra blog" type="application/atom+xml"/>
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body  >
+  <header><hgroup>
+  <h1><a href="/">JCastaneyra blog</a></h1>
+  
+    <h2>My ideas repo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="site-search">
+    <input type="hidden" name="q" value="site:www.jcastaneyra.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul role=main-navigation>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry">
+  
+  <header>
+    
+      <h1 class="entry-title">Instalando RabbitMQ</h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-06-07T00:00:00-05:00" pubdate  data-updated="true" >Jun 7<span>th</span>, 2009</time></p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a name="rabbitmq_spanish"/><strong>Instalando RabbitMQ</strong></a> (<a href="#rabbitmq_english">English</a>)</p>
+
+<p>RabbitMQ es un sistema de message queue (MQ), el cual provee comunicaciones asíncronas, es decir que el productor y consumidor no tienen la necesidad de interactuar con los mensajes al mismo tiempo, además de que es una implementación del protocolo AMQP (Advanced Message Queuing Protocol), un protocolo para mensajeo de alto rendimiento, y por último decir que RabbitMQ está desarrollado con Erlang, Erlang es un lenguaje de programación funcional.</p>
+
+<h2>En Ubuntu 9.04</h2>
+
+<p>La instalación de RabbitMQ en Ubuntu 9.04 es tan simple como correr el comando</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo aptitude install rabbitmq-server</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Y con el cual si no has instalado Erlang te mostrará que paquetes tendrá que instalar para que lo tengas también.</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>jcastaneyra@ubuntu:~/sources$ sudo aptitude install rabbitmq-server
+</div><div class='line'>[sudo] password for jcastaneyra:
+</div><div class='line'>Reading package lists... Done
+</div><div class='line'>Building dependency tree
+</div><div class='line'>Reading state information... Done
+</div><div class='line'>Reading extended state information
+</div><div class='line'>Initializing package states... Done
+</div><div class='line'>Writing extended state information... Done
+</div><div class='line'>The following NEW packages will be installed:
+</div><div class='line'>erlang-base{a} erlang-nox{a} libltdl7{a} odbcinst1debian1{a} unixodbc{a}
+</div><div class='line'>The following partially installed packages will be configured:
+</div><div class='line'>rabbitmq-server
+</div><div class='line'>0 packages upgraded, 5 newly installed, 0 to remove and 8 not upgraded.
+</div><div class='line'>Need to get 28.6MB of archives. After unpacking 46.9MB will be used.
+</div><div class='line'>Do you want to continue? [Y/n/?]</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Una vez instalado ya está corriendo.</p>
+
+<h2>En Mac leopard</h2>
+
+<p><em>UPDATE (27/05/2010)</em>: Desde hace un rato que ya estoy usando Homebrew para instalar cosas en Mac, ya existe una fórmula para instalar también RabbitMQ  y por supuesto Erlang, para más información visitar <a href="http://github.com/mxcl/homebrew">http://github.com/mxcl/homebrew</a> y seguir las instrucciones para instalar Homebrew. Con RabbitMQ, incluso si se quiere una versión específica de RabbitMQ se puede modificar la fórmula :)</p>
+
+<p>La instalación es a través de los MacPorts, hay que bajar el instalador de la página www.macports.org/install.php, pero para poder compilar es necesario tener XCode instalado. Los MacPorts son instalados en /opt, por lo que hay que asegurarnos que se tengamos agregados los paths necesarios en el profile para ejecutar los comandos de MacPorts.</p>
+
+<p>En mi caso en .profile (pero también puede ser el .bash_login) debe estar algo así (si no está lo agrego):</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'># MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate PATH variable for use with MacPorts.
+</div><div class='line'>export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+</div><div class='line'># Finished adapting your PATH environment variable for use with MacPorts.
+</div><div class='line'>
+</div><div class='line'># MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate MANPATH variable for use with MacPorts.
+</div><div class='line'>export MANPATH=/opt/local/share/man:$MANPATH
+</div><div class='line'># Finished adapting your MANPATH environment variable for use with MacPorts.</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Una vez que están los MacPorts hay que instalar primero erlang, así que ejecutamos</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo port install erlang</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Y esperamos un buen rato a que se instale.</p>
+
+<p>Una vez instalado erlang, bajamos la última versión de RabbitMQ</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>mkdir /tmp/rabbitmq && cd /tmp/rabbitmq
+</div><div class='line'>curl -O http://www.rabbitmq.com/releases/rabbitmq-server/v1.5.5/rabbitmq-server-generic-unix-1.5.5.tar.gz
+</div><div class='line'>tar xvzf rabbitmq-server-generic-unix-1.5.5.tar.gz
+</div><div class='line'>sudo mv rabbitmq_server-1.5.5/ /opt/local/lib/erlang/lib</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora ya lo podemos ejecutar.</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo /opt/local/lib/erlang/lib/rabbitmq_server-1.5.5/sbin/rabbitmq-server</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Recursos</h2>
+
+<ol>
+<li><a href="http://www.rabbitmq.com">http://www.rabbitmq.com</a></li>
+<li><a href="http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/">http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/</a></li>
+</ol>
+
+
+<p><a name="rabbitmq_english"/><strong>Installing RabbitMQ</strong></a> (<a href="#rabbitmq_spanish">Español</a>)</p>
+
+<p>RabbitMQ is a complete and highly reliable Enterprise Messaging system, it provides asynchronous communications,  meaning that the sender and receiver of the message do not need to interact with the message queue at the same time, also it is a AMQP implementation (Advanced Message Queuing Protocol) a protocol for high performance messaging, and last RabbitMQ is developed with Erlang, a functional programming language.</p>
+
+<h2>In Ubuntu 9.04</h2>
+
+<p>RabbitMQ instalation in Ubuntu 9.04 is so simple, it is just needed to run a command</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo aptitude install rabbitmq-server</div></code></pre></td></tr></table></div></figure>
+
+
+<p>With this also install all packages needed by rabbitmq, Erlang is installed also.</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>jcastaneyra@ubuntu:~/sources$ sudo aptitude install rabbitmq-server
+</div><div class='line'>[sudo] password for jcastaneyra:
+</div><div class='line'>Reading package lists... Done
+</div><div class='line'>Building dependency tree
+</div><div class='line'>Reading state information... Done
+</div><div class='line'>Reading extended state information
+</div><div class='line'>Initializing package states... Done
+</div><div class='line'>Writing extended state information... Done
+</div><div class='line'>The following NEW packages will be installed:
+</div><div class='line'>erlang-base{a} erlang-nox{a} libltdl7{a} odbcinst1debian1{a} unixodbc{a}
+</div><div class='line'>The following partially installed packages will be configured:
+</div><div class='line'>rabbitmq-server
+</div><div class='line'>0 packages upgraded, 5 newly installed, 0 to remove and 8 not upgraded.
+</div><div class='line'>Need to get 28.6MB of archives. After unpacking 46.9MB will be used.
+</div><div class='line'>Do you want to continue? [Y/n/?]</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Once the installation is finished RabbitMQ will be running.</p>
+
+<h2>In Mac leopard</h2>
+
+<p><em>UPDATE (27/05/2010)</em>: I am using Homebrew to install some stuff in Mac from some months ago, Homebrew has a formula to install RabbitMQ and also Erlang, for more info please visit <a href="http://github.com/mxcl/homebrew">http://github.com/mxcl/homebrew</a> for install instructions. Also if you want to install a different version of RabbitMQ you can do it just editing the formula :)</p>
+
+<p>RabbitMQ installation is done through MacPorts, you need to download the MacPorts installer from www.macports.org/install.php, also XCode is needed. MacPorts are installed in /opt, for that reason we put these paths in the .profile file (could be .bash_login), if you don&#8217;t have these paths add them to your profile file:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'># MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate PATH variable for use with MacPorts.
+</div><div class='line'>export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+</div><div class='line'># Finished adapting your PATH environment variable for use with MacPorts.
+</div><div class='line'>
+</div><div class='line'># MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate MANPATH variable for use with MacPorts.
+</div><div class='line'>export MANPATH=/opt/local/share/man:$MANPATH
+</div><div class='line'># Finished adapting your MANPATH environment variable for use with MacPorts.</div></code></pre></td></tr></table></div></figure>
+
+
+<p>In order to install erlang execute the following command:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo port install erlang</div></code></pre></td></tr></table></div></figure>
+
+
+<p>You need to wait some time, maybe several minutes :)</p>
+
+<p>Once you have erlang installed, we download the last RabbitMQ version</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>mkdir /tmp/rabbitmq && cd /tmp/rabbitmq
+</div><div class='line'>curl -O http://www.rabbitmq.com/releases/rabbitmq-server/v1.5.5/rabbitmq-server-generic-unix-1.5.5.tar.gz
+</div><div class='line'>tar xvzf rabbitmq-server-generic-unix-1.5.5.tar.gz
+</div><div class='line'>sudo mv rabbitmq_server-1.5.5/ /opt/local/lib/erlang/lib</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we execute rabbitmq-server with this</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo /opt/local/lib/erlang/lib/rabbitmq_server-1.5.5/sbin/rabbitmq-server</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Links</h2>
+
+<ol>
+<li><a href="http://www.rabbitmq.com">http://www.rabbitmq.com</a></li>
+<li><a href="http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/">http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/</a></li>
+</ol>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jose Castaneyra</span></span>
+
+      
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-06-07T00:00:00-05:00" pubdate  data-updated="true" >Jun 7<span>th</span>, 2009</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/" data-via="jcastaneyra" data-counturl="http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+</div>
+
+    
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread"><div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'jcastaneyra';
+  if(typeof(custom_disqus_identifier) != "undefined") {
+    var disqus_identifier = custom_disqus_identifier;
+  } else {
+    var disqus_identifier = 'http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/';
+  }
+  if(typeof(custom_disqus_url) != "undefined") {
+    var disqus_url = custom_disqus_url;
+  } else {
+    var disqus_url = 'http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/';
+  }
+  //var disqus_developer = 1;
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside role=sidebar>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/">Bundler gem and Daemons error (The default Gemfile was not found)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table names case insensitive for MySQL Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/">Etiquetando código en git/Tagging code in git</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jcastaneyra">@jcastaneyra</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jcastaneyra',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jcastaneyra", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+  
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/jcastaneyra?title=&count=3&sort=date&extended"></script>
+  <p><a href="http://delicious.com/jcastaneyra">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer><p>
+  Copyright &copy; 2011 - Jose Castaneyra -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>

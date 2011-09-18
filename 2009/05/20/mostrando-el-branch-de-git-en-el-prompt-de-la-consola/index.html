@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Mostrando el branch de git en el prompt de la consola - JCastaneyra blog</title>
+  <meta name="author" content="Jose Castaneyra">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <link rel="canonical" href="http://www.jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/"/>
+  <link href="/favicon.png" rel="shortcut icon" />
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="JCastaneyra blog" type="application/atom+xml"/>
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body  >
+  <header><hgroup>
+  <h1><a href="/">JCastaneyra blog</a></h1>
+  
+    <h2>My ideas repo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="site-search">
+    <input type="hidden" name="q" value="site:www.jcastaneyra.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul role=main-navigation>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry">
+  
+  <header>
+    
+      <h1 class="entry-title">Mostrando El Branch De Git en El Prompt De La Consola</h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-05-20T00:00:00-05:00" pubdate  data-updated="true" >May 20<span>th</span>, 2009</time></p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>Mostrando el branch de git en el prompt de la consola</strong> (In english below)</p>
+
+<p>Tiene aproximadamente dos meses que empecé a trabajar con git, y la experiencia ha sido muy buena, bastante interesante, pero con los primeros tutoriales que empecé a ver noté que los aliases ayudan a hacer más ágil el trabajo con git, curiosamente hasta este momento no los he usado, creo que ha llegado la hora de agregarlos en mi configuración. Así que al final de mi archivo $HOME/.gitconfig agrego:</p>
+
+<pre><code>[color]
+        ui = auto
+[alias]
+        ci = commit
+        co = checkout
+        st = status
+</code></pre>
+
+<p>Por cierto, que la parte de [color] es para mostrar con colores mis cambios cuando le doy git status, aunque ahora con estos cambios ya le podría dar git st.&lt;/p&gt; &lt;p&gt;Otra cosa que noté en mis inicios con git fue que en un screencast de peepcode, en el prompt de la consola aparecía el branch en el que se encontraba trabajando, en ese entonces busqué como hacerlo pero no tuve éxito hasta ahora, entonces para lograr esto hay que agregar un archivo con funciones .bash_functions</p>
+
+<pre><code># git-related functions in here
+
+git_branch () {
+  GIT_BRANCH="$(git branch --no-color 2&gt; /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+  if [[ -n "$GIT_BRANCH" ]] ; then
+    echo ":($GIT_BRANCH) "
+  fi
+}
+empty_branch () {
+  name="$1"
+  if [[ -n "$name" ]] ; then
+    echo "This will create a new empty branch in the current"
+    echo -n "git repository called '${name}' ... Continue? [y/N] "
+    read VERIFY
+    if [[ "$VERIFY" = "Y" || "$VERIFY" = "y" ]]; then
+      echo "creating branch '$name'"
+      git symbolic-ref HEAD refs/heads/$name
+      rm .git/index
+      git clean -fdx
+      echo "you should be on your new empty branch! "
+      echo "add/commit files as usual! "
+      echo "( your new branch will show up after you commit something to it )"
+    else
+      echo -n ""
+    fi
+  else
+    echo "Creates a new empty branch in your git repository."
+    echo ""
+    echo "Usage: empty_branch [name_of_new_branch]"
+  fi
+}
+
+# vim:set ft=sh:
+</code></pre>
+
+<p>Y dependiendo del archivo de configuración del shell que estén usando agregar en él esto:</p>
+
+<pre><code># if .bash_functions if a file then source it
+# if .bash_functions is a directory, then sourec all its files
+if [ -f ~/.bash_functions ]; then
+  . ~/.bash_functions
+fi
+if [ -d ~/.bash_functions ]; then
+  for function in ~/.bash_functions/*; do . $function; done
+fi
+
+# bash prompt
+prompt () {
+  PS1="\[\e[34m\]\u\[\e[37m\]@\[\e[36m\]\h\[\e[37m\]:\[\e[31m\]\w\[\e[37m\]$(git_branch)$ "
+}
+PROMPT_COMMAND=prompt
+export PROMPT_COMMAND
+</code></pre>
+
+<p>En mi caso, en leopard yo estoy usando .profile, pero podría ser .bash_rc o algún otro profile de shell. Ya para cargar la info del profile habría que ejecutar source .profile ó bien salirse de la consola y volverla a abrir para que cargue la nueva configuración.</p>
+
+<p>Todavía falta mucho por aprender de git, pero creo que voy por buen camino, también he aprendido bastante de los flujos que siguen algunos equipos de trabajo ágiles, son muy interesantes.</p>
+
+<h2>Recursos:</h2>
+
+<ol>
+<li><a href="http://git.or.cz/gitwiki/Aliases">Aliases</a></li>
+<li><a href="http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bash_functions/git">.bash_functions file from Remi</a></li>
+<li><a href="http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bashrc">.bash_rc file from Remi</a></li>
+<li><a href="http://reinh.com/blog/2009/03/02/a-git-workflow-for-agile-teams.html">Git workflow for agile teams</a></li>
+</ol>
+
+
+<p><strong>Showing the git branch in the console prompt</strong></p>
+
+<p>I have working with git since started two months ago, the experience have been too good, I must say awesome, when I started to work I saw that you could use aliases with git, it is funny but since then I&#8217;ve never used aliases, so now it&#8217;s time to add them to my configuration file $HOME/.gitconfig</p>
+
+<pre><code>[color]
+        ui = auto
+[alias]
+        ci = commit
+        co = checkout
+        st = status
+</code></pre>
+
+<p>This [color] section enable colors when I execute git status and see my changes, but now with my aliases I could write git st.&lt;/p&gt; &lt;p&gt;Another nice stuff that I noticed when started to work with git and I was watching a Peepcode screencast was that in the console prompt appeared the git branch, in that moment I googled it but no results got, until now that I found how to do this; one file with the git functions is created .bash_functions</p>
+
+<pre><code># git-related functions in here
+
+git_branch () {
+  GIT_BRANCH="$(git branch --no-color 2&gt; /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+  if [[ -n "$GIT_BRANCH" ]] ; then
+    echo ":($GIT_BRANCH) "
+  fi
+}
+empty_branch () {
+  name="$1"
+  if [[ -n "$name" ]] ; then
+    echo "This will create a new empty branch in the current"
+    echo -n "git repository called '${name}' ... Continue? [y/N] "
+    read VERIFY
+    if [[ "$VERIFY" = "Y" || "$VERIFY" = "y" ]]; then
+      echo "creating branch '$name'"
+      git symbolic-ref HEAD refs/heads/$name
+      rm .git/index
+      git clean -fdx
+      echo "you should be on your new empty branch! "
+      echo "add/commit files as usual! "
+      echo "( your new branch will show up after you commit something to it )"
+    else
+      echo -n ""
+    fi
+  else
+    echo "Creates a new empty branch in your git repository."
+    echo ""
+    echo "Usage: empty_branch [name_of_new_branch]"
+  fi
+}
+
+# vim:set ft=sh:
+</code></pre>
+
+<p>And depending which shell are you using you add this into it</p>
+
+<pre><code># if .bash_functions if a file then source it
+# if .bash_functions is a directory, then sourec all its files
+if [ -f ~/.bash_functions ]; then
+  . ~/.bash_functions
+fi
+if [ -d ~/.bash_functions ]; then
+  for function in ~/.bash_functions/*; do . $function; done
+fi
+
+# bash prompt
+prompt () {
+  PS1="\[\e[34m\]\u\[\e[37m\]@\[\e[36m\]\h\[\e[37m\]:\[\e[31m\]\w\[\e[37m\]$(git_branch)$ "
+}
+PROMPT_COMMAND=prompt
+export PROMPT_COMMAND
+</code></pre>
+
+<p>I&#8217;m using .profile in leopard, but could be .bash_rc. Now to load this new changes from your profile it&#8217;s need to execute source .profile or you also could close your console window and open a new one.</p>
+
+<p>I&#8217;ve learned a lot until now but I still need to learn more (even english :) ), I&#8217;ve learned also from agile workflows that helps with your work.</p>
+
+<h2>Notes:</h2>
+
+<ol>
+<li><a href="http://git.or.cz/gitwiki/Aliases">Aliases</a></li>
+<li><a href="http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bash_functions/git">.bash_functions file from Remi</a></li>
+<li><a href="http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bashrc">.bash_rc file from Remi</a></li>
+<li><a href="http://reinh.com/blog/2009/03/02/a-git-workflow-for-agile-teams.html">Git workflow for agile teams</a></li>
+</ol>
+
+
+<p>Another note:</p>
+
+<p>This is my first try to write in english, I definitely need to learn to be more fluid in my english writing also speaking, but it&#8217;s needed to start in some place. So if this is not understandable you can give some feedback, thanks.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jose Castaneyra</span></span>
+
+      
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-05-20T00:00:00-05:00" pubdate  data-updated="true" >May 20<span>th</span>, 2009</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/" data-via="jcastaneyra" data-counturl="http://www.jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+</div>
+
+    
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread"><div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'jcastaneyra';
+  if(typeof(custom_disqus_identifier) != "undefined") {
+    var disqus_identifier = custom_disqus_identifier;
+  } else {
+    var disqus_identifier = 'http://www.jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/';
+  }
+  if(typeof(custom_disqus_url) != "undefined") {
+    var disqus_url = custom_disqus_url;
+  } else {
+    var disqus_url = 'http://www.jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/';
+  }
+  //var disqus_developer = 1;
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside role=sidebar>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/">Bundler gem and Daemons error (The default Gemfile was not found)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table names case insensitive for MySQL Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/">Etiquetando código en git/Tagging code in git</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jcastaneyra">@jcastaneyra</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jcastaneyra',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jcastaneyra", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+  
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/jcastaneyra?title=&count=3&sort=date&extended"></script>
+  <p><a href="http://delicious.com/jcastaneyra">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer><p>
+  Copyright &copy; 2011 - Jose Castaneyra -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>

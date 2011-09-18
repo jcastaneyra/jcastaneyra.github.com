@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Como tener un router linksys con un modem infinitum alámbrico - JCastaneyra blog</title>
+  <meta name="author" content="Jose Castaneyra">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <link rel="canonical" href="http://www.jcastaneyra.com/2007/03/07/como-tener-router-linksys-con-un-modem-infinitum-alambrico/"/>
+  <link href="/favicon.png" rel="shortcut icon" />
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="JCastaneyra blog" type="application/atom+xml"/>
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body  >
+  <header><hgroup>
+  <h1><a href="/">JCastaneyra blog</a></h1>
+  
+    <h2>My ideas repo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="site-search">
+    <input type="hidden" name="q" value="site:www.jcastaneyra.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul role=main-navigation>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry">
+  
+  <header>
+    
+      <h1 class="entry-title">Como Tener Un Router Linksys Con Un Modem Infinitum Alámbrico</h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2007-03-07T00:00:00-06:00" pubdate  data-updated="true" >Mar 7<span>th</span>, 2007</time></p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Bueno, realmente no se si esto sea un howto o un tutorial, pero al menos para mi si será un registro más que me ayudará a recordar cómo está esto del router linksys con el modem infinitum alámbrico, he aquí a lo que me refiero.</p>
+
+<p>Sucede que donde estoy viviendo no tengo la posibilidad de <img src="http://jcastaneyra.files.wordpress.com/2007/03/wrt54g.jpg" alt="wrt54g.jpg" align="right" />contratar una conexión broadband de internet (por cuestiones de arrendamiento), por lo que me di a la tarea de contactar con los vecinos y ver si alguien me podría apoyar, y obviamente yo apoyar con los gastos de la conexión, para mi buena suerte, las vecinas del departamento de al lado, que son sobrinas de una amiga de la familia de mi flaca, tienen internet con infinitum, pero sólo tienen el modem alámbrico, así es que tuve que comprar un router inalámbrico, el equipo que compré fue un linksys WRT54G.</p>
+
+<p>Al primer intento de instalación del router, éste no jaló, después de analizar bien la situación e investigando un poco, me di cuenta que el modem alámbrico de infinitum proporciona ip&#8217;s dinámicas en el rango de ip&#8217;s privadas 192.168.1.0 y que el router inalámbrico linksys por defecto también proporciona en ese mismo rango por lo que la conexión a internet de buenas a primeras no es posible.</p>
+
+<p>Después de haber dado una leída en algunos foros de discusión en internet, muchas soluciones eran dadas, pero la más fácil de todas (para mi) es cambiar la dirección IP local del router en la configuración básica a 192.168.2.1, guardar los cambios, apagar y volver a prender el router wireless, de esta manera el modem alámbrico infinitum maneja el rango de ip&#8217;s 192.168.1.0 y el router 192.168.2.0, evitando el problema de choque con estos dos grupos de ip&#8217;s entre los dos equipos.</p>
+
+<p style="text-align:center;"><a href="http://img104.imageshack.us/img104/2839/linksysgy7.jpg"><img src="http://img104.imageshack.us/img104/3127/linksysmb4.jpg" alt="" /></a></p>
+
+
+<p>Y así, con ese cambio que no lleva más de 5 minutos se tiene funcionando un router linksys inalámbrico detrás del modem alámbrico de infinitum, es más creo que me llevó más tiempo conectar los equipos.</p>
+
+<p><strong>UPDATE (2008/06/17)</strong></p>
+
+<p>Se me había pasado poner este update, pero nuestro buen Kique, nos mandó lo siguiente, es una solución bastante sencilla a este problema:</p>
+
+<blockquote>
+<div class="comment-content">
+
+Hola a todos, encontre una solución aún MAS FACIL:
+
+Primero te aseguras de que tu modem 2WIRE tenga internet (osea que tenga todas las luces del mismo color y ninguna sin parpadear, esto es para descartar problemas con tu conexión.
+
+Luego conectas un cable de red sencillo desde el puerto Ethernet 1 del 2WIRE al puerto Ethernet 1 de tu router Linksys (osea, hacer una conexión de ethernet a ethernet entre los dos aparatos).
+
+Listo, ya tienes internet y solo debes configurar el WIFI.</div>
+Nota: esto te dejaría con solo 3 puertos ethernet en tu Linksys, pero es una solución sencilla para los que no quieren meterle mano a la configuración.</blockquote>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jose Castaneyra</span></span>
+
+      
+
+
+
+
+
+  
+
+
+
+<time datetime="2007-03-07T00:00:00-06:00" pubdate  data-updated="true" >Mar 7<span>th</span>, 2007</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.jcastaneyra.com/2007/03/07/como-tener-router-linksys-con-un-modem-infinitum-alambrico/" data-via="jcastaneyra" data-counturl="http://www.jcastaneyra.com/2007/03/07/como-tener-router-linksys-con-un-modem-infinitum-alambrico/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+</div>
+
+    
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread"><div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'jcastaneyra';
+  if(typeof(custom_disqus_identifier) != "undefined") {
+    var disqus_identifier = custom_disqus_identifier;
+  } else {
+    var disqus_identifier = 'http://www.jcastaneyra.com/2007/03/07/como-tener-router-linksys-con-un-modem-infinitum-alambrico/';
+  }
+  if(typeof(custom_disqus_url) != "undefined") {
+    var disqus_url = custom_disqus_url;
+  } else {
+    var disqus_url = 'http://www.jcastaneyra.com/2007/03/07/como-tener-router-linksys-con-un-modem-infinitum-alambrico/';
+  }
+  //var disqus_developer = 1;
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside role=sidebar>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/">Bundler gem and Daemons error (The default Gemfile was not found)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table names case insensitive for MySQL Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/">Etiquetando código en git/Tagging code in git</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jcastaneyra">@jcastaneyra</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jcastaneyra',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jcastaneyra", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+  
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/jcastaneyra?title=&count=3&sort=date&extended"></script>
+  <p><a href="http://delicious.com/jcastaneyra">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer><p>
+  Copyright &copy; 2011 - Jose Castaneyra -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>

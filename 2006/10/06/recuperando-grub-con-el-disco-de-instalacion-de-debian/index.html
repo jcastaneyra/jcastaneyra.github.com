@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Recuperando GRUB con el disco de instalación de Debian - JCastaneyra blog</title>
+  <meta name="author" content="Jose Castaneyra">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <link rel="canonical" href="http://www.jcastaneyra.com/2006/10/06/recuperando-grub-con-el-disco-de-instalacion-de-debian/"/>
+  <link href="/favicon.png" rel="shortcut icon" />
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="JCastaneyra blog" type="application/atom+xml"/>
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body  >
+  <header><hgroup>
+  <h1><a href="/">JCastaneyra blog</a></h1>
+  
+    <h2>My ideas repo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="site-search">
+    <input type="hidden" name="q" value="site:www.jcastaneyra.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul role=main-navigation>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry">
+  
+  <header>
+    
+      <h1 class="entry-title">Recuperando GRUB Con El Disco De Instalación De Debian</h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2006-10-06T00:00:00-05:00" pubdate  data-updated="true" >Oct 6<span>th</span>, 2006</time></p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Anoche me puse a instalar un nuevo disco duro de 160 Gb en una maquinilla que tengo en la casa, que está corriendo Debian Sarge y que está funcionando como servidor.
+Este nuevo disco duro vino a sustituir un par de discos (uno de 6 Gb en el que estaban / y swap y el otro de 2.5 Gb que tenía /home), los cuáles ya tenían todo instalado, y como no quise instalar de nueva cuenta el Debian (que hueva de imaginarse todo lo que implicaría, instalar desde ceros, levantar servicios, usuarios, etc.), decidí usar el GParted Live CD, muy útil por cierto, para copiar las particiones del disco duro principal (el disco duro que tenía /boot, y swap) y expandir la partición / hasta ocupar todo el disco.
+La copia de estas particiones y la expansión de / fue exitosa, pero con lo que no conté fue con que el Grub no estaría en el MBR de este nuevo disco duro, obvio verdad, bueno, pues me di a la tarea de reinstalar Grub en este disco, busqué en internet y todo parecía facil, pero a lo que pensé me llevaría no más de una hora me tomó cinco horas dado a unos pequeños errores que cometí, y he aquí mis experiencias.
+Bien, lo primero que hice fue arrancar con el disco de instalación de Debian, y hasta el momento que dice que si queremos particionar el disco duro, ahí presionamos las teclas &lt;Alt&gt; &lt;F2&gt;, ahí tendremos acceso al shell.
+Una vez en el shell, creamos un directorio donde montaremos la partición en donde se encuentra /boot, en este caso yo cree /disk de la siguiente manera:</p>
+
+<pre># mkdir /disk</pre>
+
+
+<p>Para saber que partición vamos a montar, habrá que darle el comando siguiente:</p>
+
+<pre># fdisk -l</pre>
+
+
+<p>Con este comando nos saldrá una lista de particiones, y tendrán un nombre raro, pero aún así será facil reconocer la partición que nos interesa montar (la que tiene /boot), lo siguiente será montar la partición (el dispositivo me imagino que variará, aún así este dispositivo lo veremos en la lista de particiones mostradas por el comando anterior):</p>
+
+<pre># mount -t ext3 /dev/bus0/lun0/disk0/part1 /disk</pre>
+
+
+<p>Ahora bien, haremos esta partición montada como nuestra partición root:</p>
+
+<pre># chroot /disk</pre>
+
+
+<p>En mi caso, como los discos los cambié de IDE, los nombres de las particiones cambiaron, por lo tanto tuve que editar /boot/grub/menu.lst, aquí fue donde tuve los problemas que me hicieron tardarme las cinco horas, todo por no fijarme bien al momento de editar, tuve que modificar la línea de root a (hd0,0) y me faltó editar en donde se encontraba el kernel, entonces como esta apuntaba a otra partición en otro dispositivo debí haberla editado por eso ahí me pasé las horas sin saber porque no podía arrancar, pero bien, ya que encontré el problema, así más o menos quedó lo que edité:</p>
+
+<pre lang="bash">
+title           Debian GNU/Linux, kernel 2.6.16-2-686
+root            (hd0,0)
+kernel          /boot/vmlinuz-2.6.16-2-686 root=/dev/hda1 ro
+initrd          /boot/initrd.img-2.6.16-2-686
+savedefault
+boot</pre>
+
+
+<p>Posteriormente, hubo que ejecutar:</p>
+
+<pre># grub</pre>
+
+
+<p>En el shell de grub, ejecuté lo siguiente:</p>
+
+<pre lang="bash">
+root (hd0,0)
+setup (hd0)
+quit</pre>
+
+
+<p>Y listo, a reiniciar!
+Con todo esto quedó, ya después sólo copié /home que estaba en el segundo disco duro,  claro de haber sido cuidadoso al leer lo que estaba haciendo, esto en teoría debió haber durado menos de una hora, entonces aquí está la experiencia para los que quieran cambiar de discos duros puedan hacerlo en el menor tiempo del que yo lo hice.
+:D</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jose Castaneyra</span></span>
+
+      
+
+
+
+
+
+  
+
+
+
+<time datetime="2006-10-06T00:00:00-05:00" pubdate  data-updated="true" >Oct 6<span>th</span>, 2006</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.jcastaneyra.com/2006/10/06/recuperando-grub-con-el-disco-de-instalacion-de-debian/" data-via="jcastaneyra" data-counturl="http://www.jcastaneyra.com/2006/10/06/recuperando-grub-con-el-disco-de-instalacion-de-debian/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+</div>
+
+    
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread"><div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'jcastaneyra';
+  if(typeof(custom_disqus_identifier) != "undefined") {
+    var disqus_identifier = custom_disqus_identifier;
+  } else {
+    var disqus_identifier = 'http://www.jcastaneyra.com/2006/10/06/recuperando-grub-con-el-disco-de-instalacion-de-debian/';
+  }
+  if(typeof(custom_disqus_url) != "undefined") {
+    var disqus_url = custom_disqus_url;
+  } else {
+    var disqus_url = 'http://www.jcastaneyra.com/2006/10/06/recuperando-grub-con-el-disco-de-instalacion-de-debian/';
+  }
+  //var disqus_developer = 1;
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside role=sidebar>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/">Bundler gem and Daemons error (The default Gemfile was not found)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table names case insensitive for MySQL Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/">Etiquetando código en git/Tagging code in git</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jcastaneyra">@jcastaneyra</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jcastaneyra',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jcastaneyra", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+  
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/jcastaneyra?title=&count=3&sort=date&extended"></script>
+  <p><a href="http://delicious.com/jcastaneyra">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer><p>
+  Copyright &copy; 2011 - Jose Castaneyra -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>

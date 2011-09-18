@@ -1,0 +1,764 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Enviando correo de manera asíncrona en Rails usando Workling, Workling-Mailer y RabbitMQ - JCastaneyra blog</title>
+  <meta name="author" content="Jose Castaneyra">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <link rel="canonical" href="http://www.jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/"/>
+  <link href="/favicon.png" rel="shortcut icon" />
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="JCastaneyra blog" type="application/atom+xml"/>
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body  >
+  <header><hgroup>
+  <h1><a href="/">JCastaneyra blog</a></h1>
+  
+    <h2>My ideas repo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="site-search">
+    <input type="hidden" name="q" value="site:www.jcastaneyra.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul role=main-navigation>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry">
+  
+  <header>
+    
+      <h1 class="entry-title">Enviando Correo De Manera Asíncrona en Rails Usando Workling, Workling-Mailer Y RabbitMQ</h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-06-10T00:00:00-05:00" pubdate  data-updated="true" >Jun 10<span>th</span>, 2009</time></p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a name="async_mailer_spanish"><strong>Enviando correo de manera asíncrona en Rails usando Workling, Workling-Mailer y RabbitMQ</strong></a> (<a href="#async_mailer_english">English</a>)</p>
+
+<p>El trabajar con message queues es bastante interesante, ya que podemos mandar procesos al background y que estos sean procesados de manera asíncrona, un ejemplo podría ser el envío de correos, aunque también podría servir para realizar otras tareas, por ejemplo, como el envío de mensajes sms, generación de reportes, generación de pdf&#8217;s, etc.</p>
+
+<p>En esta ocasión les quiero presentar como enviar correos de manera asíncrona haciendo una aplicación sencilla haciendo uso de los puglins Workling y workling-mailer y del sistema RabbitMQ, en teoría, con esto se podría ajustar esta solución fácilmente a cualquier otro proceso que se quiera realizar de manera asíncrona.</p>
+
+<h2>Aplicación base</h2>
+
+<p>Se crea una aplicación básica con restful_authentication, y con la opción de activación.</p>
+
+<p>Lo primero que hacemos es crear la aplicación en rails</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>rails mail_async_example -d mysql
+</div><div class='line'>
+</div><div class='line'>rm public/index.html
+</div><div class='line'>
+</div><div class='line'>script/plugin install git://github.com/technoweenie/restful-authentication.git
+</div><div class='line'>
+</div><div class='line'>script/generate authenticated user sessions --include-activation</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Creamos nuestra base de datos y migramos</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>rake db:create
+</div><div class='line'>
+</div><div class='line'>rake db:migrate</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Y hacemos unos pequeños cambios al código de la aplicación para enviar correo según las instrucciones de restful_authentication, así que agregamos lo suguiente:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="c1">#config/routes.rb</span>
+</div><div class='line'><span class="n">map</span><span class="o">.</span><span class="n">activate</span> <span class="s1">&#39;activate/:activation_code&#39;</span><span class="p">,</span> <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="ss">:action</span> <span class="o">=&gt;</span> <span class="s1">&#39;activate&#39;</span><span class="p">,</span> <span class="ss">:activation_code</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+</div><div class='line'>
+</div><div class='line'><span class="c1">#config/environment.rb</span>
+</div><div class='line'><span class="n">config</span><span class="o">.</span><span class="n">active_record</span><span class="o">.</span><span class="n">observers</span> <span class="o">=</span> <span class="ss">:user_observer</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Con esto ya tendríamos nuestra aplicación básica la cuál podríamos probar de inmediato apuntando en el browser a http://localhost:3000/signup</p>
+
+<p>Y agregando algunas cosillas extras, a app/controller/application_controller.rb agregamos la línea:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="kp">include</span> <span class="no">AuthenticatedSystem</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Esta misma línea que agregamos al Application controller la removemos de app/controller/sessions_controller.rb y de app/controllers/users_controller.rb</p>
+
+<p>Y creamos un nuevo controlador</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">generate</span> <span class="n">controller</span> <span class="n">portal</span> <span class="n">index</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Modificamos config/routes.rb para agregar al último como página root</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">map</span><span class="o">.</span><span class="n">root</span> <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="s2">&quot;portal&quot;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Por último agregamos un layout para nuestra aplicación:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+<span class='line'>29</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">&lt;!--app/views/layouts/application.html.erb--!&gt;</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+</div><div class='line'><span class="x">       &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot; lang=&quot;en&quot;&gt;</span>
+</div><div class='line'><span class="x">&lt;head&gt;</span>
+</div><div class='line'><span class="x">  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=UTF-8&quot; /&gt;</span>
+</div><div class='line'><span class="x">  &lt;title&gt;Contracts: </span><span class="cp">&lt;%=</span> <span class="n">controller</span><span class="o">.</span><span class="n">action_name</span> <span class="cp">%&gt;</span><span class="x">&lt;/title&gt;</span>
+</div><div class='line'><span class="x">  </span><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s1">&#39;scaffold&#39;</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">&lt;/head&gt;</span>
+</div><div class='line'><span class="x">&lt;body&gt;</span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">if</span> <span class="n">current_user</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Logout&#39;</span><span class="p">,</span> <span class="n">logout_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">else</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Login&#39;</span><span class="p">,</span> <span class="n">login_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Sign up&#39;</span><span class="p">,</span> <span class="n">signup_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="o">[</span><span class="ss">:error</span><span class="p">,</span> <span class="ss">:warning</span><span class="p">,</span> <span class="ss">:notice</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">level</span><span class="o">|</span>
+</div><div class='line'>    <span class="k">if</span> <span class="n">flash</span><span class="o">[</span><span class="n">level</span><span class="o">]</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">      &lt;div class=&quot;flash </span><span class="cp">&lt;%=</span> <span class="n">level</span><span class="o">.</span><span class="n">to_s</span> <span class="cp">-%&gt;</span><span class="x">&quot;&gt;</span><span class="cp">&lt;%=</span> <span class="n">flash</span><span class="o">[</span><span class="n">level</span><span class="o">]</span> <span class="cp">-%&gt;</span><span class="x">&lt;/div&gt;</span>
+</div><div class='line'><span class="x">  </span><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;/body&gt;</span>
+</div><div class='line'><span class="x">&lt;/html&gt;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Instalando amqp, workling y workling_mailer</h2>
+
+<p>Ahora bien, antes de instalar Workling, para poder trabajar con RabbitMQ es necesario instalar la gema de amqp, esta gema requiere también de la gema de EventMachine, por lo que al instalar amqp también instalará EventMachine.</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">gem sources -a http://gems.github.com/</span>
+</div><div class='line'><span class="x">sudo gem install tmm1-amqp --no-rdoc --no-ri</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Vemos nuestro listado de gemas</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">sudo gem list</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora si, a instalar workling y workling_mailer</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">script/plugin install git://github.com/purzelrakete/workling.git</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">script/plugin install git://github.com/langalex/workling_mailer.git</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Para poder utilizar workling con RabbitMQ agregamos al final de config/environment.rb</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">config</span><span class="o">.</span><span class="n">after_initialize</span> <span class="k">do</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">invoker</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">::</span><span class="no">Invokers</span><span class="o">::</span><span class="no">EventmachineSubscriber</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">dispatcher</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">::</span><span class="no">Runners</span><span class="o">::</span><span class="no">ClientRunner</span><span class="o">.</span><span class="n">new</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Clients</span><span class="o">::</span><span class="no">AmqpClient</span><span class="o">.</span><span class="n">new</span>
+</div><div class='line'><span class="k">end</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Posteriormente en app/models/user_mailer.rb añadimos</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="kp">include</span> <span class="no">AsynchMail</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>A la fecha de hoy el plugin de workling tiene un pequeño issue, para resolverlo hacemos lo siguiente en el archivo lib/workling/clients/memcache_queue_client.rb y verificar que contiene:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="nb">require</span> <span class="s1">&#39;memcache&#39;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Al principio del archivo, si no lo tienes agrégalo.</p>
+
+<p>Como el amqp corre sobre un ciclo de EventMachine es necesario correr nuestra aplicación con Thin, ya que este servidor soporta EventMachine sin ningún problema. Para instalar Thin corremos</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">sudo</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">thin</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">rdoc</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">ri</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Instalando RabbitMQ</h2>
+
+<p>Checar la instalación <a href="/2009/06/07/instalando-rabbitmq/">aquí</a></p>
+
+<h2>A correr todos</h2>
+
+<p>Nos aseguramos de que el RabbitMQ esté corriendo.</p>
+
+<p>Iniciamos el cliente de workling</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">workling_client</span> <span class="n">start</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>E iniciamos el servidor thin</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">thin</span> <span class="n">start</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Apuntamos nuestro browser a http://localhost:3000 y nos registramos con un usuario, al verificar el log de desarrollo veremos que el correo ahora es enviado después de todas las últimas operaciones registradas en el log. Podemos probar quitando la línea de include AsynchMail del UserMailer y ver lo que hace, o bien haciendo nuevo proceso que sea pesado y que se realice en background.</p>
+
+<p>Referencias:</p>
+
+<ol>
+<li><a href="http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f">http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f</a></li>
+<li><a href="http://github.com/purzelrakete/workling/">http://github.com/purzelrakete/workling/</a></li>
+<li><a href="http://github.com/langalex/workling_mailer/">http://github.com/langalex/workling_mailer/</a></li>
+<li><a href="http://github.com/tmm1/amqp/">http://github.com/tmm1/amqp/</a></li>
+<li><a href="http://github.com/technoweenie/restful-authentication/">http://github.com/technoweenie/restful-authentication/</a></li>
+<li><a href="http://www.rabbitmq.com">http://www.rabbitmq.com</a></li>
+<li><a href="http://code.macournoyer.com/thin/">http://code.macournoyer.com/thin/</a></li>
+<li><a href="/2009/06/07/instalando-rabbitmq/">Instalando RabbitMQ</a></li>
+</ol>
+
+
+<p><a name="async_mailer_english"><strong>Sending mails in asynchronous way in Rails using Workling, Workling-Mailer and RabbitMQ</strong></a> (<a href="#async_mailer_spanish">Español</a>)</p>
+
+<p>Working with message queues is so interesting, since we can put processes in the background in order to be processed in asynchronous way, imagine this to send several mails, or maybe for heavy tasks as sms messages, report generation, pdf generation, etc.</p>
+
+<p>So, with this post I want you to show how to send mails in asynchronous way, we are going to make a small application using Workling, Workling-mailer and as message queue RabbitMQ, actually we could adjust this solution to any other problem with async process requirement.</p>
+
+<h2>Base application</h2>
+
+<p>We create a simple application with restful_authentication and activation option.</p>
+
+<p>First of all we create the rails app</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">rails</span> <span class="n">mail_async_example</span> <span class="o">-</span><span class="n">d</span> <span class="n">mysql</span>
+</div><div class='line'>
+</div><div class='line'><span class="n">rm</span> <span class="kp">public</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</div><div class='line'>
+</div><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">plugin</span> <span class="n">install</span> <span class="n">git</span><span class="ss">:/</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">technoweenie</span><span class="o">/</span><span class="n">restful</span><span class="o">-</span><span class="n">authentication</span><span class="o">.</span><span class="n">git</span>
+</div><div class='line'>
+</div><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">generate</span> <span class="n">authenticated</span> <span class="n">user</span> <span class="n">sessions</span> <span class="o">--</span><span class="kp">include</span><span class="o">-</span><span class="n">activation</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Now with rake we create and migrate DB</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">rake</span> <span class="n">db</span><span class="ss">:create</span>
+</div><div class='line'>
+</div><div class='line'><span class="n">rake</span> <span class="n">db</span><span class="ss">:migrate</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Following the restful_authentication instructions to send mail we add this:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="c1">#config/routes.rb</span>
+</div><div class='line'><span class="n">map</span><span class="o">.</span><span class="n">activate</span> <span class="s1">&#39;activate/:activation_code&#39;</span><span class="p">,</span> <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="ss">:action</span> <span class="o">=&gt;</span> <span class="s1">&#39;activate&#39;</span><span class="p">,</span> <span class="ss">:activation_code</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+</div><div class='line'>
+</div><div class='line'><span class="c1">#config/environment.rb</span>
+</div><div class='line'><span class="n">config</span><span class="o">.</span><span class="n">active_record</span><span class="o">.</span><span class="n">observers</span> <span class="o">=</span> <span class="ss">:user_observer</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Our base app is working now, so to test it we get the url http://localhost:3000/signup in the browser.</p>
+
+<p>Add this in app/controller/application_controller.rb:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="kp">include</span> <span class="no">AuthenticatedSystem</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>The same line added to Application controller is removed from app/controller/sessions_controller.rb and app/controllers/users_controller.rb</p>
+
+<p>We create a new controller for portal index</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">generate</span> <span class="n">controller</span> <span class="n">portal</span> <span class="n">index</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>And modify config/routes.rb to add portal as root</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">map</span><span class="o">.</span><span class="n">root</span> <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="s2">&quot;portal&quot;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>And last we create a layout for our application:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+<span class='line'>29</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">&lt;!--app/views/layouts/application.html.erb--!&gt;</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+</div><div class='line'><span class="x">       &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot; lang=&quot;en&quot;&gt;</span>
+</div><div class='line'><span class="x">&lt;head&gt;</span>
+</div><div class='line'><span class="x">  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=UTF-8&quot; /&gt;</span>
+</div><div class='line'><span class="x">  &lt;title&gt;Contracts: </span><span class="cp">&lt;%=</span> <span class="n">controller</span><span class="o">.</span><span class="n">action_name</span> <span class="cp">%&gt;</span><span class="x">&lt;/title&gt;</span>
+</div><div class='line'><span class="x">  </span><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s1">&#39;scaffold&#39;</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">&lt;/head&gt;</span>
+</div><div class='line'><span class="x">&lt;body&gt;</span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">if</span> <span class="n">current_user</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Logout&#39;</span><span class="p">,</span> <span class="n">logout_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">else</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Login&#39;</span><span class="p">,</span> <span class="n">login_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Sign up&#39;</span><span class="p">,</span> <span class="n">signup_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="o">[</span><span class="ss">:error</span><span class="p">,</span> <span class="ss">:warning</span><span class="p">,</span> <span class="ss">:notice</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">level</span><span class="o">|</span>
+</div><div class='line'>    <span class="k">if</span> <span class="n">flash</span><span class="o">[</span><span class="n">level</span><span class="o">]</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">      &lt;div class=&quot;flash </span><span class="cp">&lt;%=</span> <span class="n">level</span><span class="o">.</span><span class="n">to_s</span> <span class="cp">-%&gt;</span><span class="x">&quot;&gt;</span><span class="cp">&lt;%=</span> <span class="n">flash</span><span class="o">[</span><span class="n">level</span><span class="o">]</span> <span class="cp">-%&gt;</span><span class="x">&lt;/div&gt;</span>
+</div><div class='line'><span class="x">  </span><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;/body&gt;</span>
+</div><div class='line'><span class="x">&lt;/html&gt;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Installing amqp, workling and workling_mailer</h2>
+
+<p>Now, before using Workling, we need RabbitMQ and amqp is needed, this gem also requires EventMachine gem, so, both gems are installed when amqp is installed.</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">gem sources -a http://gems.github.com/</span>
+</div><div class='line'><span class="x">sudo gem install tmm1-amqp --no-rdoc --no-ri</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>List your installed gems</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">sudo gem list</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, install workling and workling_mailer</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">script/plugin install git://github.com/purzelrakete/workling.git</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">script/plugin install git://github.com/langalex/workling_mailer.git</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Add this to config/environment.rb to allow workling to use RabbitMQ</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">config</span><span class="o">.</span><span class="n">after_initialize</span> <span class="k">do</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">invoker</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">::</span><span class="no">Invokers</span><span class="o">::</span><span class="no">EventmachineSubscriber</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">dispatcher</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">::</span><span class="no">Runners</span><span class="o">::</span><span class="no">ClientRunner</span><span class="o">.</span><span class="n">new</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Clients</span><span class="o">::</span><span class="no">AmqpClient</span><span class="o">.</span><span class="n">new</span>
+</div><div class='line'><span class="k">end</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>To app/models/user_mailer.rb add this</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="kp">include</span> <span class="no">AsynchMail</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Until today I&#8217;ve seen a little issue with workling, to solve it we do the folloging in this file lib/workling/clients/memcache_queue_client.rb; verify that you have:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="nb">require</span> <span class="s1">&#39;memcache&#39;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Add it if you don&#8217;t have it.</p>
+
+<p>Amqp runs in an EventMachine cycle, so it is needed to run our app with Thin, since Thin supports EventMachine without any problem. To install Thin run</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">sudo</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">thin</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">rdoc</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">ri</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Installing RabbitMQ</h2>
+
+<p>Follow the instructions here <a href="/2009/06/07/instalando-rabbitmq/">aquí</a></p>
+
+<h2>Everybody runs</h2>
+
+<p>Cool, naw we ensure that RabbitMQ is running.</p>
+
+<p>Start workling client</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">workling_client</span> <span class="n">start</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>And start Thin server</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">thin</span> <span class="n">start</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Point with your browser to http://localhost:3000 and sign up a new user, then verify your log and will see that email is sent and registered to the end of log after all operations. We can test removing include AsynchMail from UserMailer and see what happens, it would be great if you test some application with a heavy process working in the background.</p>
+
+<p>Links:</p>
+
+<ol>
+<li><a href="http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f">http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f</a></li>
+<li><a href="http://github.com/purzelrakete/workling/">http://github.com/purzelrakete/workling/</a></li>
+<li><a href="http://github.com/langalex/workling_mailer/">http://github.com/langalex/workling_mailer/</a></li>
+<li><a href="http://github.com/tmm1/amqp/">http://github.com/tmm1/amqp/</a></li>
+<li><a href="http://github.com/technoweenie/restful-authentication/">http://github.com/technoweenie/restful-authentication/</a></li>
+<li><a href="http://www.rabbitmq.com">http://www.rabbitmq.com</a></li>
+<li><a href="http://code.macournoyer.com/thin/">http://code.macournoyer.com/thin/</a></li>
+<li><a href="/2009/06/07/instalando-rabbitmq/">Instalando RabbitMQ</a></li>
+</ol>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jose Castaneyra</span></span>
+
+      
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-06-10T00:00:00-05:00" pubdate  data-updated="true" >Jun 10<span>th</span>, 2009</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/" data-via="jcastaneyra" data-counturl="http://www.jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+</div>
+
+    
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread"><div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'jcastaneyra';
+  if(typeof(custom_disqus_identifier) != "undefined") {
+    var disqus_identifier = custom_disqus_identifier;
+  } else {
+    var disqus_identifier = 'http://www.jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/';
+  }
+  if(typeof(custom_disqus_url) != "undefined") {
+    var disqus_url = custom_disqus_url;
+  } else {
+    var disqus_url = 'http://www.jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/';
+  }
+  //var disqus_developer = 1;
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside role=sidebar>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/">Bundler gem and Daemons error (The default Gemfile was not found)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table names case insensitive for MySQL Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/">Etiquetando código en git/Tagging code in git</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jcastaneyra">@jcastaneyra</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jcastaneyra',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jcastaneyra", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+  
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/jcastaneyra?title=&count=3&sort=date&extended"></script>
+  <p><a href="http://delicious.com/jcastaneyra">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer><p>
+  Copyright &copy; 2011 - Jose Castaneyra -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Installing RabbitMQ + Stomp in Ubuntu/Mac - JCastaneyra blog</title>
+  <meta name="author" content="Jose Castaneyra">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <link rel="canonical" href="http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/"/>
+  <link href="/favicon.png" rel="shortcut icon" />
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="JCastaneyra blog" type="application/atom+xml"/>
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body  >
+  <header><hgroup>
+  <h1><a href="/">JCastaneyra blog</a></h1>
+  
+    <h2>My ideas repo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="site-search">
+    <input type="hidden" name="q" value="site:www.jcastaneyra.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul role=main-navigation>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry">
+  
+  <header>
+    
+      <h1 class="entry-title">Installing RabbitMQ + Stomp in Ubuntu/Mac</h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2010-05-30T00:00:00-05:00" pubdate  data-updated="true" >May 30<span>th</span>, 2010</time></p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a name="rabbitmq_stomp_english"></a> <a href="#rabbitmq_stomp_spanish">En español</a></p>
+
+<p><img src="http://www.jcastaneyra.com/wp-content/uploads/2010/05/RabbitMQLogo-300x79.png" alt="Screenshot of RabbitMQ logo" /></p>
+
+<p>In the project I&#8217;m working now it was needed to have RabbitMQ running with Stomp as a message queue for Orbited, we know that Orbited comes with MorbidQ, but in our system we already had running RabbitMQ and used by other processes, so, two queue systems at the same time were not needed.</p>
+
+<p>But, searching for Stomp over RabbitMQ info or some kind of tutorial was difficult and painful, a friend of mine would say &#8220;a real pain in the ass&#8221;, there was info but not too clear. For that reason here is another note to myself, just in case.</p>
+
+<ul>
+<li>RabbitMQ 1.6.0 installed, <a href="/2009/06/07/instalando-rabbitmq/">here there are some steps</a> to install it.</li>
+<li>Mercurial is needed to download Stomp code</li>
+<li>Download Stomp code</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>hg clone -r rabbitmq_v1_6_0 http://hg.rabbitmq.com/rabbitmq-stomp</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Compile Stomp (use your RabbitMQ include directory, maybe in Linux /usr/lib/erlang/lib/rabbitmq_server-1.6.0/include, in Mac I have it here /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/include)</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>cd rabbitmq-stomp
+</div><div class='line'>make RABBIT_SERVER_INCLUDE_DIR=/usr/lib/erlang/lib/rabbitmq_server-1.6.0/include</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Copy your compiled Stomp to the Erlang libraries</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo mkdir -p /usr/lib/erlang/lib/rabbitmq-stomp
+</div><div class='line'>sudo cp -R * /usr/lib/erlang/lib/rabbitmq-stomp</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Add the Stomp configuration for RabbitMQ (also use your correct directory here, in Linux /usr/lib/erlang/lib/rabbitmq-stomp/ebin and in my Mac /usr/local/lib/erlang/lib/rabbitmq-stomp/ebin)</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo vim /etc/rabbitmq/rabbitmq.conf
+</div><div class='line'>
+</div><div class='line'>#Add the lines below
+</div><div class='line'>NODENAME=rabbit
+</div><div class='line'>NODE_IP_ADDRESS=0.0.0.0
+</div><div class='line'>NODE_PORT=5672
+</div><div class='line'>
+</div><div class='line'>LOG_BASE=/var/log/rabbitmq
+</div><div class='line'>MNESIA_BASE=/var/lib/rabbitmq/mnesia
+</div><div class='line'>
+</div><div class='line'>SERVER_START_ARGS='
+</div><div class='line'>     -pa /usr/lib/erlang/lib/rabbitmq-stomp/ebin
+</div><div class='line'>     -rabbit
+</div><div class='line'>       stomp_listeners [{"0.0.0.0",61613}]
+</div><div class='line'>       extra_startup_steps [{"STOMP-listeners",rabbit_stomp,kickstart,[]}]'</div></code></pre></td></tr></table></div></figure>
+
+
+<p>And that&#8217;s it, if you start RabbitMQ will see how STOMP-Listeners are starting (In Linux you maybe will need to stop RabbitMQ with the following command sudo /etc/init.d/rabbitmq-server stop before running the next step, in my Mac I use this command to start RabbitMQ sudo /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/sbin/rabbitmq-server)</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>deploy@localhost:~$ sudo rabbitmq-server 
+</div><div class='line'>RabbitMQ 1.6.0 (AMQP 8-0)
+</div><div class='line'>Copyright (C) 2007-2009 LShift Ltd., Cohesive Financial Technologies LLC., and Rabbit Technologies Ltd.
+</div><div class='line'>Licensed under the MPL.  See http://www.rabbitmq.com/
+</div><div class='line'>
+</div><div class='line'>node        : rabbit@localhost
+</div><div class='line'>log         : /var/log/rabbitmq/rabbit.log
+</div><div class='line'>sasl log    : /var/log/rabbitmq/rabbit-sasl.log
+</div><div class='line'>database dir: /var/lib/rabbitmq/mnesia/rabbit
+</div><div class='line'>
+</div><div class='line'>starting database             ...done
+</div><div class='line'>starting core processes       ...done
+</div><div class='line'>starting recovery             ...done
+</div><div class='line'>starting persister            ...done
+</div><div class='line'>starting guid generator       ...done
+</div><div class='line'>starting builtin applications ...done
+</div><div class='line'>starting TCP listeners        ...done
+</div><div class='line'>starting STOMP-listeners      ...done
+</div><div class='line'>
+</div><div class='line'>broker running</div></code></pre></td></tr></table></div></figure>
+
+
+<p><a name="rabbitmq_stomp_spanish"></a> <a href="#rabbitmq_stomp_english">In english</a></p>
+
+<p><img src="http://www.jcastaneyra.com/wp-content/uploads/2010/05/RabbitMQLogo-300x79.png" alt="Screenshot of RabbitMQ logo" /></p>
+
+<p>En el proyecto en el que estoy trabajando era necesario tener corriendo RabbitMQ con Stomp para poder hacer conexiones con Orbited, Orbited ya incluye MorbidQ, pero en este caso ya teníamos corriendo RabbitMQ para otros procesos y no era necesario tener un segundo sistema de queues.</p>
+
+<p>Sorprendentemente, encontrar información de cómo agregar Stomp a RabbitMQ resultó algo doloroso, si había información pero como que no indicaba bien que pasos seguir. Entonces como parte de mis notas personales estoy agregando esta receta por si se llega a ofrecer de nueva cuenta.</p>
+
+<ul>
+<li>Tener instalado RabbitMQ 1.6.0, <a href="/2009/06/07/instalando-rabbitmq/">aquí hay unos pasos</a> para instalarlo.</li>
+<li>Tener instalado Mercurial para bajar el código de Stomp</li>
+<li>Bajar el código de Stomp</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>hg clone -r rabbitmq_v1_6_0 http://hg.rabbitmq.com/rabbitmq-stomp</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Compilar Stomp (apuntando al directorio de include donde se encuentra RabbitMQ, en Linux /usr/lib/erlang/lib/rabbitmq_server-1.6.0/include y en Mac yo lo tengo en /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/include)</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>cd rabbitmq-stomp
+</div><div class='line'>make RABBIT_SERVER_INCLUDE_DIR=/usr/lib/erlang/lib/rabbitmq_server-1.6.0/include</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Copiar Stomp compilado al directorio de librerías de Erlang</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo mkdir -p /usr/lib/erlang/lib/rabbitmq-stomp
+</div><div class='line'>sudo cp -R * /usr/lib/erlang/lib/rabbitmq-stomp</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Agregar la configuración de Stomp a RabbitMQ (también apuntar al directorio correcto en la configuración, en Linux /usr/lib/erlang/lib/rabbitmq-stomp/ebin y en mi Mac /usr/local/lib/erlang/lib/rabbitmq-stomp/ebin)</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo vim /etc/rabbitmq/rabbitmq.conf
+</div><div class='line'>
+</div><div class='line'>#Add the lines below
+</div><div class='line'>NODENAME=rabbit
+</div><div class='line'>NODE_IP_ADDRESS=0.0.0.0
+</div><div class='line'>NODE_PORT=5672
+</div><div class='line'>
+</div><div class='line'>LOG_BASE=/var/log/rabbitmq
+</div><div class='line'>MNESIA_BASE=/var/lib/rabbitmq/mnesia
+</div><div class='line'>
+</div><div class='line'>SERVER_START_ARGS='
+</div><div class='line'>  -pa /usr/lib/erlang/lib/rabbitmq-stomp/ebin
+</div><div class='line'>  -rabbit
+</div><div class='line'>    stomp_listeners [{"0.0.0.0",61613}]
+</div><div class='line'>    extra_startup_steps [{"STOMP-listeners",rabbit_stomp,kickstart,[]}]'</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Listo, si intentan arrancar RabbitMQ se verá que dice que está levantando los STOMP-Listeners (En Linux talvez necesiten terminar el proceso con sudo /etc/init.d/rabbitmq-server stop antes de correr lo siguiente, y en Mac para levantar el servidor yo ejecuto sudo /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/sbin/rabbitmq-server)</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>deploy@localhost:~$ sudo rabbitmq-server 
+</div><div class='line'>RabbitMQ 1.6.0 (AMQP 8-0)
+</div><div class='line'>Copyright (C) 2007-2009 LShift Ltd., Cohesive Financial Technologies LLC., and Rabbit Technologies Ltd.
+</div><div class='line'>Licensed under the MPL.  See http://www.rabbitmq.com/
+</div><div class='line'>
+</div><div class='line'>node        : rabbit@localhost
+</div><div class='line'>log         : /var/log/rabbitmq/rabbit.log
+</div><div class='line'>sasl log    : /var/log/rabbitmq/rabbit-sasl.log
+</div><div class='line'>database dir: /var/lib/rabbitmq/mnesia/rabbit
+</div><div class='line'>
+</div><div class='line'>starting database             ...done
+</div><div class='line'>starting core processes       ...done
+</div><div class='line'>starting recovery             ...done
+</div><div class='line'>starting persister            ...done
+</div><div class='line'>starting guid generator       ...done
+</div><div class='line'>starting builtin applications ...done
+</div><div class='line'>starting TCP listeners        ...done
+</div><div class='line'>starting STOMP-listeners      ...done
+</div><div class='line'>
+</div><div class='line'>broker running</div></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jose Castaneyra</span></span>
+
+      
+
+
+
+
+
+  
+
+
+
+<time datetime="2010-05-30T00:00:00-05:00" pubdate  data-updated="true" >May 30<span>th</span>, 2010</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/" data-via="jcastaneyra" data-counturl="http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+</div>
+
+    
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread"><div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'jcastaneyra';
+  if(typeof(custom_disqus_identifier) != "undefined") {
+    var disqus_identifier = custom_disqus_identifier;
+  } else {
+    var disqus_identifier = 'http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/';
+  }
+  if(typeof(custom_disqus_url) != "undefined") {
+    var disqus_url = custom_disqus_url;
+  } else {
+    var disqus_url = 'http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/';
+  }
+  //var disqus_developer = 1;
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside role=sidebar>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/">Bundler gem and Daemons error (The default Gemfile was not found)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table names case insensitive for MySQL Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/">Etiquetando código en git/Tagging code in git</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jcastaneyra">@jcastaneyra</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jcastaneyra',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jcastaneyra", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+  
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/jcastaneyra?title=&count=3&sort=date&extended"></script>
+  <p><a href="http://delicious.com/jcastaneyra">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer><p>
+  Copyright &copy; 2011 - Jose Castaneyra -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>

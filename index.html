@@ -1,1 +1,1900 @@
-My Octopress Page is coming soon &hellip;
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>JCastaneyra blog</title>
+  <meta name="author" content="Jose Castaneyra">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <link rel="canonical" href="http://www.jcastaneyra.com/index.html"/>
+  <link href="/favicon.png" rel="shortcut icon" />
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="JCastaneyra blog" type="application/atom+xml"/>
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body  >
+  <header><hgroup>
+  <h1><a href="/">JCastaneyra blog</a></h1>
+  
+    <h2>My ideas repo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="site-search">
+    <input type="hidden" name="q" value="site:www.jcastaneyra.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul role=main-navigation>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2010-05-30T00:00:00-05:00" pubdate  data-updated="true" >May 30<span>th</span>, 2010</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a name="rabbitmq_stomp_english"></a> <a href="#rabbitmq_stomp_spanish">En español</a></p>
+
+<p><img src="http://www.jcastaneyra.com/wp-content/uploads/2010/05/RabbitMQLogo-300x79.png" alt="Screenshot of RabbitMQ logo" /></p>
+
+<p>In the project I&#8217;m working now it was needed to have RabbitMQ running with Stomp as a message queue for Orbited, we know that Orbited comes with MorbidQ, but in our system we already had running RabbitMQ and used by other processes, so, two queue systems at the same time were not needed.</p>
+
+<p>But, searching for Stomp over RabbitMQ info or some kind of tutorial was difficult and painful, a friend of mine would say &#8220;a real pain in the ass&#8221;, there was info but not too clear. For that reason here is another note to myself, just in case.</p>
+
+<ul>
+<li>RabbitMQ 1.6.0 installed, <a href="/2009/06/07/instalando-rabbitmq/">here there are some steps</a> to install it.</li>
+<li>Mercurial is needed to download Stomp code</li>
+<li>Download Stomp code</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>hg clone -r rabbitmq_v1_6_0 http://hg.rabbitmq.com/rabbitmq-stomp</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Compile Stomp (use your RabbitMQ include directory, maybe in Linux /usr/lib/erlang/lib/rabbitmq_server-1.6.0/include, in Mac I have it here /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/include)</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>cd rabbitmq-stomp
+</div><div class='line'>make RABBIT_SERVER_INCLUDE_DIR=/usr/lib/erlang/lib/rabbitmq_server-1.6.0/include</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Copy your compiled Stomp to the Erlang libraries</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo mkdir -p /usr/lib/erlang/lib/rabbitmq-stomp
+</div><div class='line'>sudo cp -R * /usr/lib/erlang/lib/rabbitmq-stomp</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Add the Stomp configuration for RabbitMQ (also use your correct directory here, in Linux /usr/lib/erlang/lib/rabbitmq-stomp/ebin and in my Mac /usr/local/lib/erlang/lib/rabbitmq-stomp/ebin)</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo vim /etc/rabbitmq/rabbitmq.conf
+</div><div class='line'>
+</div><div class='line'>#Add the lines below
+</div><div class='line'>NODENAME=rabbit
+</div><div class='line'>NODE_IP_ADDRESS=0.0.0.0
+</div><div class='line'>NODE_PORT=5672
+</div><div class='line'>
+</div><div class='line'>LOG_BASE=/var/log/rabbitmq
+</div><div class='line'>MNESIA_BASE=/var/lib/rabbitmq/mnesia
+</div><div class='line'>
+</div><div class='line'>SERVER_START_ARGS='
+</div><div class='line'>     -pa /usr/lib/erlang/lib/rabbitmq-stomp/ebin
+</div><div class='line'>     -rabbit
+</div><div class='line'>       stomp_listeners [{"0.0.0.0",61613}]
+</div><div class='line'>       extra_startup_steps [{"STOMP-listeners",rabbit_stomp,kickstart,[]}]'</div></code></pre></td></tr></table></div></figure>
+
+
+<p>And that&#8217;s it, if you start RabbitMQ will see how STOMP-Listeners are starting (In Linux you maybe will need to stop RabbitMQ with the following command sudo /etc/init.d/rabbitmq-server stop before running the next step, in my Mac I use this command to start RabbitMQ sudo /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/sbin/rabbitmq-server)</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>deploy@localhost:~$ sudo rabbitmq-server 
+</div><div class='line'>RabbitMQ 1.6.0 (AMQP 8-0)
+</div><div class='line'>Copyright (C) 2007-2009 LShift Ltd., Cohesive Financial Technologies LLC., and Rabbit Technologies Ltd.
+</div><div class='line'>Licensed under the MPL.  See http://www.rabbitmq.com/
+</div><div class='line'>
+</div><div class='line'>node        : rabbit@localhost
+</div><div class='line'>log         : /var/log/rabbitmq/rabbit.log
+</div><div class='line'>sasl log    : /var/log/rabbitmq/rabbit-sasl.log
+</div><div class='line'>database dir: /var/lib/rabbitmq/mnesia/rabbit
+</div><div class='line'>
+</div><div class='line'>starting database             ...done
+</div><div class='line'>starting core processes       ...done
+</div><div class='line'>starting recovery             ...done
+</div><div class='line'>starting persister            ...done
+</div><div class='line'>starting guid generator       ...done
+</div><div class='line'>starting builtin applications ...done
+</div><div class='line'>starting TCP listeners        ...done
+</div><div class='line'>starting STOMP-listeners      ...done
+</div><div class='line'>
+</div><div class='line'>broker running</div></code></pre></td></tr></table></div></figure>
+
+
+<p><a name="rabbitmq_stomp_spanish"></a> <a href="#rabbitmq_stomp_english">In english</a></p>
+
+<p><img src="http://www.jcastaneyra.com/wp-content/uploads/2010/05/RabbitMQLogo-300x79.png" alt="Screenshot of RabbitMQ logo" /></p>
+
+<p>En el proyecto en el que estoy trabajando era necesario tener corriendo RabbitMQ con Stomp para poder hacer conexiones con Orbited, Orbited ya incluye MorbidQ, pero en este caso ya teníamos corriendo RabbitMQ para otros procesos y no era necesario tener un segundo sistema de queues.</p>
+
+<p>Sorprendentemente, encontrar información de cómo agregar Stomp a RabbitMQ resultó algo doloroso, si había información pero como que no indicaba bien que pasos seguir. Entonces como parte de mis notas personales estoy agregando esta receta por si se llega a ofrecer de nueva cuenta.</p>
+
+<ul>
+<li>Tener instalado RabbitMQ 1.6.0, <a href="/2009/06/07/instalando-rabbitmq/">aquí hay unos pasos</a> para instalarlo.</li>
+<li>Tener instalado Mercurial para bajar el código de Stomp</li>
+<li>Bajar el código de Stomp</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>hg clone -r rabbitmq_v1_6_0 http://hg.rabbitmq.com/rabbitmq-stomp</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Compilar Stomp (apuntando al directorio de include donde se encuentra RabbitMQ, en Linux /usr/lib/erlang/lib/rabbitmq_server-1.6.0/include y en Mac yo lo tengo en /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/include)</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>cd rabbitmq-stomp
+</div><div class='line'>make RABBIT_SERVER_INCLUDE_DIR=/usr/lib/erlang/lib/rabbitmq_server-1.6.0/include</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Copiar Stomp compilado al directorio de librerías de Erlang</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo mkdir -p /usr/lib/erlang/lib/rabbitmq-stomp
+</div><div class='line'>sudo cp -R * /usr/lib/erlang/lib/rabbitmq-stomp</div></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Agregar la configuración de Stomp a RabbitMQ (también apuntar al directorio correcto en la configuración, en Linux /usr/lib/erlang/lib/rabbitmq-stomp/ebin y en mi Mac /usr/local/lib/erlang/lib/rabbitmq-stomp/ebin)</li>
+</ul>
+
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo vim /etc/rabbitmq/rabbitmq.conf
+</div><div class='line'>
+</div><div class='line'>#Add the lines below
+</div><div class='line'>NODENAME=rabbit
+</div><div class='line'>NODE_IP_ADDRESS=0.0.0.0
+</div><div class='line'>NODE_PORT=5672
+</div><div class='line'>
+</div><div class='line'>LOG_BASE=/var/log/rabbitmq
+</div><div class='line'>MNESIA_BASE=/var/lib/rabbitmq/mnesia
+</div><div class='line'>
+</div><div class='line'>SERVER_START_ARGS='
+</div><div class='line'>  -pa /usr/lib/erlang/lib/rabbitmq-stomp/ebin
+</div><div class='line'>  -rabbit
+</div><div class='line'>    stomp_listeners [{"0.0.0.0",61613}]
+</div><div class='line'>    extra_startup_steps [{"STOMP-listeners",rabbit_stomp,kickstart,[]}]'</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Listo, si intentan arrancar RabbitMQ se verá que dice que está levantando los STOMP-Listeners (En Linux talvez necesiten terminar el proceso con sudo /etc/init.d/rabbitmq-server stop antes de correr lo siguiente, y en Mac para levantar el servidor yo ejecuto sudo /usr/local/lib/erlang/lib/rabbitmq_server-1.6.0/sbin/rabbitmq-server)</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>deploy@localhost:~$ sudo rabbitmq-server 
+</div><div class='line'>RabbitMQ 1.6.0 (AMQP 8-0)
+</div><div class='line'>Copyright (C) 2007-2009 LShift Ltd., Cohesive Financial Technologies LLC., and Rabbit Technologies Ltd.
+</div><div class='line'>Licensed under the MPL.  See http://www.rabbitmq.com/
+</div><div class='line'>
+</div><div class='line'>node        : rabbit@localhost
+</div><div class='line'>log         : /var/log/rabbitmq/rabbit.log
+</div><div class='line'>sasl log    : /var/log/rabbitmq/rabbit-sasl.log
+</div><div class='line'>database dir: /var/lib/rabbitmq/mnesia/rabbit
+</div><div class='line'>
+</div><div class='line'>starting database             ...done
+</div><div class='line'>starting core processes       ...done
+</div><div class='line'>starting recovery             ...done
+</div><div class='line'>starting persister            ...done
+</div><div class='line'>starting guid generator       ...done
+</div><div class='line'>starting builtin applications ...done
+</div><div class='line'>starting TCP listeners        ...done
+</div><div class='line'>starting STOMP-listeners      ...done
+</div><div class='line'>
+</div><div class='line'>broker running</div></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/">Bundler Gem and Daemons Error (the Default Gemfile Was Not Found)</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2010-02-12T00:00:00-06:00" pubdate  data-updated="true" >Feb 12<span>th</span>, 2010</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a name="bundler_gem_daemons_error_english"></a> (<a href="#bundler_gem_daemons_error_spanish">En español</a>)</p>
+
+<p>Some days ago we deployed an application with rails, in this application we are using some daemons (with daemons gem) to take care about some business processes, and recently to have more control with all gems used by our application we started to use bundler.</p>
+
+<p>Almost all was done, so, at the moment to start the daemons, we get the following error:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>/usr/lib/ruby/gems/1.8/gems/bundler-0.9.3/lib/bundler.rb:122:in `default_gemfile': The default Gemfile was not found (Bundler::GemfileNotFound)
+</div><div class='line'>    from /usr/lib/ruby/gems/1.8/gems/bundler-0.9.3/lib/bundler.rb:64:in `setup'</div></code></pre></td></tr></table></div></figure>
+
+
+<p>So, looking for this error in google we didn&#8217;t get anything, and looking into the bundler gem code the solution to this problems was:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;BUNDLE_GEMFILE&#39;</span><span class="o">]</span> <span class="o">||=</span> <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">Dir</span><span class="o">.</span><span class="n">pwd</span><span class="p">,</span> <span class="s1">&#39;Gemfile&#39;</span><span class="p">)</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>The complete daemon code here:</p>
+
+<div><script src='https://gist.github.com/302390.js?file='></script>
+<noscript><pre><code>require 'rubygems'
+require 'daemons'
+#require File.join(File.dirname(__FILE__), 'daemons_extension')
+
+ENV['RAILS_ENV'] ||= 'development'
+ENV['BUNDLE_GEMFILE'] ||= File.join(Dir.pwd, 'Gemfile')
+
+options = {
+  :app_name  =&gt; 'mail_consumer',
+  :dir_mode  =&gt; :script,
+  :dir       =&gt; '../log',
+  :backtrace =&gt; true,
+  :mode      =&gt; :load,
+  :monitor   =&gt; true
+}
+
+Daemons.run(File.join(File.dirname(__FILE__), 'mail_consumer.rb'), options)
+</code></pre></noscript></div>
+
+
+<p><a name="bundler_gem_daemons_error_spanish"></a> (<a href="#bundler_gem_daemons_error_english">In english</a>)</p>
+
+<p>Hace algunos días hicimos el deployment de una aplicación con rails, con esta aplicación corremos algunos demonios (con la gema daemons) que se hacen cargo de algunas operaciones de negocio, y recientemente para tener más control de las gemas que utilizamos empezamos a usar bundler.</p>
+
+<p>Ya se tenía todo listo, al momento de correr los demonios nos encontramos con el siguiente error:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="n">gems</span><span class="o">/</span><span class="mi">1</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">gems</span><span class="o">/</span><span class="n">bundler</span><span class="o">-</span><span class="mi">0</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">bundler</span><span class="o">.</span><span class="n">rb</span><span class="p">:</span><span class="mi">122</span><span class="ss">:in</span> <span class="sb">`default_gemfile&#39;: The default Gemfile was not found (Bundler::GemfileNotFound)</span>
+</div><div class='line'><span class="sb">   from /usr/lib/ruby/gems/1.8/gems/bundler-0.9.3/lib/bundler.rb:64:in `</span><span class="n">setup</span><span class="err">&#39;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Cabe mencionar que buscando en google no se encontró nada de como resolver el problema, así que indagando un poco en el código de bundler, llegamos a la siguiente solución, que fue agregar la siguiente línea al código que levanta nuestro demonio.</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;BUNDLE_GEMFILE&#39;</span><span class="o">]</span> <span class="o">||=</span> <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">Dir</span><span class="o">.</span><span class="n">pwd</span><span class="p">,</span> <span class="s1">&#39;Gemfile&#39;</span><span class="p">)</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>El código completo del demonio es el siguiente:</p>
+
+<div><script src='https://gist.github.com/302390.js?file='></script>
+<noscript><pre><code>require 'rubygems'
+require 'daemons'
+#require File.join(File.dirname(__FILE__), 'daemons_extension')
+
+ENV['RAILS_ENV'] ||= 'development'
+ENV['BUNDLE_GEMFILE'] ||= File.join(Dir.pwd, 'Gemfile')
+
+options = {
+  :app_name  =&gt; 'mail_consumer',
+  :dir_mode  =&gt; :script,
+  :dir       =&gt; '../log',
+  :backtrace =&gt; true,
+  :mode      =&gt; :load,
+  :monitor   =&gt; true
+}
+
+Daemons.run(File.join(File.dirname(__FILE__), 'mail_consumer.rb'), options)
+</code></pre></noscript></div>
+
+
+
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table Names Case Insensitive for MySQL Linux</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2010-01-07T00:00:00-06:00" pubdate  data-updated="true" >Jan 7<span>th</span>, 2010</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hola a todos, feliz año 2010, que tal se pasaron estas fechas? descansaron bastante? Pues yo más o menos, unos ratos descansaba y otros trabajaba, y para variar me encontré con esto en el trabajo.</p>
+
+<p>Resulta que estaba montando un servidor de Weblogic y MySQL en Linux, para instalar una aplicación que originalmente estaba con Weblogic y Oracle, y resulta que al cargar las tablas de esta aplicación en MySQL empecé a encontrarme problemas con los nombres de las tablas (entre otras cosas, como los tipos de datos entre Oracle y MySQL), yo no sabía que MySQL por default en Linux es case sensitive, por lo que me di a la tarea de investigar y buscar como deshabilitar esta función.</p>
+
+<p>Es necesario editar el archivo my.cnf que se puede encontrar en /etc o bien en /etc/mysql, e inmediatamente después de la sección [mysqld], agregar lo siguiente:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>lower_case_table_names=1</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Guardamos el archivo y reiniciamos MySQL, con esto al momento de crear nuevas tablas estas se harán en minúsculas, y ya no tendremos problemas de si son mayúsculas o minúsculas.</p>
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como Crear Un Archivo Zip Con Ruby</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-11-16T00:00:00-06:00" pubdate  data-updated="true" >Nov 16<span>th</span>, 2009</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hace unos días me encontré con el problema de generar archivos Zip que contuvieran archivos de un curso de SCORM, ¿Cómo hacerlo?, lo primero que me vino a la mente fue Ruby!!!</p>
+
+<p>La gema que me sirvió para esto fue rubyzip, y con el siguiente fragmento de código se realizaron los archivos zip:</p>
+
+<div><script src='https://gist.github.com/235735.js?file='></script>
+<noscript><pre><code>require 'rubygems'
+require 'zip/zip'
+require 'zip/zipfilesystem'
+
+current_path = Dir.pwd
+      
+scorm_file = current_path + &quot;/&quot; + tmp_dir + '/' + course + &quot;/#{scorm_module}.zip&quot;
+# module_path is where scorm files are (files to zip)
+Dir.chdir(module_path)
+files_to_zip = Dir[&quot;**/*&quot;]
+      
+Zip::ZipFile.open(scorm_file, Zip::ZipFile::CREATE) do |zipfile|
+  files_to_zip.each { |f| zipfile.add( f, f) }
+end
+      
+Dir.chdir(current_path)</code></pre></noscript></div>
+
+
+<p>Espero que les sirva como a mi.</p>
+
+<p>Links:</p>
+
+<ol>
+<li><a href="http://ruby-doc.org/core/classes/Dir.html">http://ruby-doc.org/core/classes/Dir.html</a></li>
+<li><a href="http://ruby-doc.org/core/classes/FileUtils.html">http://ruby-doc.org/core/classes/FileUtils.html</a></li>
+<li><a href="http://rubyzip.sourceforge.net/">http://rubyzip.sourceforge.net/</a></li>
+</ol>
+
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/">Etiquetando Código en git/Tagging Code in Git</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-11-05T00:00:00-06:00" pubdate  data-updated="true" >Nov 5<span>th</span>, 2009</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a name="tagging_code_git_spanish"><strong>Etiquetando código en git</strong></a> (<a href="#tagging_code_git_english">English</a>)</p>
+
+<p>Resulta que al estar trabajando con nuestro código queremos marcar o etiquetar nuestro código en cierto momento de tiempo, algo así como versionar nuestro código.</p>
+
+<p>A decir verdad no soy un experto en git, pero esto es lo que me ha funcionado. Primero que nada tendríamos que etiquetar nuestro código (ponerle una marca), para esto usamos el comando git tag:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>git tag -a -m "My old and ugly style" old_style</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Para ver nuestros tags locales tenemos que ejecutar</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>git tag -l</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Pero como le agregué una descripción a mi tag ejecuto lo siguiente para poder ver el tag junto con su descripción</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>git tag -l -n1</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Con esto tenemos agregado el tag localmente, pero como yo trabajo con un repositorio remoto, para subir mi tag tengo que hacer</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>git push origin --tags</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Ya tengo una etiqueta en mi código, ahora supongamos que pasan dos semanas y que quiero ver algo en mi viejo y feo estilo, sólo tendría que hacer lo siguiente:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>git checkout -f -b mybranch old_style</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Así tendría un nuevo branch con mi código que tiene la etiqueta de old_style.</p>
+
+<p>Links:</p>
+
+<ol>
+<li><a href="http://ariejan.net/2009/09/05/git-tag-mini-cheat-sheet-revisited/?doing_wp_cron">http://ariejan.net/2009/09/05/git-tag-mini-cheat-sheet-revisited/?doing_wp_cron</a></li>
+<li><a href="http://polywww.in2p3.fr/~gaycken/Calice/Software/my_git_workflow.html">http://polywww.in2p3.fr/~gaycken/Calice/Software/my_git_workflow.html</a></li>
+</ol>
+
+
+<p><a name="tagging_code_git_english"><strong>Tagging code in git</strong></a> (<a href="#tagging_code_git_spanish">Español</a>)</p>
+
+<p>When we are working with our code in some time of the project we want to mark or tag the code in order to have control until that time of the project and code, something like versioning.</p>
+
+<p>I&#8217;m not a git expert, but this worked for me. First of all, we need to tag our code, use this command:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>git tag -a -m "My old and ugly style" old_style</div></code></pre></td></tr></table></div></figure>
+
+
+<p>In order to see all local tags</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>git tag -l</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Since I added a description to my tag it&#8217;s needed to execute the following to see the description</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>git tag -l -n1</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Until now we have this tag added locally, but if we work with a remote repository we are going to push the tag</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>git push origin --tags</div></code></pre></td></tr></table></div></figure>
+
+
+<p>I already have this tag in my code, now suppose that some weeks have been passed and you want to see something in your old and ugly style, you would need to do:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>git checkout -f -b mybranch old_style</div></code></pre></td></tr></table></div></figure>
+
+
+<p>With this command you would have a new branch with the code tagged with old_style.</p>
+
+<p>Links:</p>
+
+<ol>
+<li><a href="http://ariejan.net/2009/09/05/git-tag-mini-cheat-sheet-revisited/?doing_wp_cron">http://ariejan.net/2009/09/05/git-tag-mini-cheat-sheet-revisited/?doing_wp_cron</a></li>
+<li><a href="http://polywww.in2p3.fr/~gaycken/Calice/Software/my_git_workflow.html">http://polywww.in2p3.fr/~gaycken/Calice/Software/my_git_workflow.html</a></li>
+</ol>
+
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/">Enviando Correo De Manera Asíncrona en Rails Usando Workling, Workling-Mailer Y RabbitMQ</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-06-10T00:00:00-05:00" pubdate  data-updated="true" >Jun 10<span>th</span>, 2009</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a name="async_mailer_spanish"><strong>Enviando correo de manera asíncrona en Rails usando Workling, Workling-Mailer y RabbitMQ</strong></a> (<a href="#async_mailer_english">English</a>)</p>
+
+<p>El trabajar con message queues es bastante interesante, ya que podemos mandar procesos al background y que estos sean procesados de manera asíncrona, un ejemplo podría ser el envío de correos, aunque también podría servir para realizar otras tareas, por ejemplo, como el envío de mensajes sms, generación de reportes, generación de pdf&#8217;s, etc.</p>
+
+<p>En esta ocasión les quiero presentar como enviar correos de manera asíncrona haciendo una aplicación sencilla haciendo uso de los puglins Workling y workling-mailer y del sistema RabbitMQ, en teoría, con esto se podría ajustar esta solución fácilmente a cualquier otro proceso que se quiera realizar de manera asíncrona.</p>
+
+<h2>Aplicación base</h2>
+
+<p>Se crea una aplicación básica con restful_authentication, y con la opción de activación.</p>
+
+<p>Lo primero que hacemos es crear la aplicación en rails</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>rails mail_async_example -d mysql
+</div><div class='line'>
+</div><div class='line'>rm public/index.html
+</div><div class='line'>
+</div><div class='line'>script/plugin install git://github.com/technoweenie/restful-authentication.git
+</div><div class='line'>
+</div><div class='line'>script/generate authenticated user sessions --include-activation</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Creamos nuestra base de datos y migramos</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>rake db:create
+</div><div class='line'>
+</div><div class='line'>rake db:migrate</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Y hacemos unos pequeños cambios al código de la aplicación para enviar correo según las instrucciones de restful_authentication, así que agregamos lo suguiente:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="c1">#config/routes.rb</span>
+</div><div class='line'><span class="n">map</span><span class="o">.</span><span class="n">activate</span> <span class="s1">&#39;activate/:activation_code&#39;</span><span class="p">,</span> <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="ss">:action</span> <span class="o">=&gt;</span> <span class="s1">&#39;activate&#39;</span><span class="p">,</span> <span class="ss">:activation_code</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+</div><div class='line'>
+</div><div class='line'><span class="c1">#config/environment.rb</span>
+</div><div class='line'><span class="n">config</span><span class="o">.</span><span class="n">active_record</span><span class="o">.</span><span class="n">observers</span> <span class="o">=</span> <span class="ss">:user_observer</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Con esto ya tendríamos nuestra aplicación básica la cuál podríamos probar de inmediato apuntando en el browser a http://localhost:3000/signup</p>
+
+<p>Y agregando algunas cosillas extras, a app/controller/application_controller.rb agregamos la línea:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="kp">include</span> <span class="no">AuthenticatedSystem</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Esta misma línea que agregamos al Application controller la removemos de app/controller/sessions_controller.rb y de app/controllers/users_controller.rb</p>
+
+<p>Y creamos un nuevo controlador</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">generate</span> <span class="n">controller</span> <span class="n">portal</span> <span class="n">index</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Modificamos config/routes.rb para agregar al último como página root</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">map</span><span class="o">.</span><span class="n">root</span> <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="s2">&quot;portal&quot;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Por último agregamos un layout para nuestra aplicación:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+<span class='line'>29</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">&lt;!--app/views/layouts/application.html.erb--!&gt;</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+</div><div class='line'><span class="x">       &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot; lang=&quot;en&quot;&gt;</span>
+</div><div class='line'><span class="x">&lt;head&gt;</span>
+</div><div class='line'><span class="x">  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=UTF-8&quot; /&gt;</span>
+</div><div class='line'><span class="x">  &lt;title&gt;Contracts: </span><span class="cp">&lt;%=</span> <span class="n">controller</span><span class="o">.</span><span class="n">action_name</span> <span class="cp">%&gt;</span><span class="x">&lt;/title&gt;</span>
+</div><div class='line'><span class="x">  </span><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s1">&#39;scaffold&#39;</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">&lt;/head&gt;</span>
+</div><div class='line'><span class="x">&lt;body&gt;</span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">if</span> <span class="n">current_user</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Logout&#39;</span><span class="p">,</span> <span class="n">logout_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">else</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Login&#39;</span><span class="p">,</span> <span class="n">login_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Sign up&#39;</span><span class="p">,</span> <span class="n">signup_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="o">[</span><span class="ss">:error</span><span class="p">,</span> <span class="ss">:warning</span><span class="p">,</span> <span class="ss">:notice</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">level</span><span class="o">|</span>
+</div><div class='line'>    <span class="k">if</span> <span class="n">flash</span><span class="o">[</span><span class="n">level</span><span class="o">]</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">      &lt;div class=&quot;flash </span><span class="cp">&lt;%=</span> <span class="n">level</span><span class="o">.</span><span class="n">to_s</span> <span class="cp">-%&gt;</span><span class="x">&quot;&gt;</span><span class="cp">&lt;%=</span> <span class="n">flash</span><span class="o">[</span><span class="n">level</span><span class="o">]</span> <span class="cp">-%&gt;</span><span class="x">&lt;/div&gt;</span>
+</div><div class='line'><span class="x">  </span><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;/body&gt;</span>
+</div><div class='line'><span class="x">&lt;/html&gt;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Instalando amqp, workling y workling_mailer</h2>
+
+<p>Ahora bien, antes de instalar Workling, para poder trabajar con RabbitMQ es necesario instalar la gema de amqp, esta gema requiere también de la gema de EventMachine, por lo que al instalar amqp también instalará EventMachine.</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">gem sources -a http://gems.github.com/</span>
+</div><div class='line'><span class="x">sudo gem install tmm1-amqp --no-rdoc --no-ri</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Vemos nuestro listado de gemas</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">sudo gem list</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora si, a instalar workling y workling_mailer</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">script/plugin install git://github.com/purzelrakete/workling.git</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">script/plugin install git://github.com/langalex/workling_mailer.git</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Para poder utilizar workling con RabbitMQ agregamos al final de config/environment.rb</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">config</span><span class="o">.</span><span class="n">after_initialize</span> <span class="k">do</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">invoker</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">::</span><span class="no">Invokers</span><span class="o">::</span><span class="no">EventmachineSubscriber</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">dispatcher</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">::</span><span class="no">Runners</span><span class="o">::</span><span class="no">ClientRunner</span><span class="o">.</span><span class="n">new</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Clients</span><span class="o">::</span><span class="no">AmqpClient</span><span class="o">.</span><span class="n">new</span>
+</div><div class='line'><span class="k">end</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Posteriormente en app/models/user_mailer.rb añadimos</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="kp">include</span> <span class="no">AsynchMail</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>A la fecha de hoy el plugin de workling tiene un pequeño issue, para resolverlo hacemos lo siguiente en el archivo lib/workling/clients/memcache_queue_client.rb y verificar que contiene:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="nb">require</span> <span class="s1">&#39;memcache&#39;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Al principio del archivo, si no lo tienes agrégalo.</p>
+
+<p>Como el amqp corre sobre un ciclo de EventMachine es necesario correr nuestra aplicación con Thin, ya que este servidor soporta EventMachine sin ningún problema. Para instalar Thin corremos</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">sudo</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">thin</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">rdoc</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">ri</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Instalando RabbitMQ</h2>
+
+<p>Checar la instalación <a href="/2009/06/07/instalando-rabbitmq/">aquí</a></p>
+
+<h2>A correr todos</h2>
+
+<p>Nos aseguramos de que el RabbitMQ esté corriendo.</p>
+
+<p>Iniciamos el cliente de workling</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">workling_client</span> <span class="n">start</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>E iniciamos el servidor thin</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">thin</span> <span class="n">start</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Apuntamos nuestro browser a http://localhost:3000 y nos registramos con un usuario, al verificar el log de desarrollo veremos que el correo ahora es enviado después de todas las últimas operaciones registradas en el log. Podemos probar quitando la línea de include AsynchMail del UserMailer y ver lo que hace, o bien haciendo nuevo proceso que sea pesado y que se realice en background.</p>
+
+<p>Referencias:</p>
+
+<ol>
+<li><a href="http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f">http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f</a></li>
+<li><a href="http://github.com/purzelrakete/workling/">http://github.com/purzelrakete/workling/</a></li>
+<li><a href="http://github.com/langalex/workling_mailer/">http://github.com/langalex/workling_mailer/</a></li>
+<li><a href="http://github.com/tmm1/amqp/">http://github.com/tmm1/amqp/</a></li>
+<li><a href="http://github.com/technoweenie/restful-authentication/">http://github.com/technoweenie/restful-authentication/</a></li>
+<li><a href="http://www.rabbitmq.com">http://www.rabbitmq.com</a></li>
+<li><a href="http://code.macournoyer.com/thin/">http://code.macournoyer.com/thin/</a></li>
+<li><a href="/2009/06/07/instalando-rabbitmq/">Instalando RabbitMQ</a></li>
+</ol>
+
+
+<p><a name="async_mailer_english"><strong>Sending mails in asynchronous way in Rails using Workling, Workling-Mailer and RabbitMQ</strong></a> (<a href="#async_mailer_spanish">Español</a>)</p>
+
+<p>Working with message queues is so interesting, since we can put processes in the background in order to be processed in asynchronous way, imagine this to send several mails, or maybe for heavy tasks as sms messages, report generation, pdf generation, etc.</p>
+
+<p>So, with this post I want you to show how to send mails in asynchronous way, we are going to make a small application using Workling, Workling-mailer and as message queue RabbitMQ, actually we could adjust this solution to any other problem with async process requirement.</p>
+
+<h2>Base application</h2>
+
+<p>We create a simple application with restful_authentication and activation option.</p>
+
+<p>First of all we create the rails app</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">rails</span> <span class="n">mail_async_example</span> <span class="o">-</span><span class="n">d</span> <span class="n">mysql</span>
+</div><div class='line'>
+</div><div class='line'><span class="n">rm</span> <span class="kp">public</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</div><div class='line'>
+</div><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">plugin</span> <span class="n">install</span> <span class="n">git</span><span class="ss">:/</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">technoweenie</span><span class="o">/</span><span class="n">restful</span><span class="o">-</span><span class="n">authentication</span><span class="o">.</span><span class="n">git</span>
+</div><div class='line'>
+</div><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">generate</span> <span class="n">authenticated</span> <span class="n">user</span> <span class="n">sessions</span> <span class="o">--</span><span class="kp">include</span><span class="o">-</span><span class="n">activation</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Now with rake we create and migrate DB</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">rake</span> <span class="n">db</span><span class="ss">:create</span>
+</div><div class='line'>
+</div><div class='line'><span class="n">rake</span> <span class="n">db</span><span class="ss">:migrate</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Following the restful_authentication instructions to send mail we add this:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="c1">#config/routes.rb</span>
+</div><div class='line'><span class="n">map</span><span class="o">.</span><span class="n">activate</span> <span class="s1">&#39;activate/:activation_code&#39;</span><span class="p">,</span> <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="ss">:action</span> <span class="o">=&gt;</span> <span class="s1">&#39;activate&#39;</span><span class="p">,</span> <span class="ss">:activation_code</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+</div><div class='line'>
+</div><div class='line'><span class="c1">#config/environment.rb</span>
+</div><div class='line'><span class="n">config</span><span class="o">.</span><span class="n">active_record</span><span class="o">.</span><span class="n">observers</span> <span class="o">=</span> <span class="ss">:user_observer</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Our base app is working now, so to test it we get the url http://localhost:3000/signup in the browser.</p>
+
+<p>Add this in app/controller/application_controller.rb:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="kp">include</span> <span class="no">AuthenticatedSystem</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>The same line added to Application controller is removed from app/controller/sessions_controller.rb and app/controllers/users_controller.rb</p>
+
+<p>We create a new controller for portal index</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">generate</span> <span class="n">controller</span> <span class="n">portal</span> <span class="n">index</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>And modify config/routes.rb to add portal as root</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">map</span><span class="o">.</span><span class="n">root</span> <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="s2">&quot;portal&quot;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>And last we create a layout for our application:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+<span class='line'>16</span>
+<span class='line'>17</span>
+<span class='line'>18</span>
+<span class='line'>19</span>
+<span class='line'>20</span>
+<span class='line'>21</span>
+<span class='line'>22</span>
+<span class='line'>23</span>
+<span class='line'>24</span>
+<span class='line'>25</span>
+<span class='line'>26</span>
+<span class='line'>27</span>
+<span class='line'>28</span>
+<span class='line'>29</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">&lt;!--app/views/layouts/application.html.erb--!&gt;</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
+</div><div class='line'><span class="x">       &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot; lang=&quot;en&quot;&gt;</span>
+</div><div class='line'><span class="x">&lt;head&gt;</span>
+</div><div class='line'><span class="x">  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=UTF-8&quot; /&gt;</span>
+</div><div class='line'><span class="x">  &lt;title&gt;Contracts: </span><span class="cp">&lt;%=</span> <span class="n">controller</span><span class="o">.</span><span class="n">action_name</span> <span class="cp">%&gt;</span><span class="x">&lt;/title&gt;</span>
+</div><div class='line'><span class="x">  </span><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s1">&#39;scaffold&#39;</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">&lt;/head&gt;</span>
+</div><div class='line'><span class="x">&lt;body&gt;</span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">if</span> <span class="n">current_user</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Logout&#39;</span><span class="p">,</span> <span class="n">logout_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">else</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Login&#39;</span><span class="p">,</span> <span class="n">login_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">   </span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Sign up&#39;</span><span class="p">,</span> <span class="n">signup_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="o">[</span><span class="ss">:error</span><span class="p">,</span> <span class="ss">:warning</span><span class="p">,</span> <span class="ss">:notice</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">level</span><span class="o">|</span>
+</div><div class='line'>    <span class="k">if</span> <span class="n">flash</span><span class="o">[</span><span class="n">level</span><span class="o">]</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="x">      &lt;div class=&quot;flash </span><span class="cp">&lt;%=</span> <span class="n">level</span><span class="o">.</span><span class="n">to_s</span> <span class="cp">-%&gt;</span><span class="x">&quot;&gt;</span><span class="cp">&lt;%=</span> <span class="n">flash</span><span class="o">[</span><span class="n">level</span><span class="o">]</span> <span class="cp">-%&gt;</span><span class="x">&lt;/div&gt;</span>
+</div><div class='line'><span class="x">  </span><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">-%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span><span class="x"></span>
+</div><div class='line'>
+</div><div class='line'><span class="x">&lt;/body&gt;</span>
+</div><div class='line'><span class="x">&lt;/html&gt;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Installing amqp, workling and workling_mailer</h2>
+
+<p>Now, before using Workling, we need RabbitMQ and amqp is needed, this gem also requires EventMachine gem, so, both gems are installed when amqp is installed.</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">gem sources -a http://gems.github.com/</span>
+</div><div class='line'><span class="x">sudo gem install tmm1-amqp --no-rdoc --no-ri</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>List your installed gems</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">sudo gem list</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, install workling and workling_mailer</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+</pre></td><td class='code' width='100%'><pre><code class='erb'><div class='line'><span class="x">script/plugin install git://github.com/purzelrakete/workling.git</span>
+</div><div class='line'>
+</div><div class='line'><span class="x">script/plugin install git://github.com/langalex/workling_mailer.git</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Add this to config/environment.rb to allow workling to use RabbitMQ</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">config</span><span class="o">.</span><span class="n">after_initialize</span> <span class="k">do</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">invoker</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">::</span><span class="no">Invokers</span><span class="o">::</span><span class="no">EventmachineSubscriber</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">dispatcher</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">::</span><span class="no">Runners</span><span class="o">::</span><span class="no">ClientRunner</span><span class="o">.</span><span class="n">new</span>
+</div><div class='line'><span class="no">Workling</span><span class="o">::</span><span class="no">Remote</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="no">Workling</span><span class="o">::</span><span class="no">Clients</span><span class="o">::</span><span class="no">AmqpClient</span><span class="o">.</span><span class="n">new</span>
+</div><div class='line'><span class="k">end</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>To app/models/user_mailer.rb add this</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="kp">include</span> <span class="no">AsynchMail</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Until today I&#8217;ve seen a little issue with workling, to solve it we do the folloging in this file lib/workling/clients/memcache_queue_client.rb; verify that you have:</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="nb">require</span> <span class="s1">&#39;memcache&#39;</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Add it if you don&#8217;t have it.</p>
+
+<p>Amqp runs in an EventMachine cycle, so it is needed to run our app with Thin, since Thin supports EventMachine without any problem. To install Thin run</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">sudo</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">thin</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">rdoc</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">ri</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Installing RabbitMQ</h2>
+
+<p>Follow the instructions here <a href="/2009/06/07/instalando-rabbitmq/">aquí</a></p>
+
+<h2>Everybody runs</h2>
+
+<p>Cool, naw we ensure that RabbitMQ is running.</p>
+
+<p>Start workling client</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">script</span><span class="o">/</span><span class="n">workling_client</span> <span class="n">start</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>And start Thin server</p>
+
+<figure role=code><figcaption><span></span></figcaption><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class='ruby'><div class='line'><span class="n">thin</span> <span class="n">start</span>
+</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Point with your browser to http://localhost:3000 and sign up a new user, then verify your log and will see that email is sent and registered to the end of log after all operations. We can test removing include AsynchMail from UserMailer and see what happens, it would be great if you test some application with a heavy process working in the background.</p>
+
+<p>Links:</p>
+
+<ol>
+<li><a href="http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f">http://github.com/christospappas/workling/commit/063b9849b32e0c6140a5ecdb254357770d9bd28f</a></li>
+<li><a href="http://github.com/purzelrakete/workling/">http://github.com/purzelrakete/workling/</a></li>
+<li><a href="http://github.com/langalex/workling_mailer/">http://github.com/langalex/workling_mailer/</a></li>
+<li><a href="http://github.com/tmm1/amqp/">http://github.com/tmm1/amqp/</a></li>
+<li><a href="http://github.com/technoweenie/restful-authentication/">http://github.com/technoweenie/restful-authentication/</a></li>
+<li><a href="http://www.rabbitmq.com">http://www.rabbitmq.com</a></li>
+<li><a href="http://code.macournoyer.com/thin/">http://code.macournoyer.com/thin/</a></li>
+<li><a href="/2009/06/07/instalando-rabbitmq/">Instalando RabbitMQ</a></li>
+</ol>
+
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/06/07/instalando-rabbitmq/">Instalando RabbitMQ</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-06-07T00:00:00-05:00" pubdate  data-updated="true" >Jun 7<span>th</span>, 2009</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a name="rabbitmq_spanish"/><strong>Instalando RabbitMQ</strong></a> (<a href="#rabbitmq_english">English</a>)</p>
+
+<p>RabbitMQ es un sistema de message queue (MQ), el cual provee comunicaciones asíncronas, es decir que el productor y consumidor no tienen la necesidad de interactuar con los mensajes al mismo tiempo, además de que es una implementación del protocolo AMQP (Advanced Message Queuing Protocol), un protocolo para mensajeo de alto rendimiento, y por último decir que RabbitMQ está desarrollado con Erlang, Erlang es un lenguaje de programación funcional.</p>
+
+<h2>En Ubuntu 9.04</h2>
+
+<p>La instalación de RabbitMQ en Ubuntu 9.04 es tan simple como correr el comando</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo aptitude install rabbitmq-server</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Y con el cual si no has instalado Erlang te mostrará que paquetes tendrá que instalar para que lo tengas también.</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>jcastaneyra@ubuntu:~/sources$ sudo aptitude install rabbitmq-server
+</div><div class='line'>[sudo] password for jcastaneyra:
+</div><div class='line'>Reading package lists... Done
+</div><div class='line'>Building dependency tree
+</div><div class='line'>Reading state information... Done
+</div><div class='line'>Reading extended state information
+</div><div class='line'>Initializing package states... Done
+</div><div class='line'>Writing extended state information... Done
+</div><div class='line'>The following NEW packages will be installed:
+</div><div class='line'>erlang-base{a} erlang-nox{a} libltdl7{a} odbcinst1debian1{a} unixodbc{a}
+</div><div class='line'>The following partially installed packages will be configured:
+</div><div class='line'>rabbitmq-server
+</div><div class='line'>0 packages upgraded, 5 newly installed, 0 to remove and 8 not upgraded.
+</div><div class='line'>Need to get 28.6MB of archives. After unpacking 46.9MB will be used.
+</div><div class='line'>Do you want to continue? [Y/n/?]</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Una vez instalado ya está corriendo.</p>
+
+<h2>En Mac leopard</h2>
+
+<p><em>UPDATE (27/05/2010)</em>: Desde hace un rato que ya estoy usando Homebrew para instalar cosas en Mac, ya existe una fórmula para instalar también RabbitMQ  y por supuesto Erlang, para más información visitar <a href="http://github.com/mxcl/homebrew">http://github.com/mxcl/homebrew</a> y seguir las instrucciones para instalar Homebrew. Con RabbitMQ, incluso si se quiere una versión específica de RabbitMQ se puede modificar la fórmula :)</p>
+
+<p>La instalación es a través de los MacPorts, hay que bajar el instalador de la página www.macports.org/install.php, pero para poder compilar es necesario tener XCode instalado. Los MacPorts son instalados en /opt, por lo que hay que asegurarnos que se tengamos agregados los paths necesarios en el profile para ejecutar los comandos de MacPorts.</p>
+
+<p>En mi caso en .profile (pero también puede ser el .bash_login) debe estar algo así (si no está lo agrego):</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'># MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate PATH variable for use with MacPorts.
+</div><div class='line'>export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+</div><div class='line'># Finished adapting your PATH environment variable for use with MacPorts.
+</div><div class='line'>
+</div><div class='line'># MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate MANPATH variable for use with MacPorts.
+</div><div class='line'>export MANPATH=/opt/local/share/man:$MANPATH
+</div><div class='line'># Finished adapting your MANPATH environment variable for use with MacPorts.</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Una vez que están los MacPorts hay que instalar primero erlang, así que ejecutamos</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo port install erlang</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Y esperamos un buen rato a que se instale.</p>
+
+<p>Una vez instalado erlang, bajamos la última versión de RabbitMQ</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>mkdir /tmp/rabbitmq && cd /tmp/rabbitmq
+</div><div class='line'>curl -O http://www.rabbitmq.com/releases/rabbitmq-server/v1.5.5/rabbitmq-server-generic-unix-1.5.5.tar.gz
+</div><div class='line'>tar xvzf rabbitmq-server-generic-unix-1.5.5.tar.gz
+</div><div class='line'>sudo mv rabbitmq_server-1.5.5/ /opt/local/lib/erlang/lib</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora ya lo podemos ejecutar.</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo /opt/local/lib/erlang/lib/rabbitmq_server-1.5.5/sbin/rabbitmq-server</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Recursos</h2>
+
+<ol>
+<li><a href="http://www.rabbitmq.com">http://www.rabbitmq.com</a></li>
+<li><a href="http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/">http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/</a></li>
+</ol>
+
+
+<p><a name="rabbitmq_english"/><strong>Installing RabbitMQ</strong></a> (<a href="#rabbitmq_spanish">Español</a>)</p>
+
+<p>RabbitMQ is a complete and highly reliable Enterprise Messaging system, it provides asynchronous communications,  meaning that the sender and receiver of the message do not need to interact with the message queue at the same time, also it is a AMQP implementation (Advanced Message Queuing Protocol) a protocol for high performance messaging, and last RabbitMQ is developed with Erlang, a functional programming language.</p>
+
+<h2>In Ubuntu 9.04</h2>
+
+<p>RabbitMQ instalation in Ubuntu 9.04 is so simple, it is just needed to run a command</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo aptitude install rabbitmq-server</div></code></pre></td></tr></table></div></figure>
+
+
+<p>With this also install all packages needed by rabbitmq, Erlang is installed also.</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+<span class='line'>13</span>
+<span class='line'>14</span>
+<span class='line'>15</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>jcastaneyra@ubuntu:~/sources$ sudo aptitude install rabbitmq-server
+</div><div class='line'>[sudo] password for jcastaneyra:
+</div><div class='line'>Reading package lists... Done
+</div><div class='line'>Building dependency tree
+</div><div class='line'>Reading state information... Done
+</div><div class='line'>Reading extended state information
+</div><div class='line'>Initializing package states... Done
+</div><div class='line'>Writing extended state information... Done
+</div><div class='line'>The following NEW packages will be installed:
+</div><div class='line'>erlang-base{a} erlang-nox{a} libltdl7{a} odbcinst1debian1{a} unixodbc{a}
+</div><div class='line'>The following partially installed packages will be configured:
+</div><div class='line'>rabbitmq-server
+</div><div class='line'>0 packages upgraded, 5 newly installed, 0 to remove and 8 not upgraded.
+</div><div class='line'>Need to get 28.6MB of archives. After unpacking 46.9MB will be used.
+</div><div class='line'>Do you want to continue? [Y/n/?]</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Once the installation is finished RabbitMQ will be running.</p>
+
+<h2>In Mac leopard</h2>
+
+<p><em>UPDATE (27/05/2010)</em>: I am using Homebrew to install some stuff in Mac from some months ago, Homebrew has a formula to install RabbitMQ and also Erlang, for more info please visit <a href="http://github.com/mxcl/homebrew">http://github.com/mxcl/homebrew</a> for install instructions. Also if you want to install a different version of RabbitMQ you can do it just editing the formula :)</p>
+
+<p>RabbitMQ installation is done through MacPorts, you need to download the MacPorts installer from www.macports.org/install.php, also XCode is needed. MacPorts are installed in /opt, for that reason we put these paths in the .profile file (could be .bash_login), if you don&#8217;t have these paths add them to your profile file:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'># MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate PATH variable for use with MacPorts.
+</div><div class='line'>export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+</div><div class='line'># Finished adapting your PATH environment variable for use with MacPorts.
+</div><div class='line'>
+</div><div class='line'># MacPorts Installer addition on 2009-02-25_at_15:37:48: adding an appropriate MANPATH variable for use with MacPorts.
+</div><div class='line'>export MANPATH=/opt/local/share/man:$MANPATH
+</div><div class='line'># Finished adapting your MANPATH environment variable for use with MacPorts.</div></code></pre></td></tr></table></div></figure>
+
+
+<p>In order to install erlang execute the following command:</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo port install erlang</div></code></pre></td></tr></table></div></figure>
+
+
+<p>You need to wait some time, maybe several minutes :)</p>
+
+<p>Once you have erlang installed, we download the last RabbitMQ version</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>mkdir /tmp/rabbitmq && cd /tmp/rabbitmq
+</div><div class='line'>curl -O http://www.rabbitmq.com/releases/rabbitmq-server/v1.5.5/rabbitmq-server-generic-unix-1.5.5.tar.gz
+</div><div class='line'>tar xvzf rabbitmq-server-generic-unix-1.5.5.tar.gz
+</div><div class='line'>sudo mv rabbitmq_server-1.5.5/ /opt/local/lib/erlang/lib</div></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we execute rabbitmq-server with this</p>
+
+<figure role=code><div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+</pre></td><td class='code' width='100%'><pre><code class=''><div class='line'>sudo /opt/local/lib/erlang/lib/rabbitmq_server-1.5.5/sbin/rabbitmq-server</div></code></pre></td></tr></table></div></figure>
+
+
+<h2>Links</h2>
+
+<ol>
+<li><a href="http://www.rabbitmq.com">http://www.rabbitmq.com</a></li>
+<li><a href="http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/">http://playtype.net/past/2008/10/9/installing_rabbitmq_on_osx/</a></li>
+</ol>
+
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/">Mostrando El Branch De Git en El Prompt De La Consola</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-05-20T00:00:00-05:00" pubdate  data-updated="true" >May 20<span>th</span>, 2009</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Mostrando el branch de git en el prompt de la consola</strong> (In english below)</p>
+
+<p>Tiene aproximadamente dos meses que empecé a trabajar con git, y la experiencia ha sido muy buena, bastante interesante, pero con los primeros tutoriales que empecé a ver noté que los aliases ayudan a hacer más ágil el trabajo con git, curiosamente hasta este momento no los he usado, creo que ha llegado la hora de agregarlos en mi configuración. Así que al final de mi archivo $HOME/.gitconfig agrego:</p>
+
+<pre><code>[color]
+        ui = auto
+[alias]
+        ci = commit
+        co = checkout
+        st = status
+</code></pre>
+
+<p>Por cierto, que la parte de [color] es para mostrar con colores mis cambios cuando le doy git status, aunque ahora con estos cambios ya le podría dar git st.&lt;/p&gt; &lt;p&gt;Otra cosa que noté en mis inicios con git fue que en un screencast de peepcode, en el prompt de la consola aparecía el branch en el que se encontraba trabajando, en ese entonces busqué como hacerlo pero no tuve éxito hasta ahora, entonces para lograr esto hay que agregar un archivo con funciones .bash_functions</p>
+
+<pre><code># git-related functions in here
+
+git_branch () {
+  GIT_BRANCH="$(git branch --no-color 2&gt; /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+  if [[ -n "$GIT_BRANCH" ]] ; then
+    echo ":($GIT_BRANCH) "
+  fi
+}
+empty_branch () {
+  name="$1"
+  if [[ -n "$name" ]] ; then
+    echo "This will create a new empty branch in the current"
+    echo -n "git repository called '${name}' ... Continue? [y/N] "
+    read VERIFY
+    if [[ "$VERIFY" = "Y" || "$VERIFY" = "y" ]]; then
+      echo "creating branch '$name'"
+      git symbolic-ref HEAD refs/heads/$name
+      rm .git/index
+      git clean -fdx
+      echo "you should be on your new empty branch! "
+      echo "add/commit files as usual! "
+      echo "( your new branch will show up after you commit something to it )"
+    else
+      echo -n ""
+    fi
+  else
+    echo "Creates a new empty branch in your git repository."
+    echo ""
+    echo "Usage: empty_branch [name_of_new_branch]"
+  fi
+}
+
+# vim:set ft=sh:
+</code></pre>
+
+<p>Y dependiendo del archivo de configuración del shell que estén usando agregar en él esto:</p>
+
+<pre><code># if .bash_functions if a file then source it
+# if .bash_functions is a directory, then sourec all its files
+if [ -f ~/.bash_functions ]; then
+  . ~/.bash_functions
+fi
+if [ -d ~/.bash_functions ]; then
+  for function in ~/.bash_functions/*; do . $function; done
+fi
+
+# bash prompt
+prompt () {
+  PS1="\[\e[34m\]\u\[\e[37m\]@\[\e[36m\]\h\[\e[37m\]:\[\e[31m\]\w\[\e[37m\]$(git_branch)$ "
+}
+PROMPT_COMMAND=prompt
+export PROMPT_COMMAND
+</code></pre>
+
+<p>En mi caso, en leopard yo estoy usando .profile, pero podría ser .bash_rc o algún otro profile de shell. Ya para cargar la info del profile habría que ejecutar source .profile ó bien salirse de la consola y volverla a abrir para que cargue la nueva configuración.</p>
+
+<p>Todavía falta mucho por aprender de git, pero creo que voy por buen camino, también he aprendido bastante de los flujos que siguen algunos equipos de trabajo ágiles, son muy interesantes.</p>
+
+<h2>Recursos:</h2>
+
+<ol>
+<li><a href="http://git.or.cz/gitwiki/Aliases">Aliases</a></li>
+<li><a href="http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bash_functions/git">.bash_functions file from Remi</a></li>
+<li><a href="http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bashrc">.bash_rc file from Remi</a></li>
+<li><a href="http://reinh.com/blog/2009/03/02/a-git-workflow-for-agile-teams.html">Git workflow for agile teams</a></li>
+</ol>
+
+
+<p><strong>Showing the git branch in the console prompt</strong></p>
+
+<p>I have working with git since started two months ago, the experience have been too good, I must say awesome, when I started to work I saw that you could use aliases with git, it is funny but since then I&#8217;ve never used aliases, so now it&#8217;s time to add them to my configuration file $HOME/.gitconfig</p>
+
+<pre><code>[color]
+        ui = auto
+[alias]
+        ci = commit
+        co = checkout
+        st = status
+</code></pre>
+
+<p>This [color] section enable colors when I execute git status and see my changes, but now with my aliases I could write git st.&lt;/p&gt; &lt;p&gt;Another nice stuff that I noticed when started to work with git and I was watching a Peepcode screencast was that in the console prompt appeared the git branch, in that moment I googled it but no results got, until now that I found how to do this; one file with the git functions is created .bash_functions</p>
+
+<pre><code># git-related functions in here
+
+git_branch () {
+  GIT_BRANCH="$(git branch --no-color 2&gt; /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+  if [[ -n "$GIT_BRANCH" ]] ; then
+    echo ":($GIT_BRANCH) "
+  fi
+}
+empty_branch () {
+  name="$1"
+  if [[ -n "$name" ]] ; then
+    echo "This will create a new empty branch in the current"
+    echo -n "git repository called '${name}' ... Continue? [y/N] "
+    read VERIFY
+    if [[ "$VERIFY" = "Y" || "$VERIFY" = "y" ]]; then
+      echo "creating branch '$name'"
+      git symbolic-ref HEAD refs/heads/$name
+      rm .git/index
+      git clean -fdx
+      echo "you should be on your new empty branch! "
+      echo "add/commit files as usual! "
+      echo "( your new branch will show up after you commit something to it )"
+    else
+      echo -n ""
+    fi
+  else
+    echo "Creates a new empty branch in your git repository."
+    echo ""
+    echo "Usage: empty_branch [name_of_new_branch]"
+  fi
+}
+
+# vim:set ft=sh:
+</code></pre>
+
+<p>And depending which shell are you using you add this into it</p>
+
+<pre><code># if .bash_functions if a file then source it
+# if .bash_functions is a directory, then sourec all its files
+if [ -f ~/.bash_functions ]; then
+  . ~/.bash_functions
+fi
+if [ -d ~/.bash_functions ]; then
+  for function in ~/.bash_functions/*; do . $function; done
+fi
+
+# bash prompt
+prompt () {
+  PS1="\[\e[34m\]\u\[\e[37m\]@\[\e[36m\]\h\[\e[37m\]:\[\e[31m\]\w\[\e[37m\]$(git_branch)$ "
+}
+PROMPT_COMMAND=prompt
+export PROMPT_COMMAND
+</code></pre>
+
+<p>I&#8217;m using .profile in leopard, but could be .bash_rc. Now to load this new changes from your profile it&#8217;s need to execute source .profile or you also could close your console window and open a new one.</p>
+
+<p>I&#8217;ve learned a lot until now but I still need to learn more (even english :) ), I&#8217;ve learned also from agile workflows that helps with your work.</p>
+
+<h2>Notes:</h2>
+
+<ol>
+<li><a href="http://git.or.cz/gitwiki/Aliases">Aliases</a></li>
+<li><a href="http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bash_functions/git">.bash_functions file from Remi</a></li>
+<li><a href="http://github.com/remi/home/blob/9520493b8c2a2c3f290d64a33df13e0763aac50c/.bashrc">.bash_rc file from Remi</a></li>
+<li><a href="http://reinh.com/blog/2009/03/02/a-git-workflow-for-agile-teams.html">Git workflow for agile teams</a></li>
+</ol>
+
+
+<p>Another note:</p>
+
+<p>This is my first try to write in english, I definitely need to learn to be more fluid in my english writing also speaking, but it&#8217;s needed to start in some place. So if this is not understandable you can give some feedback, thanks.</p>
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/03/17/segunda-reunion-de-mxor/">Segunda Reunión De MXOR</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-03-17T00:00:00-06:00" pubdate  data-updated="true" >Mar 17<span>th</span>, 2009</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>El día de ayer fue la segunda reunión de nuestro grupo de Rails MXOR, en el cuál se hablaron de diversos tópicos en general, pero como todos estamos interesados en aprender de estos tópicos llegamos a la idea de trabajar en un proyecto en donde se pueda trabajar con las cosas que nos interesan y que de esto surgan una serie de artículos los cuales puedan servirnos a nosotros como referencia y a las personas interesadas en Rails y de todo lo que está al rededor.</p>
+
+<p>Sobre los tópicos que nos resultaron interesantes son:</p>
+
+<ul>
+<li>Instalación de Linux desde cero y con los necesario para Rails</li>
+<li>Version de Rails, VM&#8217;s</li>
+<li>Uso de Git con el proyecto</li>
+<li>RedMine como administrador de proyecto</li>
+<li>BDD</li>
+<li>Autenticación</li>
+<li>Servidores Web, App Servers</li>
+<li>Prototype, scriptaculous, JQuery (Edgar dice que es más ligero)</li>
+<li>CSS (blueprint, haml)</li>
+<li>Deployment</li>
+<li>Cache</li>
+<li>Plugins de consulta</li>
+<li>I18N</li>
+</ul>
+
+
+<p>En la reunión se hizo una lluvia de ideas sobre que proyectos trabajar y sobre el proyecto que se eligió también se fueron aterrizando diversas ideas.</p>
+
+<h2>Problema:</h2>
+
+<p>Compartir historias de desarrolladores.</p>
+
+<h2>El contenido:</h2>
+
+<p>Tutoriales
+Errores
+Categorización de tutoriales
+Categorización de Errores
+Como wiki de errores
+¿Compartir pasos de recetas?
+Solo en español para empezar</p>
+
+<p>Hasta aquí me quedé en las anotaciones ya que tuve que salir temprano, pero hay un podcast con la sesión de principio a fin. En este momento se está seleccionando un nombre para la aplicación, una vez que se haya elegido el nombre se podrá empezar a trabajar en estos tópicos, idealmente la gente involucrada en cada actividad sería la que esté interesada en aprender y no precisamente la que domine el tema. La lista de nombres al momento es:</p>
+
+<ul>
+<li>redcipe (3 votos)</li>
+<li>errecipe (1 voto)</li>
+<li>devrecipes (0 votos)</li>
+<li>devcipe (1 voto)</li>
+</ul>
+
+
+<p>Por supuesto este es un proyecto open source y abierto a la comunidad interesada en Rails, buscando que a partir de esto surgan artículos e información que en un momento dado nos sea de utilidad, una especie de libro que nos sirva de guía en la realización de una aplicación. Para más información acudir a la <a href="http://mexicoonrails.com.mx/news/12">página del grupo</a>.</p>
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/02/27/scaling-rails/">Scaling Rails</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2009-02-27T00:00:00-06:00" pubdate  data-updated="true" >Feb 27<span>th</span>, 2009</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hace un par de semanas aproximadamente buscando información de como hacer escalar aplicaciones Rails me encontré con un material bastante interesante y con información muy valiosa, y lo mejor de todo es que en screencasts, los cuales han sido publicados por Gregg Pollack de <a href="http://railsenvy.com">RailsEnvy</a> con el soporte de <a href="http://newrelic.com/">NewRelic</a>, sería muy bueno que les den una revisada. Los screencasts publicados hasta el momento son:</p>
+
+<ol>
+    <li><a href="http://railslab.newrelic.com/2009/01/22/introduction">Introduction</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/01/22/page-responsiveness">Page Responsiveness</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/01/22/page-caching">Page Caching</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/01/22/cache-expiration">Chache Expiration</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/01/22/new-relic-rpm">New Relic RPM</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/02/05/episode-5-advanced-page-caching">Advanced Page Caching</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/02/09/episode-6-action-caching">Action Caching</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/02/09/episode-7-fragment-caching">Fragment Caching</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/02/19/episode-8-memcached">Memcahed</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/02/19/episode-9-taylor-weibley-databases">Taylor Weibley &amp; Databases</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/02/25/episode-10-client-side-caching">Client-side Caching</a></li>
+    <li><a href="http://railslab.newrelic.com/2009/02/26/episode-11-advanced-http-caching">Additional HTTP Caching</a></li>
+</ol>
+
+</div>
+  
+  
+
+
+  </article>
+
+<nav role="pagination">
+  <div>
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</nav>
+
+<script type="text/javascript">
+    var disqus_shortname = 'jcastaneyra';
+    (function () {
+      var s = document.createElement('script'); s.async = true;
+      s.type = 'text/javascript';
+      s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+
+</div>
+<aside role=sidebar>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/">Bundler gem and Daemons error (The default Gemfile was not found)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table names case insensitive for MySQL Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/">Etiquetando código en git/Tagging code in git</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/jcastaneyra">@jcastaneyra</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jcastaneyra',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jcastaneyra", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+  
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/jcastaneyra?title=&count=3&sort=date&extended"></script>
+  <p><a href="http://delicious.com/jcastaneyra">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer><p>
+  Copyright &copy; 2011 - Jose Castaneyra -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>

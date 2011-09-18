@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby on Rails, desarrollo ágil y mis divagaciones - JCastaneyra blog</title>
+  <meta name="author" content="Jose Castaneyra">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <link rel="canonical" href="http://www.jcastaneyra.com/2008/03/18/ruby-on-rails-desarrollo-agil-y-mis-divagaciones/"/>
+  <link href="/favicon.png" rel="shortcut icon" />
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="JCastaneyra blog" type="application/atom+xml"/>
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body  >
+  <header><hgroup>
+  <h1><a href="/">JCastaneyra blog</a></h1>
+  
+    <h2>My ideas repo</h2>
+  
+</hgroup>
+
+</header>
+  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="site-search">
+    <input type="hidden" name="q" value="site:www.jcastaneyra.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul role=main-navigation>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry">
+  
+  <header>
+    
+      <h1 class="entry-title">Ruby on Rails, Desarrollo ágil Y Mis Divagaciones</h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-03-18T00:00:00-06:00" pubdate  data-updated="true" >Mar 18<span>th</span>, 2008</time></p>
+    
+  </header>
+
+
+<div class="entry-content"><p>De hace un mes para acá he andado en una de mis divagaciones internas, de esas que me suelen dar, esas como cómo podría poner un negocio y de qué, o de cómo poder generar más dinero, en fin, esas que luego no me dejan dormir. Sucede que de un mes para acá he estado pensando como poder desarrollar software para negocios pequeños y medianos, de siempre yo he desarrollado para empresas grandes, y obviamente para proyectos grandes, donde mi participación queda en una pequeña parte del proyecto, nunca he hecho algo para un posible cliente, tanto pequeño o grande, ajeno al ambiente de una empresa grande, esto no se me ha dado, y aunque se me hubiera dado probablemente lo habría rechazado, el ¿porqué?, bueno esto hubiera sido porque a mi percepción los desarrollos de lo que sea siempre son lentos, independientemente de la curva de aprendizaje de alguna tecnología (que para mi sigue siendo algo lento), el analisis, el desarrollo y las pruebas son lentas, entonces, dentro de mis divagaciones internas me puse a pensar si ¿habrá alguna tecnología que me ayude o nos ayude a nosotros los desarrolladores a hacer un desarrollo ágil?, debe de haberla, digo, no es por nada de que haya bastantes libros sobre desarrollo ágil.</p>
+
+<p>Entonces me encontré, que para el desarrollo, al menos en aplicaciones web, hay un framework, este framework ya tiene más de un par de años en el mercado, y este es <a href="http://www.rubyonrails.org">Ruby on Rails</a>, no voy a hablar nada del framework como tal ni del lenguaje Ruby, lo que  si puedo decir es de que acabo de adquirir un par de libros, y si puedo ver que el desarrollo en aplicaciones web si se agiliza bastante, digo, aún así yo no tengo mucha experiencia en desarrollo web, pero dentro de las pocas prácticas personales que  he hecho, al menos con Java, jsp&#8217;s, jsf, ha sido algo pesado de llevar, porque de repente empiezan a haber un buen de archivos xml de configuración, y si hubiese un errorcito, para encontrarlo puede llegar a ser frustrante.</p>
+
+<p>Bueno, pero eso es con respecto al desarrollo web, y el decir que puede ser ágil es subjetivo, porque también hay que superar la curva de aprendizaje, aunque esto podría ser algo más rapido con Ruby on Rails que por ejemplo con las tecnologías de Java (servlets, jsp&#8217;s, jsf), ahora bien, con respecto a aplicaciones de escritorio ¿como se podría llevar a cabo un desarrollo ágil con las tecnologías que hay?, pues aquí si parece que no está muy claro para mi esta cuestión.</p>
+
+<p>A toda esta divagación tuve la osadía de agregarle más confusión, y leerme algunos artículos, un libro y una tesis doctoral, con el <a href="http://gettingreal.37signals.com/toc.php">libro de 37signals</a> (&#8220;Getting real&#8221;) donde habla de desarrollos sencillos y que cumplan con la función principal que resuelve una necesidad, sin agregar complejidad por funcionalidad que bien podría no ser necesaria, pero esto creo que puede servir para desarrollos web, pero para aplicaciones de escritorio tengo mis dudas. También, con la <a href="http://www.flomedia.de/diploma/">tesis doctoral de Florian Moritz</a> donde habla de la convergencia de aplicaciones web con aplicaciones de escritorio, y las diferentes tecnologías que existen y que están tratando de alcanzar este punto, como las muy mentadas RIA (Rich Internet Applications).</p>
+
+<p>Y bien, aterrizando un poco todo esto, y volviendo a lo que decía en un principio sobre las aplicaciones para clientes pequeños y/o medianos, por ejemplo, si yo tuviera un cliente que quiere una aplicación que sólo corriera en una sóla máquina (el giro de la empresa podría ser cualquiera y que fuera necesario tener datos persistentes), y que después quisiera migrar su aplicación a un sistema multiusuarios, y que posteriormente se requiriera esta aplicación que funcionara como una aplicación global para dar servicio a muchas sucursales, ¿como podría lograr esto de una manera ágil? ¿Como podría hacerla transparente a la migración? ¿Cómo podría hacerla consistente con respecto a la interfaz de usuario, con tal de que no cause impacto de la migración de aplicación de escritorio a aplicación global? ¿Podría funcionar Ruby on Rails aquí, y hacer una aplicación web y tenerla en una máquina local como si fuera una aplicación de escritorio, y con esto sólo quedaría en centralizar la base de datos acorde a cada una de las migraciones? ¿O tendría que hacer uso de una combinación de tecnologías, como Java, AIR (el framework de Adobe), openlaszlo?</p>
+
+<p>De veras que me gusta complicarme la vida, y cuando estaba terminando de escribir este post, llega una posibilidad de poner en práctica esto que estoy poniendo aquí.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jose Castaneyra</span></span>
+
+      
+
+
+
+
+
+  
+
+
+
+<time datetime="2008-03-18T00:00:00-06:00" pubdate  data-updated="true" >Mar 18<span>th</span>, 2008</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.jcastaneyra.com/2008/03/18/ruby-on-rails-desarrollo-agil-y-mis-divagaciones/" data-via="jcastaneyra" data-counturl="http://www.jcastaneyra.com/2008/03/18/ruby-on-rails-desarrollo-agil-y-mis-divagaciones/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+</div>
+
+    
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread"><div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname = 'jcastaneyra';
+  if(typeof(custom_disqus_identifier) != "undefined") {
+    var disqus_identifier = custom_disqus_identifier;
+  } else {
+    var disqus_identifier = 'http://www.jcastaneyra.com/2008/03/18/ruby-on-rails-desarrollo-agil-y-mis-divagaciones/';
+  }
+  if(typeof(custom_disqus_url) != "undefined") {
+    var disqus_url = custom_disqus_url;
+  } else {
+    var disqus_url = 'http://www.jcastaneyra.com/2008/03/18/ruby-on-rails-desarrollo-agil-y-mis-divagaciones/';
+  }
+  //var disqus_developer = 1;
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside role=sidebar>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/">Bundler gem and Daemons error (The default Gemfile was not found)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table names case insensitive for MySQL Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/">Etiquetando código en git/Tagging code in git</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jcastaneyra">@jcastaneyra</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jcastaneyra',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jcastaneyra", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+  
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/js/jcastaneyra?title=&count=3&sort=date&extended"></script>
+  <p><a href="http://delicious.com/jcastaneyra">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer><p>
+  Copyright &copy; 2011 - Jose Castaneyra -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+</body>
+</html>
