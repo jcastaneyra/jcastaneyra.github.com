@@ -4,13 +4,25 @@
   <title>JCastaneyra blog</title>
   <link href="http://www.jcastaneyra.com/atom.xml" rel="self"/>
   <link href="http://www.jcastaneyra.com/"/>
-  <updated>2011-09-19T12:11:04-05:00</updated>
+  <updated>2011-09-19T12:55:11-05:00</updated>
   <id>http://www.jcastaneyra.com/</id>
   <author>
     <name>Jose Castaneyra</name>
     
   </author>
 
+  
+  <entry>
+    <title>Mi Blog Con Octopress</title>
+    <link href="http://www.jcastaneyra.com/2011/09/19/mi-blog-con-octopress/"/>
+    <updated>2011-09-19T12:31:00-05:00</updated>
+    <id>http://www.jcastaneyra.com/2011/09/19/mi-blog-con-octopress</id>
+    <content type="html">&lt;p&gt;&lt;img class=&#8217;left &#8217; src=&#8217;http://octopress.org/images/logo.png?1316270443&#8217; width=&#8221; height=&#8221; alt=&#8221; title=&#8221;&gt;
+Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio sin ningún post, por lo que he tenido totalmente abandonado mi blog, he estado trabajando bastante y el tiempo libre se ha reducido a casi nada o bien mi total desorganización me lo ha impedido.&lt;/p&gt;
+
+&lt;p&gt;Pues bien, esta vez estoy con una nueva plataforma de blogging (&lt;a href=&quot;http://octopress.org&quot;&gt;octopress&lt;/a&gt;), y está bastante atractiva, veo que muchos ya están sobre esta plataforma, que emoción, y además trabaja con &lt;a href=&quot;https://github.com/mojombo/jekyll&quot;&gt;jekyll&lt;/a&gt; para generar el sitio estático, en los días que siguen iré personalizando mi blog, ya tenía por ahí un estilo muy básico hecho por mi (desde el punto de vista de un desarrollador) con un pequeño ejercicio hecho en sinatra, tendré que aprovecharlo y espero actualizarlo pronto.&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Installing RabbitMQ + Stomp in Ubuntu/Mac</title>
@@ -1803,23 +1815,6 @@ sudo gem install capistrano&lt;/pre&gt;
     <content type="html">&lt;p&gt;La semana pasada, instalé Ubuntu 8.10, bueno más bien actualicé sobre mi versión de 8.04, sólo tuve un pequeño problema, que cuando arrancaba no me reconocía la tarjeta de video, y después de un rato me di cuenta, que al hacer la actualización hay ciertos archivos que no sobreescribe, incluso te saca mensajes de que los archivos los va a dejar intactos, uno de esos archivos fue el /boot/grub/menu.lst, por lo que la actualización a 8.10 traía un kernel nuevo, y este kernel nuevo no se encontraba en la lista de kerneles a arrancar.&lt;/p&gt;
 
 &lt;p&gt;Así pues, la solución fue agregar ese nuevo kernel al menu.lst, y con esto quedó solucionado el problema de que no me reconocía la tarjeta de video.&lt;/p&gt;
-</content>
-  </entry>
-  
-  <entry>
-    <title>Retrospectiva</title>
-    <link href="http://www.jcastaneyra.com/2008/06/25/retrospectiva/"/>
-    <updated>2008-06-25T00:00:00-05:00</updated>
-    <id>http://www.jcastaneyra.com/2008/06/25/retrospectiva</id>
-    <content type="html">&lt;p&gt;Tenía tiempo que no posteaba algo, hasta hace apenas un par de días que mencioné que ya tengo mi propio dominio, y que dije que era mi &amp;#8220;nuevo blog&amp;#8221; y qué sólo fue mover mi blog anterior a mi propio servidor.&lt;/p&gt;
-
-&lt;p&gt;Y bien, en estos últimos meses pasaron muchas cosas, y de algunas que quiero compartir son, pues primero, que hace como un par de meses o un poco más creo compré una macbook air, pero estoy seguro de que ya habrán escuchado de esta laptop ultraligera, muy bonita, puro lujo, pero bonita, pero no fue para mi jajaja porque me dio por regalar computadoras, jajaja así es, se la regalé a mi novia, es que como todas las mañanas acompaño a mi novia a los taxis y le ayudaba a cargar su mochila con su laptop viejita que pesaba como una desktop y además de todo el instrumental de endodoncista y que para llegar a los taxis caminamos aproximadamente dos cuadras pos si me di cuenta de que necesitabamos algo más ligero, sin pensar lo que ella caminaba en la universidad, y así fue como me decidí a regalarsela, y también la laptop viejita que tenía, una thinkpad T30, se la regalé a mi hermana porque perdió la suya, o se la robaron, o lo que haya sido, pero ya no tenía, y mis papás querían comprarle una, pero viendo la situación con el gasto inminente, preferí regalarsela, tons ahora yo no tengo laptop sólo estoy usando la del trabajo.&lt;/p&gt;
-
-&lt;p&gt;También por otra parte, empecé a meterme más con ruby on rails, porque quiero hacer algunos proyectos personales, y la verdad este framework se me hace muy funcional, simple, y ágil para desarrollar aplicaciones web, la idea en un principio era migrar mi blog a algunos de las aplicaciones de blog que están sobre RoR como mephisto o typo, pero me di cuenta que me iba a tardar un rato en migrarlo, entonces mejor preferí montarlo sobre wordpress en lo que averiguaba como hacerlo sobre RoR y ya con más calma. Que por cierto, los libros de RoR que compré ya casi los termino, ahora quiero seguir aprendiendo más y por supuesto ya empecé con mis proyectos personales.&lt;/p&gt;
-
-&lt;p&gt;En lo que concierne a lo laboral, sucede que hace casi un mes nos cambiaron a otro lugar de trabajo, ahora para llegar a este nuevo lugar tengo que levantarme más temprano porque la hora de entrada ahora si es a las 9, también que para subirse al metro por la zona del centro está cañón, tiene uno que empujar a la gente y en lo que están cerrando las puertas del metro volver a empujar para que no sea uno apachurrado por la puerta. También estamos a punto de entrar a producción con nuestra proyecto, ya casi, sólo un poquito más y listo.&lt;/p&gt;
-
-&lt;p&gt;Todo ha ido bien hasta el momento, espero que siga yendo bien de aquí para delante.&lt;/p&gt;
 </content>
   </entry>
   

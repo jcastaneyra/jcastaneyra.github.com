@@ -65,6 +65,87 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2006/10/06/recuperando-grub-con-el-disco-de-instalacion-de-debian/">Recuperando GRUB Con El Disco De Instalación De Debian</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2006-10-06T00:00:00-05:00" pubdate  data-updated="true" >Oct 6<span>th</span>, 2006</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Anoche me puse a instalar un nuevo disco duro de 160 Gb en una maquinilla que tengo en la casa, que está corriendo Debian Sarge y que está funcionando como servidor.
+Este nuevo disco duro vino a sustituir un par de discos (uno de 6 Gb en el que estaban / y swap y el otro de 2.5 Gb que tenía /home), los cuáles ya tenían todo instalado, y como no quise instalar de nueva cuenta el Debian (que hueva de imaginarse todo lo que implicaría, instalar desde ceros, levantar servicios, usuarios, etc.), decidí usar el GParted Live CD, muy útil por cierto, para copiar las particiones del disco duro principal (el disco duro que tenía /boot, y swap) y expandir la partición / hasta ocupar todo el disco.
+La copia de estas particiones y la expansión de / fue exitosa, pero con lo que no conté fue con que el Grub no estaría en el MBR de este nuevo disco duro, obvio verdad, bueno, pues me di a la tarea de reinstalar Grub en este disco, busqué en internet y todo parecía facil, pero a lo que pensé me llevaría no más de una hora me tomó cinco horas dado a unos pequeños errores que cometí, y he aquí mis experiencias.
+Bien, lo primero que hice fue arrancar con el disco de instalación de Debian, y hasta el momento que dice que si queremos particionar el disco duro, ahí presionamos las teclas &lt;Alt&gt; &lt;F2&gt;, ahí tendremos acceso al shell.
+Una vez en el shell, creamos un directorio donde montaremos la partición en donde se encuentra /boot, en este caso yo cree /disk de la siguiente manera:</p>
+
+<pre># mkdir /disk</pre>
+
+
+<p>Para saber que partición vamos a montar, habrá que darle el comando siguiente:</p>
+
+<pre># fdisk -l</pre>
+
+
+<p>Con este comando nos saldrá una lista de particiones, y tendrán un nombre raro, pero aún así será facil reconocer la partición que nos interesa montar (la que tiene /boot), lo siguiente será montar la partición (el dispositivo me imagino que variará, aún así este dispositivo lo veremos en la lista de particiones mostradas por el comando anterior):</p>
+
+<pre># mount -t ext3 /dev/bus0/lun0/disk0/part1 /disk</pre>
+
+
+<p>Ahora bien, haremos esta partición montada como nuestra partición root:</p>
+
+<pre># chroot /disk</pre>
+
+
+<p>En mi caso, como los discos los cambié de IDE, los nombres de las particiones cambiaron, por lo tanto tuve que editar /boot/grub/menu.lst, aquí fue donde tuve los problemas que me hicieron tardarme las cinco horas, todo por no fijarme bien al momento de editar, tuve que modificar la línea de root a (hd0,0) y me faltó editar en donde se encontraba el kernel, entonces como esta apuntaba a otra partición en otro dispositivo debí haberla editado por eso ahí me pasé las horas sin saber porque no podía arrancar, pero bien, ya que encontré el problema, así más o menos quedó lo que edité:</p>
+
+<pre lang="bash">
+title           Debian GNU/Linux, kernel 2.6.16-2-686
+root            (hd0,0)
+kernel          /boot/vmlinuz-2.6.16-2-686 root=/dev/hda1 ro
+initrd          /boot/initrd.img-2.6.16-2-686
+savedefault
+boot</pre>
+
+
+<p>Posteriormente, hubo que ejecutar:</p>
+
+<pre># grub</pre>
+
+
+<p>En el shell de grub, ejecuté lo siguiente:</p>
+
+<pre lang="bash">
+root (hd0,0)
+setup (hd0)
+quit</pre>
+
+
+<p>Y listo, a reiniciar!
+Con todo esto quedó, ya después sólo copié /home que estaba en el segundo disco duro,  claro de haber sido cuidadoso al leer lo que estaba haciendo, esto en teoría debió haber durado menos de una hora, entonces aquí está la experiencia para los que quieran cambiar de discos duros puedan hacerlo en el menor tiempo del que yo lo hice.
+:D</p>
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2006/09/21/hace-varios-kilos/">Hace Varios Kilos &#8230;</a></h1>
     
     
@@ -581,6 +662,10 @@ fi</pre>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/19/mi-blog-con-octopress/">Mi Blog Con Octopress</a>
+      </li>
+    
+      <li class="post">
         <a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a>
       </li>
     
@@ -594,10 +679,6 @@ fi</pre>
     
       <li class="post">
         <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/">Etiquetando código en git/Tagging code in git</a>
       </li>
     
   </ul>
