@@ -4,7 +4,7 @@
   <title>JCastaneyra blog</title>
   <link href="http://www.jcastaneyra.com/atom.xml" rel="self"/>
   <link href="http://www.jcastaneyra.com/"/>
-  <updated>2011-09-19T12:55:11-05:00</updated>
+  <updated>2011-09-20T15:40:11-05:00</updated>
   <id>http://www.jcastaneyra.com/</id>
   <author>
     <name>Jose Castaneyra</name>
@@ -17,7 +17,7 @@
     <link href="http://www.jcastaneyra.com/2011/09/19/mi-blog-con-octopress/"/>
     <updated>2011-09-19T12:31:00-05:00</updated>
     <id>http://www.jcastaneyra.com/2011/09/19/mi-blog-con-octopress</id>
-    <content type="html">&lt;p&gt;&lt;img class=&#8217;left &#8217; src=&#8217;http://octopress.org/images/logo.png?1316270443&#8217; width=&#8221; height=&#8221; alt=&#8221; title=&#8221;&gt;
+    <content type="html">&lt;p&gt;&lt;img class=&#8217;left &#8217; src=&#8217;http://c243421.r21.cf1.rackcdn.com/octopress_logo.png&#8217; width=&#8221; height=&#8221; alt=&#8221; title=&#8221;&gt;
 Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio sin ningún post, por lo que he tenido totalmente abandonado mi blog, he estado trabajando bastante y el tiempo libre se ha reducido a casi nada o bien mi total desorganización me lo ha impedido.&lt;/p&gt;
 
 &lt;p&gt;Pues bien, esta vez estoy con una nueva plataforma de blogging (&lt;a href=&quot;http://octopress.org&quot;&gt;octopress&lt;/a&gt;), y está bastante atractiva, veo que muchos ya están sobre esta plataforma, que emoción, y además trabaja con &lt;a href=&quot;https://github.com/mojombo/jekyll&quot;&gt;jekyll&lt;/a&gt; para generar el sitio estático, en los días que siguen iré personalizando mi blog, ya tenía por ahí un estilo muy básico hecho por mi (desde el punto de vista de un desarrollador) con un pequeño ejercicio hecho en sinatra, tendré que aprovecharlo y espero actualizarlo pronto.&lt;/p&gt;
@@ -31,7 +31,7 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
     <id>http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac</id>
     <content type="html">&lt;p&gt;&lt;a name=&quot;rabbitmq_stomp_english&quot;&gt;&lt;/a&gt; &lt;a href=&quot;#rabbitmq_stomp_spanish&quot;&gt;En español&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://www.jcastaneyra.com/wp-content/uploads/2010/05/RabbitMQLogo-300x79.png&quot; alt=&quot;Screenshot of RabbitMQ logo&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://c243421.r21.cf1.rackcdn.com/RabbitMQLogo-300x79.png&quot; alt=&quot;Screenshot of RabbitMQ logo&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;In the project I&amp;#8217;m working now it was needed to have RabbitMQ running with Stomp as a message queue for Orbited, we know that Orbited comes with MorbidQ, but in our system we already had running RabbitMQ and used by other processes, so, two queue systems at the same time were not needed.&lt;/p&gt;
 
@@ -153,7 +153,7 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
 
 &lt;p&gt;&lt;a name=&quot;rabbitmq_stomp_spanish&quot;&gt;&lt;/a&gt; &lt;a href=&quot;#rabbitmq_stomp_english&quot;&gt;In english&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://www.jcastaneyra.com/wp-content/uploads/2010/05/RabbitMQLogo-300x79.png&quot; alt=&quot;Screenshot of RabbitMQ logo&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://c243421.r21.cf1.rackcdn.com/RabbitMQLogo-300x79.png&quot; alt=&quot;Screenshot of RabbitMQ logo&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;En el proyecto en el que estoy trabajando era necesario tener corriendo RabbitMQ con Stomp para poder hacer conexiones con Orbited, Orbited ya incluye MorbidQ, pero en este caso ya teníamos corriendo RabbitMQ para otros procesos y no era necesario tener un segundo sistema de queues.&lt;/p&gt;
 
@@ -1628,7 +1628,7 @@ Volume(s) mounted successfully
 
 &lt;p&gt;Con el post de Jamis Buck y el plugin que hizo (&lt;a href=&quot;http://github.com/jamis/fuzzyfinder_textmate/tree/master&quot;&gt;FuzzyFinder_TextMate&lt;/a&gt; que extendió de &lt;a href=&quot;http://www.vim.org/scripts/script.php?script_id=1984&quot;&gt;FuzzyFinder&lt;/a&gt;) y a todas las respuestas que recibió en su blog, es como he levantado mi ambiente con Vim, en este caso lo he hecho en la Mac, pero en Linux deber ser casi igual.&lt;/p&gt;
 
-&lt;p&gt;&lt;img class=&#8217;left &#8217; src=&#8217;http://www.jcastaneyra.com/wp-content/uploads/2008/12/imagen-1-300x277.png&#8217; width=&#8221; height=&#8221; alt=&#8221; title=&#8221;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class=&#8217;left &#8217; src=&#8217;http://c243421.r21.cf1.rackcdn.com/imagen-1-300x277.png&#8217; width=&#8221; height=&#8221; alt=&#8221; title=&#8221;&gt;&lt;/p&gt;
 
 &lt;p&gt;En Leopard primero que nada me instalé MacVim bajándolo de &lt;a href=&quot;http://code.google.com/p/macvim/&quot;&gt;http://code.google.com/p/macvim/&lt;/a&gt; y después con ayuda de los posts de Jamis Buck y de los comments ahí puestos logré levantar mi ambiente (&lt;a href=&quot;http://weblog.jamisbuck.org/2008/10/10/coming-home-to-vim&quot;&gt;Coming home to Vim&lt;/a&gt; y &lt;a href=&quot;http://weblog.jamisbuck.org/2008/11/17/vim-follow-up&quot;&gt;Vim Follow-up&lt;/a&gt;), también en los comments de estos posts encontré a una persona que puso en github su configuración de vim al igual que sus plugins de vim, que por cierto fue de bastante ayuda (&lt;a href=&quot;http://github.com/manalang/vim-config/tree/master&quot;&gt;http://github.com/manalang/vim-config/tree/master&lt;/a&gt;). Se que en internet hay muchos recursos sobre comandos de Vim, pero aquí está uno que me encontré :) &lt;a href=&quot;http://rayninfo.co.uk/vimtips.html&quot;&gt;http://rayninfo.co.uk/vimtips.html&lt;/a&gt;&lt;/p&gt;
 
@@ -1664,7 +1664,7 @@ Volume(s) mounted successfully
     <id>http://www.jcastaneyra.com/2008/11/30/leyendo-feeds-en-el-iphone</id>
     <content type="html">&lt;p&gt;Como ya había comentado en un post anterior, les había mencionado que compré el iPhone, ahora vengo a compartir ciertas impresiones sobre este telefonito que tiene gran popularidad, que está muy bien diseñado a pesar de algunas carencias, o de sus excesos (como el precio según algunos, aunque esos algunos después los he visto con teléfonos más caros, y bueno esto del precio más bien depende del país y del plan tarifario de la compañía telefónica, aquí en México si sale caro), aún así, la neta es que está muy fregón, y con el uso que le doy me queda más que perfecto, para leer/enviar correo, seguir mis comentarios en twitter, navegación que si es funcional (aún con su carencia de flash player), ver el movimiento del peso contra el dolar (inguele, y más ahorita), jugar, ver mapas con google maps y el pseudo gps, bueno hasta estar  actualizado con el Facebook, pero sobre todo y para lo que he preparado este post, para leer feeds, y se preguntarán ¿qué es un feed? y digo esto porque muchos de mis conocidos y amigos no saben y no usan los feeds; pues bien, un feed es un alimentador de noticias, o un link que nos tiene actualizados de las noticias de un sitio y que generalmente son leídos por un programa especial y manteniéndonos al tanto de la actividad de cierto sitio, incluso hay clientes de correo que pueden leer estos feeds, por eso también podrían verse como correos, por cierto aquí en mi sitio también tengo mis feeds de noticias. Bueno después de este breviario cultural (que igual y no está del todo bien pero que así me lo imagino) paso a mencionar que, en el iPhone y con la aplicación &lt;a href=&quot;http://www.newsgator.com/individuals/default.aspx&quot;&gt;NetNewsWire&lt;/a&gt; puedo leer de mis feeds y que además la empresa que hace esta app para el iPhone también ofrece el servicio de feeds mediante web y aplicaciones de escritorio para Windows y Mac (sólo faltaría la aplicación de escritorio para Linux), por lo que nuestras noticias pueden ser leídas donde sea, claro que para usar estos servicios hay que registrarse, y después de registrado a suscribirse a cuanto feed quiera uno.&lt;/p&gt;
 
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://www.jcastaneyra.com/wp-content/uploads/2008/11/iphone_nnwmainscreen.jpg&quot;&gt;&lt;img class=&quot;size-medium wp-image-189 aligncenter&quot; title=&quot;iphone_nnwmainscreen&quot; src=&quot;http://www.jcastaneyra.com/wp-content/uploads/2008/11/iphone_nnwmainscreen-139x300.jpg&quot; alt=&quot;&quot; width=&quot;139&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img class=&quot;size-medium wp-image-189 aligncenter&quot; title=&quot;iphone_nnwmainscreen&quot; src=&quot;http://c243421.r21.cf1.rackcdn.com/iphone_nnwmainscreen-139x300.jpg&quot; alt=&quot;&quot; width=&quot;139&quot; height=&quot;300&quot; /&gt;&lt;/p&gt;
 
 
 &lt;p&gt;Por ejemplo, en mi caso yo estoy suscrito a feeds de RoR, java, Mac, Noticias del universal y por supuesto a mi propio blog y a los comentarios de mi blog:&lt;/p&gt;
