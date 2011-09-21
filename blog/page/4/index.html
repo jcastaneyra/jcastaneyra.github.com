@@ -65,6 +65,45 @@
     
   <header>
     
+      <h1 class="entry-title"><a href="/2007/09/12/removiendo-m-con-vi-en-unixlinux/">Removiendo ^M Con VI en Unix/Linux</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+
+  
+
+
+
+<time datetime="2007-09-12T00:00:00-05:00" pubdate  data-updated="true" >Sep 12<span>th</span>, 2007</time></p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Después de un rato de estar ausente (por múltiples ocupaciones), sólo me tomo un pequeño momento para postear algo que puede ayudarnos a salir del hoyo cuando tengamos problemas con scripts y con los carácteres ^M al final de cada línea. El comando de VI para solucionar esto sería:</p>
+
+<p><code>:%s/<sup>M$//g</code></sup></p>
+
+<p>Hay que asegurarse que para obtener ^M se utilicen la conbinación de teclas CONTROL + V y CONTROL + M. Con este comando se reemplazan todos los ^M por nada.</p>
+
+<p>Referencia:</p>
+
+<p>http://www.vim.org/tips/tip.php?tip_id=26</p>
+</div>
+  
+  
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
       <h1 class="entry-title"><a href="/2007/08/11/complot-mongol/">Complot Mongol</a></h1>
     
     
@@ -395,41 +434,6 @@
 
   </article>
 
-
-  <article>
-    
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/05/18/el-evangelio-segun-jesucristo/">El Evangelio Según Jesucristo</a></h1>
-    
-    
-      <p class="meta">
-
-
-
-
-
-  
-
-
-
-<time datetime="2007-05-18T00:00:00-05:00" pubdate  data-updated="true" >May 18<span>th</span>, 2007</time></p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Hace un par de semanas, creo que ya tres, terminé de leer &#8220;El evangelio según Jesucristo&#8221; de José Saramago, y como dije que iba a poner resúmenes de los libros que fuera leyendo, pues aquí ya valió maye, porque no quiero poner ningún resumen :)</p>
-
-<p>Solo quiero decir que es un libro bastante interesante y que nos lleva a ver la vida de Jesucristo de una manera diferente, pensarla como si hubiera sucedido de otra manera, como por ejemplo que María Magdalena hubiera sido su pareja sentimental, algo que últimamente he visto en algunos otros libros.</p>
-
-<p>En fin, está recomendable.</p>
-</div>
-  
-  
-
-
-  </article>
-
 <nav role="pagination">
   <div>
     
@@ -460,6 +464,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2011/09/21/macs-en-venta/">Macs usadas en Venta</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/09/19/mi-blog-con-octopress/">Mi Blog Con Octopress</a>
       </li>
     
@@ -473,10 +481,6 @@
     
       <li class="post">
         <a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table names case insensitive for MySQL Linux</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a>
       </li>
     
   </ul>
