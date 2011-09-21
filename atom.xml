@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title>JCastaneyra blog</title>
-  <link href="http://www.jcastaneyra.com/atom.xml" rel="self"/>
-  <link href="http://www.jcastaneyra.com/"/>
-  <updated>2011-09-21T15:46:55-05:00</updated>
-  <id>http://www.jcastaneyra.com/</id>
+  <link href="http://jcastaneyra.com/atom.xml" rel="self"/>
+  <link href="http://jcastaneyra.com/"/>
+  <updated>2011-09-21T15:56:41-05:00</updated>
+  <id>http://jcastaneyra.com/</id>
   <author>
     <name>Jose Castaneyra</name>
     
@@ -14,9 +14,9 @@
   
   <entry>
     <title>Macs usadas en Venta</title>
-    <link href="http://www.jcastaneyra.com/2011/09/21/macs-en-venta/"/>
+    <link href="http://jcastaneyra.com/2011/09/21/macs-en-venta/"/>
     <updated>2011-09-21T15:45:00-05:00</updated>
-    <id>http://www.jcastaneyra.com/2011/09/21/macs-en-venta</id>
+    <id>http://jcastaneyra.com/2011/09/21/macs-en-venta</id>
     <content type="html">&lt;p&gt;Se está llevando, computadoras mac económicas, bara bara, para la hermana(o), para la mamá(papá), para la novia(o), para la abuelita(o), por única ocasión le estamos ofreciendo los siguientes modelos:&lt;/p&gt;
 
 &lt;h2&gt; MacBook Air/1.6GHz (2008)&lt;/h2&gt;
@@ -83,9 +83,9 @@
   
   <entry>
     <title>Mi Blog Con Octopress</title>
-    <link href="http://www.jcastaneyra.com/2011/09/19/mi-blog-con-octopress/"/>
+    <link href="http://jcastaneyra.com/2011/09/19/mi-blog-con-octopress/"/>
     <updated>2011-09-19T12:31:00-05:00</updated>
-    <id>http://www.jcastaneyra.com/2011/09/19/mi-blog-con-octopress</id>
+    <id>http://jcastaneyra.com/2011/09/19/mi-blog-con-octopress</id>
     <content type="html">&lt;p&gt;&lt;img class=&#8217;left &#8217; src=&#8217;http://c243421.r21.cf1.rackcdn.com/octopress_logo.png&#8217; width=&#8221; height=&#8221; alt=&#8221; title=&#8221;&gt;
 Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio sin ningún post, por lo que he tenido totalmente abandonado mi blog, he estado trabajando bastante y el tiempo libre se ha reducido a casi nada o bien mi total desorganización me lo ha impedido.&lt;/p&gt;
 
@@ -95,9 +95,9 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
   
   <entry>
     <title>Installing RabbitMQ + Stomp in Ubuntu/Mac</title>
-    <link href="http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/"/>
+    <link href="http://jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/"/>
     <updated>2010-05-30T00:00:00-05:00</updated>
-    <id>http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac</id>
+    <id>http://jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac</id>
     <content type="html">&lt;p&gt;&lt;a name=&quot;rabbitmq_stomp_english&quot;&gt;&lt;/a&gt; &lt;a href=&quot;#rabbitmq_stomp_spanish&quot;&gt;En español&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://c243421.r21.cf1.rackcdn.com/RabbitMQLogo-300x79.png&quot; alt=&quot;Screenshot of RabbitMQ logo&quot; /&gt;&lt;/p&gt;
@@ -107,7 +107,7 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
 &lt;p&gt;But, searching for Stomp over RabbitMQ info or some kind of tutorial was difficult and painful, a friend of mine would say &amp;#8220;a real pain in the ass&amp;#8221;, there was info but not too clear. For that reason here is another note to myself, just in case.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;RabbitMQ 1.6.0 installed, &lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;here there are some steps&lt;/a&gt; to install it.&lt;/li&gt;
+&lt;li&gt;RabbitMQ 1.6.0 installed, &lt;a href=&quot;http://jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;here there are some steps&lt;/a&gt; to install it.&lt;/li&gt;
 &lt;li&gt;Mercurial is needed to download Stomp code&lt;/li&gt;
 &lt;li&gt;Download Stomp code&lt;/li&gt;
 &lt;/ul&gt;
@@ -229,7 +229,7 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
 &lt;p&gt;Sorprendentemente, encontrar información de cómo agregar Stomp a RabbitMQ resultó algo doloroso, si había información pero como que no indicaba bien que pasos seguir. Entonces como parte de mis notas personales estoy agregando esta receta por si se llega a ofrecer de nueva cuenta.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Tener instalado RabbitMQ 1.6.0, &lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;aquí hay unos pasos&lt;/a&gt; para instalarlo.&lt;/li&gt;
+&lt;li&gt;Tener instalado RabbitMQ 1.6.0, &lt;a href=&quot;http://jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;aquí hay unos pasos&lt;/a&gt; para instalarlo.&lt;/li&gt;
 &lt;li&gt;Tener instalado Mercurial para bajar el código de Stomp&lt;/li&gt;
 &lt;li&gt;Bajar el código de Stomp&lt;/li&gt;
 &lt;/ul&gt;
@@ -348,9 +348,9 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
   
   <entry>
     <title>Bundler gem and Daemons error (The default Gemfile was not found)</title>
-    <link href="http://www.jcastaneyra.com/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/"/>
+    <link href="http://jcastaneyra.com/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/"/>
     <updated>2010-02-12T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found</id>
+    <id>http://jcastaneyra.com/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found</id>
     <content type="html">&lt;p&gt;&lt;a name=&quot;bundler_gem_daemons_error_english&quot;&gt;&lt;/a&gt; (&lt;a href=&quot;#bundler_gem_daemons_error_spanish&quot;&gt;En español&lt;/a&gt;)&lt;/p&gt;
 
 &lt;p&gt;Some days ago we deployed an application with rails, in this application we are using some daemons (with daemons gem) to take care about some business processes, and recently to have more control with all gems used by our application we started to use bundler.&lt;/p&gt;
@@ -442,9 +442,9 @@ Daemons.run(File.join(File.dirname(__FILE__), &#8216;mail_consumer.rb&#8217;), o
   
   <entry>
     <title>Table names case insensitive for MySQL Linux</title>
-    <link href="http://www.jcastaneyra.com/2010/01/07/table-names-case-insensitive-for-mysql-linux/"/>
+    <link href="http://jcastaneyra.com/2010/01/07/table-names-case-insensitive-for-mysql-linux/"/>
     <updated>2010-01-07T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2010/01/07/table-names-case-insensitive-for-mysql-linux</id>
+    <id>http://jcastaneyra.com/2010/01/07/table-names-case-insensitive-for-mysql-linux</id>
     <content type="html">&lt;p&gt;Hola a todos, feliz año 2010, que tal se pasaron estas fechas? descansaron bastante? Pues yo más o menos, unos ratos descansaba y otros trabajaba, y para variar me encontré con esto en el trabajo.&lt;/p&gt;
 
 &lt;p&gt;Resulta que estaba montando un servidor de Weblogic y MySQL en Linux, para instalar una aplicación que originalmente estaba con Weblogic y Oracle, y resulta que al cargar las tablas de esta aplicación en MySQL empecé a encontrarme problemas con los nombres de las tablas (entre otras cosas, como los tipos de datos entre Oracle y MySQL), yo no sabía que MySQL por default en Linux es case sensitive, por lo que me di a la tarea de investigar y buscar como deshabilitar esta función.&lt;/p&gt;
@@ -461,9 +461,9 @@ Daemons.run(File.join(File.dirname(__FILE__), &#8216;mail_consumer.rb&#8217;), o
   
   <entry>
     <title>Como crear un archivo zip con ruby</title>
-    <link href="http://www.jcastaneyra.com/2009/11/16/como-crear-un-archivo-zip-con-ruby/"/>
+    <link href="http://jcastaneyra.com/2009/11/16/como-crear-un-archivo-zip-con-ruby/"/>
     <updated>2009-11-16T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2009/11/16/como-crear-un-archivo-zip-con-ruby</id>
+    <id>http://jcastaneyra.com/2009/11/16/como-crear-un-archivo-zip-con-ruby</id>
     <content type="html">&lt;p&gt;Hace unos días me encontré con el problema de generar archivos Zip que contuvieran archivos de un curso de SCORM, ¿Cómo hacerlo?, lo primero que me vino a la mente fue Ruby!!!&lt;/p&gt;
 
 &lt;p&gt;La gema que me sirvió para esto fue rubyzip, y con el siguiente fragmento de código se realizaron los archivos zip:&lt;/p&gt;
@@ -502,9 +502,9 @@ Dir.chdir(current_path)&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
   
   <entry>
     <title>Etiquetando código en git/Tagging code in git</title>
-    <link href="http://www.jcastaneyra.com/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/"/>
+    <link href="http://jcastaneyra.com/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/"/>
     <updated>2009-11-05T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git</id>
+    <id>http://jcastaneyra.com/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git</id>
     <content type="html">&lt;p&gt;&lt;a name=&quot;tagging_code_git_spanish&quot;&gt;&lt;strong&gt;Etiquetando código en git&lt;/strong&gt;&lt;/a&gt; (&lt;a href=&quot;#tagging_code_git_english&quot;&gt;English&lt;/a&gt;)&lt;/p&gt;
 
 &lt;p&gt;Resulta que al estar trabajando con nuestro código queremos marcar o etiquetar nuestro código en cierto momento de tiempo, algo así como versionar nuestro código.&lt;/p&gt;
@@ -597,9 +597,9 @@ Dir.chdir(current_path)&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
   
   <entry>
     <title>Enviando correo de manera asíncrona en Rails usando Workling, Workling-Mailer y RabbitMQ</title>
-    <link href="http://www.jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/"/>
+    <link href="http://jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/"/>
     <updated>2009-06-10T00:00:00-05:00</updated>
-    <id>http://www.jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq</id>
+    <id>http://jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq</id>
     <content type="html">&lt;p&gt;&lt;a name=&quot;async_mailer_spanish&quot;&gt;&lt;strong&gt;Enviando correo de manera asíncrona en Rails usando Workling, Workling-Mailer y RabbitMQ&lt;/strong&gt;&lt;/a&gt; (&lt;a href=&quot;#async_mailer_english&quot;&gt;English&lt;/a&gt;)&lt;/p&gt;
 
 &lt;p&gt;El trabajar con message queues es bastante interesante, ya que podemos mandar procesos al background y que estos sean procesados de manera asíncrona, un ejemplo podría ser el envío de correos, aunque también podría servir para realizar otras tareas, por ejemplo, como el envío de mensajes sms, generación de reportes, generación de pdf&amp;#8217;s, etc.&lt;/p&gt;
@@ -810,7 +810,7 @@ Dir.chdir(current_path)&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
 
 &lt;h2&gt;Instalando RabbitMQ&lt;/h2&gt;
 
-&lt;p&gt;Checar la instalación &lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;aquí&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Checar la instalación &lt;a href=&quot;http://jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;aquí&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2&gt;A correr todos&lt;/h2&gt;
 
@@ -842,7 +842,7 @@ Dir.chdir(current_path)&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
 &lt;li&gt;&lt;a href=&quot;http://github.com/technoweenie/restful-authentication/&quot;&gt;http://github.com/technoweenie/restful-authentication/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.rabbitmq.com&quot;&gt;http://www.rabbitmq.com&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://code.macournoyer.com/thin/&quot;&gt;http://code.macournoyer.com/thin/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;Instalando RabbitMQ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;Instalando RabbitMQ&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 
@@ -1058,7 +1058,7 @@ Dir.chdir(current_path)&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
 
 &lt;h2&gt;Installing RabbitMQ&lt;/h2&gt;
 
-&lt;p&gt;Follow the instructions here &lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;aquí&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Follow the instructions here &lt;a href=&quot;http://jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;aquí&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2&gt;Everybody runs&lt;/h2&gt;
 
@@ -1090,7 +1090,7 @@ Dir.chdir(current_path)&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
 &lt;li&gt;&lt;a href=&quot;http://github.com/technoweenie/restful-authentication/&quot;&gt;http://github.com/technoweenie/restful-authentication/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.rabbitmq.com&quot;&gt;http://www.rabbitmq.com&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://code.macournoyer.com/thin/&quot;&gt;http://code.macournoyer.com/thin/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;Instalando RabbitMQ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://jcastaneyra.com/2009/06/07/instalando-rabbitmq/&quot;&gt;Instalando RabbitMQ&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 </content>
@@ -1098,9 +1098,9 @@ Dir.chdir(current_path)&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
   
   <entry>
     <title>Instalando RabbitMQ</title>
-    <link href="http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/"/>
+    <link href="http://jcastaneyra.com/2009/06/07/instalando-rabbitmq/"/>
     <updated>2009-06-07T00:00:00-05:00</updated>
-    <id>http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq</id>
+    <id>http://jcastaneyra.com/2009/06/07/instalando-rabbitmq</id>
     <content type="html">&lt;p&gt;&lt;a name=&quot;rabbitmq_spanish&quot;/&gt;&lt;strong&gt;Instalando RabbitMQ&lt;/strong&gt;&lt;/a&gt; (&lt;a href=&quot;#rabbitmq_english&quot;&gt;English&lt;/a&gt;)&lt;/p&gt;
 
 &lt;p&gt;RabbitMQ es un sistema de message queue (MQ), el cual provee comunicaciones asíncronas, es decir que el productor y consumidor no tienen la necesidad de interactuar con los mensajes al mismo tiempo, además de que es una implementación del protocolo AMQP (Advanced Message Queuing Protocol), un protocolo para mensajeo de alto rendimiento, y por último decir que RabbitMQ está desarrollado con Erlang, Erlang es un lenguaje de programación funcional.&lt;/p&gt;
@@ -1315,9 +1315,9 @@ Dir.chdir(current_path)&lt;/code&gt;&lt;/pre&gt;&lt;/noscript&gt;&lt;/div&gt;
   
   <entry>
     <title>Mostrando el branch de git en el prompt de la consola</title>
-    <link href="http://www.jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/"/>
+    <link href="http://jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/"/>
     <updated>2009-05-20T00:00:00-05:00</updated>
-    <id>http://www.jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola</id>
+    <id>http://jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola</id>
     <content type="html">&lt;p&gt;&lt;strong&gt;Mostrando el branch de git en el prompt de la consola&lt;/strong&gt; (In english below)&lt;/p&gt;
 
 &lt;p&gt;Tiene aproximadamente dos meses que empecé a trabajar con git, y la experiencia ha sido muy buena, bastante interesante, pero con los primeros tutoriales que empecé a ver noté que los aliases ayudan a hacer más ágil el trabajo con git, curiosamente hasta este momento no los he usado, creo que ha llegado la hora de agregarlos en mi configuración. Así que al final de mi archivo $HOME/.gitconfig agrego:&lt;/p&gt;
@@ -1490,9 +1490,9 @@ export PROMPT_COMMAND
   
   <entry>
     <title>Segunda reunión de MXOR</title>
-    <link href="http://www.jcastaneyra.com/2009/03/17/segunda-reunion-de-mxor/"/>
+    <link href="http://jcastaneyra.com/2009/03/17/segunda-reunion-de-mxor/"/>
     <updated>2009-03-17T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2009/03/17/segunda-reunion-de-mxor</id>
+    <id>http://jcastaneyra.com/2009/03/17/segunda-reunion-de-mxor</id>
     <content type="html">&lt;p&gt;El día de ayer fue la segunda reunión de nuestro grupo de Rails MXOR, en el cuál se hablaron de diversos tópicos en general, pero como todos estamos interesados en aprender de estos tópicos llegamos a la idea de trabajar en un proyecto en donde se pueda trabajar con las cosas que nos interesan y que de esto surgan una serie de artículos los cuales puedan servirnos a nosotros como referencia y a las personas interesadas en Rails y de todo lo que está al rededor.&lt;/p&gt;
 
 &lt;p&gt;Sobre los tópicos que nos resultaron interesantes son:&lt;/p&gt;
@@ -1546,9 +1546,9 @@ Solo en español para empezar&lt;/p&gt;
   
   <entry>
     <title>Scaling Rails</title>
-    <link href="http://www.jcastaneyra.com/2009/02/27/scaling-rails/"/>
+    <link href="http://jcastaneyra.com/2009/02/27/scaling-rails/"/>
     <updated>2009-02-27T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2009/02/27/scaling-rails</id>
+    <id>http://jcastaneyra.com/2009/02/27/scaling-rails</id>
     <content type="html">&lt;p&gt;Hace un par de semanas aproximadamente buscando información de como hacer escalar aplicaciones Rails me encontré con un material bastante interesante y con información muy valiosa, y lo mejor de todo es que en screencasts, los cuales han sido publicados por Gregg Pollack de &lt;a href=&quot;http://railsenvy.com&quot;&gt;RailsEnvy&lt;/a&gt; con el soporte de &lt;a href=&quot;http://newrelic.com/&quot;&gt;NewRelic&lt;/a&gt;, sería muy bueno que les den una revisada. Los screencasts publicados hasta el momento son:&lt;/p&gt;
 
 &lt;ol&gt;
@@ -1571,9 +1571,9 @@ Solo en español para empezar&lt;/p&gt;
   
   <entry>
     <title>Mi participación en el BarCamp 2 México</title>
-    <link href="http://www.jcastaneyra.com/2009/02/10/mi-participacion-en-el-barcamp-2-mexico/"/>
+    <link href="http://jcastaneyra.com/2009/02/10/mi-participacion-en-el-barcamp-2-mexico/"/>
     <updated>2009-02-10T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2009/02/10/mi-participacion-en-el-barcamp-2-mexico</id>
+    <id>http://jcastaneyra.com/2009/02/10/mi-participacion-en-el-barcamp-2-mexico</id>
     <content type="html">&lt;p&gt;Así es, el pasado sábado hice presencia en el BarCamp 2 México con mi comunidad de &lt;a href=&quot;http://mexicoonrails.com.mx/&quot;&gt;México on Rails&lt;/a&gt; y aporté mi granito de arena con una presentación sobre como instalar Rails en Windows la cuál fue enriquecida por mis compañeros de la comunidad, cómo comunidad y equipo llevamos varias presentaciones al BarCamp, las cuáles se estarán subiendo a nuestro sitio de México On Rails, también les dejo dos reseñas, &lt;a href=&quot;http://mexicoonrails.com.mx/news/7&quot;&gt;una por nuestro compañero de la comunidad @chubas&lt;/a&gt; donde da un resumen de todas las ponencias que dimos como grupo y la &lt;a href=&quot;http://www.tequilavalley.com/2009/02/09/fuimos-mas-de-140-creo-barcamp-mexico-2/&quot;&gt;otra por @tequilavalley&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;La presentación la dejo aquí:&lt;/p&gt;
@@ -1587,9 +1587,9 @@ Solo en español para empezar&lt;/p&gt;
   
   <entry>
     <title>Como obtener una imagen ISO de un CD/DVD en Mac</title>
-    <link href="http://www.jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/"/>
+    <link href="http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/"/>
     <updated>2009-01-30T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac</id>
+    <id>http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac</id>
     <content type="html">&lt;p&gt;Hace poco un compañerito de la comunidad de &lt;a href=&quot;http://www.mexicoonrails.com.mx&quot;&gt;México on Rails&lt;/a&gt; mencionó que tener una Mac es como tener lo mejor de ambos mundos (de Windows y Linux), y he aquí el porqué, resulta que quería obtener una imagen ISO de cierto DVD para respaldarlo y posiblemente después quemarlo, y aquí les muestro al más puro estilo Unix como se puede hacer.&lt;/p&gt;
 
 &lt;p&gt;Primero que nada hay que insertar el CD/DVD a extraer (duh! pero alguien podría no saber :) )&lt;/p&gt;
@@ -1641,9 +1641,9 @@ Volume(s) mounted successfully
   
   <entry>
     <title>Comunidades</title>
-    <link href="http://www.jcastaneyra.com/2009/01/29/comunidades/"/>
+    <link href="http://jcastaneyra.com/2009/01/29/comunidades/"/>
     <updated>2009-01-29T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2009/01/29/comunidades</id>
+    <id>http://jcastaneyra.com/2009/01/29/comunidades</id>
     <content type="html">&lt;p&gt;El domingo pasado fui a la primer reunión de la comunidad de &lt;a href=&quot;http://www.mexicoonrails.com.mx&quot;&gt;México On Rails&lt;/a&gt;, y también es para mi la primer comunidad en la que estoy, desde hace tiempo había querido integrarme a una comunidad pero en su momento no encontré una cerca a donde estaba viviendo, y también había leído de un buen de gurús de software que recomendaban el unirse a una comunidad que siguieran la tecnología o corriente que uno quería seguir o de la cual aprender, al seguir este consejo me di cuenta a lo que realmente se referían, en esta comunidad de &lt;a href=&quot;http://www.mexicoonrails.com.mx&quot;&gt;México On Rails&lt;/a&gt; a pesar de que fuimos pocas personas, realmente pude ver el talento que hay aquí en México y con personas de todas las edades, la apertura que hay para aprender y compartir conocimiento, y con respecto a esto último, dentro de unos días será el &lt;a href=&quot;http://barcamp.org/BarCampMexico&quot;&gt;Barcamp México&lt;/a&gt; al cual iré y contribuiré con mi granito de arena haciendo una ponencia, algo sencilla, pero la finalidad es compartir y aprender, y enseñando también se aprende mucho, la ponencia será cómo instalar Rails en Windows, por cierto &lt;a href=&quot;http://groups.google.com/group/mxor/browse_thread/thread/b9b872ae2360baf8#&quot;&gt;aquí está la lista de ponencias&lt;/a&gt; que se planean dar por los demás miembros del grupo.&lt;/p&gt;
 
 &lt;p&gt;Por cierto a la otra convivencia de la comunidad a la que me gustaría asistir es la de &lt;a href=&quot;http://shdhmexicocity.org/&quot;&gt;Super Happy Dev House México&lt;/a&gt;, espero poder ir pronto.&lt;/p&gt;
@@ -1656,9 +1656,9 @@ Volume(s) mounted successfully
   
   <entry>
     <title>Problemas de memoria en mi 256slice</title>
-    <link href="http://www.jcastaneyra.com/2008/12/15/problemas-de-memoria-en-mi-256slice/"/>
+    <link href="http://jcastaneyra.com/2008/12/15/problemas-de-memoria-en-mi-256slice/"/>
     <updated>2008-12-15T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2008/12/15/problemas-de-memoria-en-mi-256slice</id>
+    <id>http://jcastaneyra.com/2008/12/15/problemas-de-memoria-en-mi-256slice</id>
     <content type="html">&lt;p&gt;No se si ya había comentado, pero mi blog lo tengo en un VPS de slicehost y tengo una &lt;a href=&quot;http://www.slicehost.com&quot;&gt;256slice&lt;/a&gt; es decir una partición virtual con 256 Mb de memoria, y recientemente debido al monto de memoria limitado (talvez debería pensar seriamente en subir el monto de memoria por unos cuántos dolares más al mes, ¿debería?) he experimentado algunos problemas ya que mi servidor se había estado muriendo, y en los logs estaba la evidencia:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;Dec 15 08:27:59 ubuntu kernel:  [&amp;lt;ffffffff8025d987&amp;gt;] out_of_memory+0x2e/0x187
@@ -1684,9 +1684,9 @@ Volume(s) mounted successfully
   
   <entry>
     <title>Desarrollando en Rails con Vim</title>
-    <link href="http://www.jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/"/>
+    <link href="http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/"/>
     <updated>2008-12-14T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim</id>
+    <id>http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim</id>
     <content type="html">&lt;p&gt;Cuando empecé a meterme con Rails me encontré con que había unos cuantos IDE&amp;#8217;s para desarrollar en este framework y algunos editores, digo como desarrollador de Java era obvio que esperaba un IDE y los disponibles eran o son &lt;a href=&quot;http://www.netbeans.org&quot;&gt;Netbeans&lt;/a&gt;, &lt;a href=&quot;http://www.aptana.com&quot;&gt;Aptana&lt;/a&gt;, &lt;a href=&quot;http://www.activestate.com/Products/komodo_ide/index.mhtml&quot;&gt;Komodo&lt;/a&gt; y editores como &lt;a href=&quot;http://www.jedit.org&quot;&gt;JEdit&lt;/a&gt;, &lt;a href=&quot;http://macromates.com&quot;&gt;TextMate&lt;/a&gt;, &lt;a href=&quot;http://www.vim.org&quot;&gt;Vim&lt;/a&gt;, &lt;a href=&quot;http://www.gnu.org/software/emacs/&quot;&gt;Emacs&lt;/a&gt;, de los cuales el que de plano vi que era muy usado era el TextMate, en cada screencast que me encontraba veía que lo usaban, sólo había un problema, y digo un problema para mi, era que no era gratuito.&lt;/p&gt;
 
 &lt;p&gt;Al ver esto me preguntaba porque era más usado un editor de texto turbocargado con comandos en la consola y no un IDE, y la respuesta de los expertos era que con la consola de comandos y un editor se tiene más control sobre el proyecto además de la experiencia que esto te deja en lugar de dejar a que el IDE automatice todo.&lt;/p&gt;
@@ -1710,9 +1710,9 @@ Volume(s) mounted successfully
   
   <entry>
     <title>Miscelánea RoR I</title>
-    <link href="http://www.jcastaneyra.com/2008/11/30/miscelanea-ror-i/"/>
+    <link href="http://jcastaneyra.com/2008/11/30/miscelanea-ror-i/"/>
     <updated>2008-11-30T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2008/11/30/miscelanea-ror-i</id>
+    <id>http://jcastaneyra.com/2008/11/30/miscelanea-ror-i</id>
     <content type="html">&lt;p&gt;La comunidad de Ruby on Rails se mueve muy, pero muy rapido, y para los que empezamos con este framework se nos hace un poco difícil seguirles el paso, por lo que tenemos que estar lee y lee, y mientras más podamos practicar es mejor.&lt;/p&gt;
 
 &lt;p&gt;Hace como una semana o un poco más, David Heinemeier Hansson, creador de Ruby on Rails publicó en su blog una &lt;a href=&quot;http://www.loudthinking.com/posts/29-the-rails-myths&quot;&gt;serie de posts&lt;/a&gt; hablando de los mitos de RoR, digo, para los que empezamos esto podría ayudarnos, ya que a veces nos detenemos en nuestra profundización precisamente por esos mitos.&lt;/p&gt;
@@ -1728,9 +1728,9 @@ Volume(s) mounted successfully
   
   <entry>
     <title>Leyendo feeds en el iPhone</title>
-    <link href="http://www.jcastaneyra.com/2008/11/30/leyendo-feeds-en-el-iphone/"/>
+    <link href="http://jcastaneyra.com/2008/11/30/leyendo-feeds-en-el-iphone/"/>
     <updated>2008-11-30T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2008/11/30/leyendo-feeds-en-el-iphone</id>
+    <id>http://jcastaneyra.com/2008/11/30/leyendo-feeds-en-el-iphone</id>
     <content type="html">&lt;p&gt;Como ya había comentado en un post anterior, les había mencionado que compré el iPhone, ahora vengo a compartir ciertas impresiones sobre este telefonito que tiene gran popularidad, que está muy bien diseñado a pesar de algunas carencias, o de sus excesos (como el precio según algunos, aunque esos algunos después los he visto con teléfonos más caros, y bueno esto del precio más bien depende del país y del plan tarifario de la compañía telefónica, aquí en México si sale caro), aún así, la neta es que está muy fregón, y con el uso que le doy me queda más que perfecto, para leer/enviar correo, seguir mis comentarios en twitter, navegación que si es funcional (aún con su carencia de flash player), ver el movimiento del peso contra el dolar (inguele, y más ahorita), jugar, ver mapas con google maps y el pseudo gps, bueno hasta estar  actualizado con el Facebook, pero sobre todo y para lo que he preparado este post, para leer feeds, y se preguntarán ¿qué es un feed? y digo esto porque muchos de mis conocidos y amigos no saben y no usan los feeds; pues bien, un feed es un alimentador de noticias, o un link que nos tiene actualizados de las noticias de un sitio y que generalmente son leídos por un programa especial y manteniéndonos al tanto de la actividad de cierto sitio, incluso hay clientes de correo que pueden leer estos feeds, por eso también podrían verse como correos, por cierto aquí en mi sitio también tengo mis feeds de noticias. Bueno después de este breviario cultural (que igual y no está del todo bien pero que así me lo imagino) paso a mencionar que, en el iPhone y con la aplicación &lt;a href=&quot;http://www.newsgator.com/individuals/default.aspx&quot;&gt;NetNewsWire&lt;/a&gt; puedo leer de mis feeds y que además la empresa que hace esta app para el iPhone también ofrece el servicio de feeds mediante web y aplicaciones de escritorio para Windows y Mac (sólo faltaría la aplicación de escritorio para Linux), por lo que nuestras noticias pueden ser leídas donde sea, claro que para usar estos servicios hay que registrarse, y después de registrado a suscribirse a cuanto feed quiera uno.&lt;/p&gt;
 
 &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img class=&quot;size-medium wp-image-189 aligncenter&quot; title=&quot;iphone_nnwmainscreen&quot; src=&quot;http://c243421.r21.cf1.rackcdn.com/iphone_nnwmainscreen-139x300.jpg&quot; alt=&quot;&quot; width=&quot;139&quot; height=&quot;300&quot; /&gt;&lt;/p&gt;
@@ -1756,9 +1756,9 @@ http://feeds.feedburner.com/jcastaneyra_comments&lt;/a&gt;&lt;/p&gt;
   
   <entry>
     <title>Instalando RoR 2.2 RC2 en Leopard</title>
-    <link href="http://www.jcastaneyra.com/2008/11/15/instalando-ror-mas-nueva-de-la-que-trae-leopard/"/>
+    <link href="http://jcastaneyra.com/2008/11/15/instalando-ror-mas-nueva-de-la-que-trae-leopard/"/>
     <updated>2008-11-15T00:00:00-06:00</updated>
-    <id>http://www.jcastaneyra.com/2008/11/15/instalando-ror-mas-nueva-de-la-que-trae-leopard</id>
+    <id>http://jcastaneyra.com/2008/11/15/instalando-ror-mas-nueva-de-la-que-trae-leopard</id>
     <content type="html">&lt;p&gt;Al día de hoy no tengo una computadora a mi disposición, y como no tengo una, de vez en cuando hago cosas en la compu del trabajo, que no debería, y también a veces me prestan la macbook air, y en la macbook puedo trabajar un poco más, que me gustaría trabajar mucho más en la macbook, pues bien, hace rato ya había trabajado con Ruby on Rails con la versión que trae el leopard, pero hace unos días me dieron ganas de probar la RC de RoR la 2.2 (ya la RC2), para instalarlo tuve que investigar un poquito, ya que no es un proceso de instalación sencillo, tiene algunos trucos, para esto me basé en el post de &lt;a href=&quot;http://danbenjamin.com/articles/2008/02/ruby-rails-leopard&quot;&gt;Dan Benjamin&lt;/a&gt;, pero para variar me hago un resumen a mi mismo, para cuando se me vuelva a ofrecer, así que para más detalle visitar el post, ahí si mencionan que sólo por las dudas sería bueno respaldar la información, yo no lo hice, y todo salió bien.&lt;/p&gt;
 
 &lt;p&gt;Pues bien, para tener instalada una de las últimas versiones de RoR y diferente a las que está instalada por defecto en leopard es necesario tener instalado el XCode 3.0 o superior, este puede ser bajado de developer.apple.com o bien instalándolo del disco que viene con la mac, la verdad no se que disco es, pero con la mac debe de venir un disco (o más no recuerdo).&lt;/p&gt;
