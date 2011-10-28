@@ -2,270 +2,282 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>
-            http://jcastaneyra.com/2006/09/05/instalacion-openbsd-apache-y-ddclient-dyndnsorg/
-        </loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2006/09/06/instalacion-de-mysql-php-y-jaws-en-openbsd/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian/
-        </loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2006/09/14/bajate-cabron/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2006/09/21/hace-varios-kilos/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://jcastaneyra.com/2006/10/06/recuperando-grub-con-el-disco-de-instalacion-de-debian/
-        </loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2006/11/02/comprometidos/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2006/11/06/cirugia-y-estancia-en-hospital-muy-divertida/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2006/11/23/agregando-una-aplicacion-al-menu-de-gnome/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2006/11/27/ya-tengo-beryl-en-ubuntu/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/02/12/y-ya-van-por-el-segundo-simposium-de-linux/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://jcastaneyra.com/2007/02/14/si-la-unica-herramienta-que-tienes-es-un-martillo/
-        </loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/02/21/transmitiendo-desde-la-capital/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://jcastaneyra.com/2007/03/07/como-tener-router-linksys-con-un-modem-infinitum-alambrico/
-        </loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/03/07/slam-en-el-metro/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/03/10/al-menos-tengo-mas-tiempo-para-leer/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/05/18/el-evangelio-segun-jesucristo/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/05/18/ya-de-regreso-de-monterrey/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/05/20/corriendo-super-mario-bros-en-la-palm/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/05/22/senor-scjp-por-favor/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/05/30/por-tierras-tapatias/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/06/01/retrato-en-sepia/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://jcastaneyra.com/2007/07/02/cambiar-recursivamente-permisos-a-archivos-con-extension-en-linuxunix/
-        </loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/07/18/un-ano-con-el-blog/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/07/29/malas-companias/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/08/11/complot-mongol/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/09/12/removiendo-m-con-vi-en-unixlinux/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/11/14/no-andaba-muerto-andaba-certificandome/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://jcastaneyra.com/2007/12/05/como-obtener-en-bash-scripting-el-valor-de-una-variable-que-esta-como-valor-de-otra-variable/
-        </loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/12/06/como-agregar-videos-de-youtube-en-jaws/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2007/12/10/como-habilitar-los-gravatars-en-jaws/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2008/01/17/empezando-el-ano/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2008/01/25/ya-soy-maestro-y-ademas-java-developer/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://jcastaneyra.com/2008/03/18/ruby-on-rails-desarrollo-agil-y-mis-divagaciones/
-        </loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2008/06/23/ya-estoy-en-mi-nuevo-blog/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2008/06/25/retrospectiva/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://jcastaneyra.com/2008/11/09/ya-quedo-instalado-ubuntu-810-actualizado-sobre-804/
+            http://www.jcastaneyra.com/2006/09/05/instalacion-openbsd-apache-y-ddclient-dyndnsorg/
         </loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
         <loc>
-            http://jcastaneyra.com/2008/11/15/instalando-ror-mas-nueva-de-la-que-trae-leopard/
+            http://www.jcastaneyra.com/2006/09/06/instalacion-de-mysql-php-y-jaws-en-openbsd/
         </loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2008/11/30/leyendo-feeds-en-el-iphone/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2008/11/30/miscelanea-ror-i/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2008/12/15/problemas-de-memoria-en-mi-256slice/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2009/01/29/comunidades/</loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
         <loc>
-            http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/
+            http://www.jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian/
         </loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
-        <loc>http://jcastaneyra.com/2009/02/10/mi-participacion-en-el-barcamp-2-mexico/</loc>
+        <loc>http://www.jcastaneyra.com/2006/09/14/bajate-cabron/</loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
-        <loc>http://jcastaneyra.com/2009/02/27/scaling-rails/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2009/03/17/segunda-reunion-de-mxor/</loc>
+        <loc>http://www.jcastaneyra.com/2006/09/21/hace-varios-kilos/</loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
         <loc>
-            http://jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/
+            http://www.jcastaneyra.com/2006/10/06/recuperando-grub-con-el-disco-de-instalacion-de-debian/
         </loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
-        <loc>http://jcastaneyra.com/2009/06/07/instalando-rabbitmq/</loc>
+        <loc>http://www.jcastaneyra.com/2006/11/02/comprometidos/</loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
         <loc>
-            http://jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/
+            http://www.jcastaneyra.com/2006/11/06/cirugia-y-estancia-en-hospital-muy-divertida/
         </loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2009/11/16/como-crear-un-archivo-zip-con-ruby/</loc>
-        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://jcastaneyra.com/2010/01/07/table-names-case-insensitive-for-mysql-linux/</loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
         <loc>
-            http://jcastaneyra.com/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/
+            http://www.jcastaneyra.com/2006/11/23/agregando-una-aplicacion-al-menu-de-gnome/
         </loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
-        <loc>http://jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/</loc>
+        <loc>http://www.jcastaneyra.com/2006/11/27/ya-tengo-beryl-en-ubuntu/</loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
-        <loc>http://jcastaneyra.com/2011/09/19/mi-blog-con-octopress/</loc>
+        <loc>
+            http://www.jcastaneyra.com/2007/02/12/y-ya-van-por-el-segundo-simposium-de-linux/
+        </loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
-        <loc>http://jcastaneyra.com/2011/09/21/macs-en-venta/</loc>
+        <loc>
+            http://www.jcastaneyra.com/2007/02/14/si-la-unica-herramienta-que-tienes-es-un-martillo/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/02/21/transmitiendo-desde-la-capital/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2007/03/07/como-tener-router-linksys-con-un-modem-infinitum-alambrico/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/03/07/slam-en-el-metro/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/03/10/al-menos-tengo-mas-tiempo-para-leer/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/05/18/el-evangelio-segun-jesucristo/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/05/18/ya-de-regreso-de-monterrey/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/05/20/corriendo-super-mario-bros-en-la-palm/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/05/22/senor-scjp-por-favor/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/05/30/por-tierras-tapatias/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/06/01/retrato-en-sepia/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2007/07/02/cambiar-recursivamente-permisos-a-archivos-con-extension-en-linuxunix/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/07/18/un-ano-con-el-blog/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/07/29/malas-companias/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/08/11/complot-mongol/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/09/12/removiendo-m-con-vi-en-unixlinux/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/11/14/no-andaba-muerto-andaba-certificandome/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2007/12/05/como-obtener-en-bash-scripting-el-valor-de-una-variable-que-esta-como-valor-de-otra-variable/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/12/06/como-agregar-videos-de-youtube-en-jaws/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2007/12/10/como-habilitar-los-gravatars-en-jaws/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2008/01/17/empezando-el-ano/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2008/01/25/ya-soy-maestro-y-ademas-java-developer/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2008/03/18/ruby-on-rails-desarrollo-agil-y-mis-divagaciones/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2008/06/23/ya-estoy-en-mi-nuevo-blog/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2008/06/25/retrospectiva/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2008/11/09/ya-quedo-instalado-ubuntu-810-actualizado-sobre-804/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2008/11/15/instalando-ror-mas-nueva-de-la-que-trae-leopard/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2008/11/30/leyendo-feeds-en-el-iphone/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2008/11/30/miscelanea-ror-i/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2008/12/15/problemas-de-memoria-en-mi-256slice/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2009/01/29/comunidades/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2009/02/10/mi-participacion-en-el-barcamp-2-mexico/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2009/02/27/scaling-rails/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2009/03/17/segunda-reunion-de-mxor/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2009/05/20/mostrando-el-branch-de-git-en-el-prompt-de-la-consola/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2009/06/07/instalando-rabbitmq/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2009/06/10/enviando-correo-de-manera-asincrona-en-rails-usando-workling-workling-mailer-y-rabbitmq/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2009/11/05/etiquetando-codigo-en-gittagging-code-in-git/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2009/11/16/como-crear-un-archivo-zip-con-ruby/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2010/01/07/table-names-case-insensitive-for-mysql-linux/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.jcastaneyra.com/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/
+        </loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2011/09/19/mi-blog-con-octopress/</loc>
+        <lastmod>2011-10-28T11:54:31-05:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.jcastaneyra.com/2011/09/21/macs-en-venta/</loc>
         <lastmod>2011-10-28T12:04:44-05:00</lastmod>
     </url>
     <url>
-        <loc>http://jcastaneyra.com/about/</loc>
+        <loc>http://www.jcastaneyra.com/about/</loc>
         <lastmod>2011-10-28T11:54:31-05:00</lastmod>
     </url>
     <url>
-        <loc>http://jcastaneyra.com/blog/archives/</loc>
+        <loc>http://www.jcastaneyra.com/blog/archives/</loc>
         <lastmod>2011-10-28T12:04:44-05:00</lastmod>
     </url>
     <url>
-        <loc>http://jcastaneyra.com/</loc>
+        <loc>http://www.jcastaneyra.com/</loc>
         <lastmod>2011-10-28T12:04:44-05:00</lastmod>
     </url>
 </urlset>
