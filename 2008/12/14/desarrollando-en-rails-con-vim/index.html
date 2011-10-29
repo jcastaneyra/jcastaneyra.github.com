@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim">
+  <link rel="canonical" href="http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -60,7 +60,7 @@
 </ul>
 <form action="http://google.com/search" method="get">
   <fieldset role="search">
-    <input type="hidden" name="q" value="site:www.jcastaneyra.com" />
+    <input type="hidden" name="q" value="site:jcastaneyra.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
@@ -90,6 +90,8 @@
   
 
 <time datetime="2008-12-14T00:00:00-06:00" pubdate>Dec 14<span>th</span>, 2008</time>
+        
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
@@ -139,7 +141,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/" data-via="jcastaneyra" data-counturl="http://www.jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -296,9 +298,21 @@
       var disqus_shortname = 'jcastaneyra';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim';
-        var disqus_url = 'http://www.jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim';
+        //var disqus_developer = 1;
+        if(typeof(custom_disqus_identifier) != "undefined") {
+          var disqus_identifier = custom_disqus_identifier;
+        } else {
+          //var disqus_identifier = 'http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim';
+          var disqus_identifier = 'http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/';
+        }
+
+        if(typeof(custom_disqus_url) != "undefined") {
+          var disqus_url = custom_disqus_url;
+        } else {
+          //var disqus_url = 'http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim';
+          var disqus_url = 'http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/';
+        }
+
         var disqus_script = 'embed.js';
       
     (function () {
