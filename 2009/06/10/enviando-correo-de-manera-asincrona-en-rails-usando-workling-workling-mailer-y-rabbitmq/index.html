@@ -78,7 +78,7 @@
   
   <header>
     
-      <h1 class="entry-title">Enviando Correo De Manera Asíncrona en Rails Usando Workling, Workling-Mailer Y RabbitMQ</h1>
+      <h1 class="entry-title">Enviando correo de manera asíncrona en Rails usando Workling, Workling-Mailer y RabbitMQ</h1>
     
     
       <p class="meta">
@@ -103,6 +103,9 @@
 <p>El trabajar con message queues es bastante interesante, ya que podemos mandar procesos al background y que estos sean procesados de manera asíncrona, un ejemplo podría ser el envío de correos, aunque también podría servir para realizar otras tareas, por ejemplo, como el envío de mensajes sms, generación de reportes, generación de pdf&#8217;s, etc.</p>
 
 <p>En esta ocasión les quiero presentar como enviar correos de manera asíncrona haciendo una aplicación sencilla haciendo uso de los puglins Workling y workling-mailer y del sistema RabbitMQ, en teoría, con esto se podría ajustar esta solución fácilmente a cualquier otro proceso que se quiera realizar de manera asíncrona.</p>
+
+<!-- more -->
+
 
 <h2>Aplicación base</h2>
 
@@ -712,12 +715,12 @@
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
-      getTwitterFeed("jcastaneyra", 4, false);
+      getTwitterFeed("jcastaneyra", 4, true);
     });
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="true">Follow @jcastaneyra</a>
   
 </section>
 
@@ -730,7 +733,7 @@
 </section>
 
 
-<section class="googleplus">
+<section class="googleplus googleplus-hidden">
   <h1>
     <a href="https://plus.google.com/112262934273275148051?rel=author">
       <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">

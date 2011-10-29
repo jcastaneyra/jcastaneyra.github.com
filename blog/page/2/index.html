@@ -81,7 +81,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/03/17/segunda-reunion-de-mxor/">Segunda Reunión De MXOR</a></h1>
+      <h1 class="entry-title"><a href="/2009/03/17/segunda-reunion-de-mxor/">Segunda reunión de MXOR</a></h1>
     
     
       <p class="meta">
@@ -103,54 +103,12 @@
 
   <div class="entry-content"><p>El día de ayer fue la segunda reunión de nuestro grupo de Rails MXOR, en el cuál se hablaron de diversos tópicos en general, pero como todos estamos interesados en aprender de estos tópicos llegamos a la idea de trabajar en un proyecto en donde se pueda trabajar con las cosas que nos interesan y que de esto surgan una serie de artículos los cuales puedan servirnos a nosotros como referencia y a las personas interesadas en Rails y de todo lo que está al rededor.</p>
 
-<p>Sobre los tópicos que nos resultaron interesantes son:</p>
-
-<ul>
-<li>Instalación de Linux desde cero y con los necesario para Rails</li>
-<li>Version de Rails, VM&#8217;s</li>
-<li>Uso de Git con el proyecto</li>
-<li>RedMine como administrador de proyecto</li>
-<li>BDD</li>
-<li>Autenticación</li>
-<li>Servidores Web, App Servers</li>
-<li>Prototype, scriptaculous, JQuery (Edgar dice que es más ligero)</li>
-<li>CSS (blueprint, haml)</li>
-<li>Deployment</li>
-<li>Cache</li>
-<li>Plugins de consulta</li>
-<li>I18N</li>
-</ul>
-
-
-<p>En la reunión se hizo una lluvia de ideas sobre que proyectos trabajar y sobre el proyecto que se eligió también se fueron aterrizando diversas ideas.</p>
-
-<h2>Problema:</h2>
-
-<p>Compartir historias de desarrolladores.</p>
-
-<h2>El contenido:</h2>
-
-<p>Tutoriales
-Errores
-Categorización de tutoriales
-Categorización de Errores
-Como wiki de errores
-¿Compartir pasos de recetas?
-Solo en español para empezar</p>
-
-<p>Hasta aquí me quedé en las anotaciones ya que tuve que salir temprano, pero hay un podcast con la sesión de principio a fin. En este momento se está seleccionando un nombre para la aplicación, una vez que se haya elegido el nombre se podrá empezar a trabajar en estos tópicos, idealmente la gente involucrada en cada actividad sería la que esté interesada en aprender y no precisamente la que domine el tema. La lista de nombres al momento es:</p>
-
-<ul>
-<li>redcipe (3 votos)</li>
-<li>errecipe (1 voto)</li>
-<li>devrecipes (0 votos)</li>
-<li>devcipe (1 voto)</li>
-</ul>
-
-
-<p>Por supuesto este es un proyecto open source y abierto a la comunidad interesada en Rails, buscando que a partir de esto surgan artículos e información que en un momento dado nos sea de utilidad, una especie de libro que nos sirva de guía en la realización de una aplicación. Para más información acudir a la <a href="http://mexicoonrails.com.mx/news/12">página del grupo</a>.</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2009/03/17/segunda-reunion-de-mxor/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -210,7 +168,7 @@ Solo en español para empezar</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/02/10/mi-participacion-en-el-barcamp-2-mexico/">Mi Participación en El BarCamp 2 México</a></h1>
+      <h1 class="entry-title"><a href="/2009/02/10/mi-participacion-en-el-barcamp-2-mexico/">Mi participación en el BarCamp 2 México</a></h1>
     
     
       <p class="meta">
@@ -250,7 +208,7 @@ Solo en español para empezar</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/">Como Obtener Una Imagen ISO De Un CD/DVD en Mac</a></h1>
+      <h1 class="entry-title"><a href="/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/">Como obtener una imagen ISO de un CD/DVD en Mac</a></h1>
     
     
       <p class="meta">
@@ -272,52 +230,12 @@ Solo en español para empezar</p>
 
   <div class="entry-content"><p>Hace poco un compañerito de la comunidad de <a href="http://www.mexicoonrails.com.mx">México on Rails</a> mencionó que tener una Mac es como tener lo mejor de ambos mundos (de Windows y Linux), y he aquí el porqué, resulta que quería obtener una imagen ISO de cierto DVD para respaldarlo y posiblemente después quemarlo, y aquí les muestro al más puro estilo Unix como se puede hacer.</p>
 
-<p>Primero que nada hay que insertar el CD/DVD a extraer (duh! pero alguien podría no saber :) )</p>
-
-<p>Y ejecutando el siguiente comando obtenemos el status del CD/DVD a quemar:</p>
-
-<pre><code>jcastaneyra$ drutil status
-Vendor   Product           Rev
-OPTIARC  DVD RW AD-5630A   1CHQ
-
-Type: DVD-ROM              Name: /dev/disk1
-Sessions: 1                  Tracks: 1
-Overwritable:   00:00:00         blocks:        0 /   0.00MB /   0.00MiB
-Space Free:   00:00:00         blocks:        0 /   0.00MB /   0.00MiB
-Space Used:  330:41:69         blocks:  1488144 /   3.05GB /   2.84GiB
-Writability:
-Book Type: DVD-ROM (v1)
-</code></pre>
-
-<p>Posteriormente desmontamos el CD/DVD:</p>
-
-<pre><code>jcastaneyra$ diskutil unmountDisk /dev/disk1
-Unmount of all volumes on disk1 was successful
-</code></pre>
-
-<p>Y ahora obtenemos la imagen con la utilidad dd:</p>
-
-<pre><code>jcastaneyra$ dd if=/dev/disk1 of=vista.iso bs=2048
-1488144+0 records in
-1488144+0 records out
-3047718912 bytes transferred in 1209.311307 secs (2520210 bytes/sec)
-</code></pre>
-
-<p>Después para expulsar el CD/DVD lo que se hace es volverlo a montar (jejeje, talvez puede haber otra forma, posiblemente haya un comando eject, ya no lo probé):</p>
-
-<pre><code>jcastaneyra$ diskutil mountDisk /dev/disk1
-Volume(s) mounted successfully
-</code></pre>
-
-<p>Y por último probamos la imagen ISO:</p>
-
-<pre><code>jcastaneyra$ hdid vista.iso
-/dev/disk2                                                 /Volumes/VISTA_32_BUSINESS
-</code></pre>
-
-<p>Y para poder quemar la imagen ISO se podría utilizar la aplicación &#8220;Utilidad de Discos&#8221;</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -350,13 +268,12 @@ Volume(s) mounted successfully
 
   <div class="entry-content"><p>El domingo pasado fui a la primer reunión de la comunidad de <a href="http://www.mexicoonrails.com.mx">México On Rails</a>, y también es para mi la primer comunidad en la que estoy, desde hace tiempo había querido integrarme a una comunidad pero en su momento no encontré una cerca a donde estaba viviendo, y también había leído de un buen de gurús de software que recomendaban el unirse a una comunidad que siguieran la tecnología o corriente que uno quería seguir o de la cual aprender, al seguir este consejo me di cuenta a lo que realmente se referían, en esta comunidad de <a href="http://www.mexicoonrails.com.mx">México On Rails</a> a pesar de que fuimos pocas personas, realmente pude ver el talento que hay aquí en México y con personas de todas las edades, la apertura que hay para aprender y compartir conocimiento, y con respecto a esto último, dentro de unos días será el <a href="http://barcamp.org/BarCampMexico">Barcamp México</a> al cual iré y contribuiré con mi granito de arena haciendo una ponencia, algo sencilla, pero la finalidad es compartir y aprender, y enseñando también se aprende mucho, la ponencia será cómo instalar Rails en Windows, por cierto <a href="http://groups.google.com/group/mxor/browse_thread/thread/b9b872ae2360baf8#">aquí está la lista de ponencias</a> que se planean dar por los demás miembros del grupo.</p>
 
-<p>Por cierto a la otra convivencia de la comunidad a la que me gustaría asistir es la de <a href="http://shdhmexicocity.org/">Super Happy Dev House México</a>, espero poder ir pronto.</p>
-
-<p>Les dejo unas fotos del primer evento de MXOR (dar click en la foto para ir a Flickr):</p>
-
-<p><a href="http://flickr.com/search/?q=Mexico%20on%20rails&amp;w=41496390%40N00"><img class="alignnone" src="http://farm4.static.flickr.com/3121/3236190410_84a244660c_m.jpg" alt="" width="240" height="180" /></a></p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2009/01/29/comunidades/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -367,7 +284,7 @@ Volume(s) mounted successfully
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/12/15/problemas-de-memoria-en-mi-256slice/">Problemas De Memoria en Mi 256slice</a></h1>
+      <h1 class="entry-title"><a href="/2008/12/15/problemas-de-memoria-en-mi-256slice/">Problemas de memoria en mi 256slice</a></h1>
     
     
       <p class="meta">
@@ -394,21 +311,12 @@ Volume(s) mounted successfully
 
 <p>Por lo que me puse a investigar y encontré unos ajustes que se le tienen que hacer a la configuración del servidor apache2:</p>
 
-<pre><code>&lt;IfModule mpm_prefork_module&gt;
-    StartServers          3
-    MinSpareServers       3
-    MaxSpareServers       3
-    ServerLimit          50
-    MaxClients           50
-    MaxRequestsPerChild   1000
-&lt;/IfModule&gt;
-</code></pre>
-
-<p>Además, también instalé el plugin de wordpress <a href="http://wordpress.org/extend/plugins/wp-super-cache/">WP Super cache</a> para bajarle un poco al proceso de php con la base de datos.</p>
-
-<p>Espero que esto funcione, estoy intentando esto antes de subir a 512 Mb de memoria, y digo ojalá que esta experiencia pueda ayudar a alguien más que se encuentre en un problema parecido.</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2008/12/15/problemas-de-memoria-en-mi-256slice/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -419,7 +327,7 @@ Volume(s) mounted successfully
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/12/14/desarrollando-en-rails-con-vim/">Desarrollando en Rails Con Vim</a></h1>
+      <h1 class="entry-title"><a href="/2008/12/14/desarrollando-en-rails-con-vim/">Desarrollando en Rails con Vim</a></h1>
     
     
       <p class="meta">
@@ -443,22 +351,12 @@ Volume(s) mounted successfully
 
 <p>Al ver esto me preguntaba porque era más usado un editor de texto turbocargado con comandos en la consola y no un IDE, y la respuesta de los expertos era que con la consola de comandos y un editor se tiene más control sobre el proyecto además de la experiencia que esto te deja en lugar de dejar a que el IDE automatice todo.</p>
 
-<p>Pues bien, debido a una cuestión de $$ me puse a usar un rato Aptana y JEdit, con los cuales tuve buenas experiencias, pero recientemente vi el <a href="http://weblog.jamisbuck.org/2008/10/10/coming-home-to-vim">post</a> de un experto en Rails, creador de <a href="http://www.capify.org/">Capistrano</a>, Jamis Buck y que venía de trabajar con TextMate durante algunos años pero que previamente había trabajado con Vim, y que ahora estaba moviéndose de nueva cuenta a Vim. Jamis Buck como experto en Rails y TextMate, ahora que se estaba moviendo creó un plugin para Vim para tener ciertas funciones que TextMate tiene. Así es que cuando vi este post dije &#8220;de aquí soy&#8221;.</p>
-
-<p>Vim siempre ha sido un editor muy poderoso, el cual he usado por años pero no como un usuario experto, porque la verdad tiene un buen de comandos, pero ahora estoy tratando de subirme en él para los desarrollos en Rails que estaré haciendo.</p>
-
-<p>Con el post de Jamis Buck y el plugin que hizo (<a href="http://github.com/jamis/fuzzyfinder_textmate/tree/master">FuzzyFinder_TextMate</a> que extendió de <a href="http://www.vim.org/scripts/script.php?script_id=1984">FuzzyFinder</a>) y a todas las respuestas que recibió en su blog, es como he levantado mi ambiente con Vim, en este caso lo he hecho en la Mac, pero en Linux deber ser casi igual.</p>
-
-<p><img class="left" src="http://c243421.r21.cf1.rackcdn.com/imagen-1-300x277.png"></p>
-
-<p>En Leopard primero que nada me instalé MacVim bajándolo de <a href="http://code.google.com/p/macvim/">http://code.google.com/p/macvim/</a> y después con ayuda de los posts de Jamis Buck y de los comments ahí puestos logré levantar mi ambiente (<a href="http://weblog.jamisbuck.org/2008/10/10/coming-home-to-vim">Coming home to Vim</a> y <a href="http://weblog.jamisbuck.org/2008/11/17/vim-follow-up">Vim Follow-up</a>), también en los comments de estos posts encontré a una persona que puso en github su configuración de vim al igual que sus plugins de vim, que por cierto fue de bastante ayuda (<a href="http://github.com/manalang/vim-config/tree/master">http://github.com/manalang/vim-config/tree/master</a>). Se que en internet hay muchos recursos sobre comandos de Vim, pero aquí está uno que me encontré :) <a href="http://rayninfo.co.uk/vimtips.html">http://rayninfo.co.uk/vimtips.html</a></p>
-
-<p>En resumen, Vim es un editor muy potente, tan potente que se pueden hacer cosas que talvez en un IDE no se puedan hacer, para muestra este video.</p>
-
-<iframe width="420" height="315" src="http://www.youtube.com/embed/pCiVCiku3cM" frameborder="0" allowfullscreen></iframe>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2008/12/14/desarrollando-en-rails-con-vim/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -511,7 +409,7 @@ Volume(s) mounted successfully
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/11/30/leyendo-feeds-en-el-iphone/">Leyendo Feeds en El iPhone</a></h1>
+      <h1 class="entry-title"><a href="/2008/11/30/leyendo-feeds-en-el-iphone/">Leyendo feeds en el iPhone</a></h1>
     
     
       <p class="meta">
@@ -533,26 +431,12 @@ Volume(s) mounted successfully
 
   <div class="entry-content"><p>Como ya había comentado en un post anterior, les había mencionado que compré el iPhone, ahora vengo a compartir ciertas impresiones sobre este telefonito que tiene gran popularidad, que está muy bien diseñado a pesar de algunas carencias, o de sus excesos (como el precio según algunos, aunque esos algunos después los he visto con teléfonos más caros, y bueno esto del precio más bien depende del país y del plan tarifario de la compañía telefónica, aquí en México si sale caro), aún así, la neta es que está muy fregón, y con el uso que le doy me queda más que perfecto, para leer/enviar correo, seguir mis comentarios en twitter, navegación que si es funcional (aún con su carencia de flash player), ver el movimiento del peso contra el dolar (inguele, y más ahorita), jugar, ver mapas con google maps y el pseudo gps, bueno hasta estar  actualizado con el Facebook, pero sobre todo y para lo que he preparado este post, para leer feeds, y se preguntarán ¿qué es un feed? y digo esto porque muchos de mis conocidos y amigos no saben y no usan los feeds; pues bien, un feed es un alimentador de noticias, o un link que nos tiene actualizados de las noticias de un sitio y que generalmente son leídos por un programa especial y manteniéndonos al tanto de la actividad de cierto sitio, incluso hay clientes de correo que pueden leer estos feeds, por eso también podrían verse como correos, por cierto aquí en mi sitio también tengo mis feeds de noticias. Bueno después de este breviario cultural (que igual y no está del todo bien pero que así me lo imagino) paso a mencionar que, en el iPhone y con la aplicación <a href="http://www.newsgator.com/individuals/default.aspx">NetNewsWire</a> puedo leer de mis feeds y que además la empresa que hace esta app para el iPhone también ofrece el servicio de feeds mediante web y aplicaciones de escritorio para Windows y Mac (sólo faltaría la aplicación de escritorio para Linux), por lo que nuestras noticias pueden ser leídas donde sea, claro que para usar estos servicios hay que registrarse, y después de registrado a suscribirse a cuanto feed quiera uno.</p>
 
-<p style="text-align: center;"><img class="size-medium wp-image-189 aligncenter" title="iphone_nnwmainscreen" src="http://c243421.r21.cf1.rackcdn.com/iphone_nnwmainscreen-139x300.jpg" alt="" width="139" height="300" /></p>
-
-
-<p>Por ejemplo, en mi caso yo estoy suscrito a feeds de RoR, java, Mac, Noticias del universal y por supuesto a mi propio blog y a los comentarios de mi blog:</p>
-
-<p>Posts de mi blog:</p>
-
-<p><a href="http://feeds.feedburner.com/jcastaneyra">http://feeds.feedburner.com/jcastaneyra</a></p>
-
-<p>Comentarios de mi blog:
-<a href="http://feeds.feedburner.com/jcastaneyra_comments">
-http://feeds.feedburner.com/jcastaneyra_comments</a></p>
-
-<p>Con estas ligas, con sólo copiarlas y pegarlas en cualquiera de los programas mencionados (escritorio, en web y el iPhone, bueno en el iPhone se tendría que que escribir porque no se puede pegar, ya se, otra carencia más en el iPhone no se puede copiar ni pegar, no todo puede ser perfecto) en la suscripción, con esto ya estaríamos recibiendo noticias, y lo mejor de todo es que los feeds se sincronizan entre todas las plataformas, por ejemplo en el trabajo, y a la hora de comida podría leer noticias de RoR (hay que especificar que es a la hora de la comida, no vaya a pensar el jefe y diga que no trabajo porque me la paso leyendo noticias) y quedarme a la mitad de las noticias y en la noche llegar y con la aplicación de escritorio entrar y que se sincronicen mis feeds mostrándome las noticias que me faltan por leer.</p>
-
-<p>En resumen, esta aplicación para el iPhone (en conjunto con las demás de web y escritorio) está muy efectiva para todos aquellos que quieran estar actualizados en noticias sobre los tópicos que les apasionen e interesen.</p>
-
-<p>Y que conste que no recibo ninguna comisión, ¡Ah por cierto!, se me olvidaba mencionar que esta aplicación para el iPhone (y para web y escritorio) es ¡totalmente gratuita!, sólo hay que suscribirse.</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2008/11/30/leyendo-feeds-en-el-iphone/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -585,120 +469,12 @@ http://feeds.feedburner.com/jcastaneyra_comments</a></p>
 
   <div class="entry-content"><p>Al día de hoy no tengo una computadora a mi disposición, y como no tengo una, de vez en cuando hago cosas en la compu del trabajo, que no debería, y también a veces me prestan la macbook air, y en la macbook puedo trabajar un poco más, que me gustaría trabajar mucho más en la macbook, pues bien, hace rato ya había trabajado con Ruby on Rails con la versión que trae el leopard, pero hace unos días me dieron ganas de probar la RC de RoR la 2.2 (ya la RC2), para instalarlo tuve que investigar un poquito, ya que no es un proceso de instalación sencillo, tiene algunos trucos, para esto me basé en el post de <a href="http://danbenjamin.com/articles/2008/02/ruby-rails-leopard">Dan Benjamin</a>, pero para variar me hago un resumen a mi mismo, para cuando se me vuelva a ofrecer, así que para más detalle visitar el post, ahí si mencionan que sólo por las dudas sería bueno respaldar la información, yo no lo hice, y todo salió bien.</p>
 
-<p>Pues bien, para tener instalada una de las últimas versiones de RoR y diferente a las que está instalada por defecto en leopard es necesario tener instalado el XCode 3.0 o superior, este puede ser bajado de developer.apple.com o bien instalándolo del disco que viene con la mac, la verdad no se que disco es, pero con la mac debe de venir un disco (o más no recuerdo).</p>
-
-<p><strong>Primeros pasos</strong></p>
-
-<p>Primero que nada hay que configurar el path, para esto habrá que abrir una terminal (en este caso con el bash shell), y verificar que esté en mi directorio home, o bien esto puedo realizarse usando el comando:</p>
-
-<pre lang="bash">cd</pre>
-
-
-<p>Habrá que editar el archivo .bash_login, yo lo hice con el vi, es posible que este archivo no exista, si no existe lo vamos a crear, y si existe pos editaremos la parte del path, entonces para editarlo o crearlo es con el siguiente comando:</p>
-
-<pre lang="bash">vi .bash_login</pre>
-
-
-<p>Al final del archivo se deberá introducir la siguiente línea:</p>
-
-<pre lang="bash">export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:$PATH"</pre>
-
-
-<p>Lo siguiente es ejecutar el cambio:</p>
-
-<pre lang="bash">. .bash_login</pre>
-
-
-<p>Al path se agregó la ruta donde se encuentra MySQL, para la instalación de MySQL en leopard recuerdo que sólo bajé el paquete directamente de www.mysql.com y seguí las instrucciones que vienen con dicho paquete.</p>
-
-<p>Se tiene que crear ahora un directorio donde vamos a bajar Ruby y posteriormente compilarlo, entonces habrá que ejecutar los siguientes comandos:</p>
-
-<pre lang="bash">sudo mkdir -p /usr/local/src
-
-sudo chgrp admin /usr/local/src
-
-sudo chmod -R 775 /usr/local/src
-
-cd /usr/local/src</pre>
-
-
-<p><strong>Ruby</strong></p>
-
-<p>Para bajarlo y compilarlo ejecutamos los siguiente:</p>
-
-<pre lang="bash">curl -O ftp://ftp.ruby-lang.org/pub/ruby/1.8/ruby-1.8.6-p287.tar.gz
-
-tar xvzf ruby-1.8.6-p287.tar.gz
-
-cd ruby-1.8.6-p287
-
-./configure --enable-shared --enable-pthread CFLAGS=-D_XOPEN_SOURCE=1
-
-make
-
-sudo make install
-
-cd ..</pre>
-
-
-<p>Para verificar que ruby se instaló en el path correcto, escribir:</p>
-
-<pre lang="bash">which ruby</pre>
-
-
-<p>Se debería ver:</p>
-
-<pre lang="bash">/usr/local/bin/ruby</pre>
-
-
-<p><strong>RubyGems</strong></p>
-
-<p>El siguiente paso es instalar RubyGems (que por cierto Ruby on Rail 2.2 RC2 requiere de RubyGems 1.3.1):</p>
-
-<pre lang="bash">curl -O http://files.rubyforge.mmmultiworks.com/rubygems/rubygems-1.3.1.tgz
-
-tar xvzf rubygems-1.3.1.tgz
-
-cd rubygems-1.3.1
-
-sudo /usr/local/bin/ruby setup.rb
-
-cd ..</pre>
-
-
-<p><strong>Ruby on Rails</strong></p>
-
-<p>Para instalar la versión estable de RoR se ejecuta:</p>
-
-<pre lang="bash">sudo gem install rails</pre>
-
-
-<p>También instalamos mongrel y capistrano, por si las moscas:</p>
-
-<pre lang="bash">sudo gem install mongrel
-
-sudo gem install capistrano</pre>
-
-
-<p>Ahora si, para instalar la versión 2.2 RC2 de RoR ejecutar:</p>
-
-<pre lang="bash">sudo gem install rails -s http://gems.rubyonrails.org</pre>
-
-
-<p>Y por último instalamos la gem para mysql</p>
-
-<pre lang="bash">sudo gem install mysql -- --with-mysql-dir=/usr/local/mysql</pre>
-
-
-<p>Recursos:</p>
-
-<p><a href="http://danbenjamin.com/articles/2008/02/ruby-rails-leopard">http://danbenjamin.com/articles/2008/02/ruby-rails-leopard</a></p>
-
-<p><a href="http://weblog.rubyonrails.com/">http://weblog.rubyonrails.com/</a></p>
-
-<p><a href="http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.67-osx10.5-x86_64.dmg/from/pick#mirrors">http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.67-osx10.5-x86_64.dmg/from/pick#mirrors</a></p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2008/11/15/instalando-ror-mas-nueva-de-la-que-trae-leopard/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -780,12 +556,12 @@ sudo gem install capistrano</pre>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
-      getTwitterFeed("jcastaneyra", 4, false);
+      getTwitterFeed("jcastaneyra", 4, true);
     });
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="true">Follow @jcastaneyra</a>
   
 </section>
 
@@ -798,7 +574,7 @@ sudo gem install capistrano</pre>
 </section>
 
 
-<section class="googleplus">
+<section class="googleplus googleplus-hidden">
   <h1>
     <a href="https://plus.google.com/112262934273275148051?rel=author">
       <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">

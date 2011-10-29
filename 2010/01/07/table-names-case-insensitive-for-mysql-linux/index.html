@@ -78,7 +78,7 @@
   
   <header>
     
-      <h1 class="entry-title">Table Names Case Insensitive for MySQL Linux</h1>
+      <h1 class="entry-title">Table names case insensitive for MySQL Linux</h1>
     
     
       <p class="meta">
@@ -101,6 +101,9 @@
 <div class="entry-content"><p>Hola a todos, feliz año 2010, que tal se pasaron estas fechas? descansaron bastante? Pues yo más o menos, unos ratos descansaba y otros trabajaba, y para variar me encontré con esto en el trabajo.</p>
 
 <p>Resulta que estaba montando un servidor de Weblogic y MySQL en Linux, para instalar una aplicación que originalmente estaba con Weblogic y Oracle, y resulta que al cargar las tablas de esta aplicación en MySQL empecé a encontrarme problemas con los nombres de las tablas (entre otras cosas, como los tipos de datos entre Oracle y MySQL), yo no sabía que MySQL por default en Linux es case sensitive, por lo que me di a la tarea de investigar y buscar como deshabilitar esta función.</p>
+
+<!-- more -->
+
 
 <p>Es necesario editar el archivo my.cnf que se puede encontrar en /etc o bien en /etc/mysql, e inmediatamente después de la sección [mysqld], agregar lo siguiente:</p>
 
@@ -230,12 +233,12 @@
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
-      getTwitterFeed("jcastaneyra", 4, false);
+      getTwitterFeed("jcastaneyra", 4, true);
     });
   </script>
   <script src="/javascripts/twitter.js" type="text/javascript"> </script>
   
-    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @jcastaneyra</a>
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="true">Follow @jcastaneyra</a>
   
 </section>
 
@@ -248,7 +251,7 @@
 </section>
 
 
-<section class="googleplus">
+<section class="googleplus googleplus-hidden">
   <h1>
     <a href="https://plus.google.com/112262934273275148051?rel=author">
       <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
