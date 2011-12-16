@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Instalando paquetes de stable y testing en Debian - JCastaneyra blog</title>
+  <title>Arduino shippings - JCastaneyra blog</title>
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="Hace poco instalé la última versión stable de Debian, pero resulta que tenía interés de probar algunos paquetes más recientes de MySQL y de PHP, los &hellip;">
+  <meta name="description" content="Hace unos 2 o 3 años escuché por primera vez sobre Arduino, y se me hizo una plataforma interesante. El punto es que traigo algunos proyectos &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian">
+  <link rel="canonical" href="http://jcastaneyra.com/2011/12/16/arduino-shippings">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -78,7 +78,7 @@
   
   <header>
     
-      <h1 class="entry-title">Instalando paquetes de stable y testing en Debian</h1>
+      <h1 class="entry-title">Arduino shippings</h1>
     
     
       <p class="meta">
@@ -89,7 +89,7 @@
 
   
 
-<time datetime="2006-09-09T00:00:00-05:00" pubdate>Sep 9<span>th</span>, 2006</time>
+<time datetime="2011-12-16T15:56:00-06:00" pubdate>Dec 16<span>th</span>, 2011</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -98,38 +98,56 @@
   </header>
 
 
-<div class="entry-content"><p>Hace poco instalé la última versión stable de Debian, pero resulta que tenía interés de probar algunos paquetes más recientes de MySQL y de PHP, los cuáles se encontraban en la versión testing de los paquetes, así es que me puse a buscar en la red para saber como poder instalar desde la versión testing sin tener que mover todos mis paquetes a esta versión, o sin tener que estar modificando la lista de fuentes en sources.list a cada rato, y he aquí lo que se tiene que hacer.</p>
+<div class="entry-content"><p>Hace unos 2 o 3 años escuché por primera vez sobre Arduino, y se me hizo una plataforma interesante. El punto es que traigo algunos proyectos personales en los cuáles quiero involucrar algo de interacción de software con hardware, por lo que presumo aquí mis más recientes adquisiciones, no entraré mucho en detalle técnico de las características de cada componente ya que estas pueden ser encontradas fácilmente en internet.</p>
 
 <!-- more -->
 
 
-<p>Primero debemos tener la lista de fuentes de las versiones stable y testing en /etc/apt/sources.list. En mi caso apunto a los fuentes que están en un mirror de la UNAM:</p>
+<p>Lo que compré aquí en México (en el centro, en la calle de República de Uruguay creo).</p>
 
-<pre lang="bash"># sources for stable
-deb http://nisamox.fciencias.unam.mx/debian/ stable main
-deb-src http://nisamox.fciencias.unam.mx/debian/ stable main
-
-deb http://security.debian.org/ stable/updates main
-
-# sources for testing
-deb http://nisamox.fciencias.unam.mx/debian/ testing main
-deb-src http://nisamox.fciencias.unam.mx/debian/ testing main
-#deb http://security.debian.org/ stable/updates main</pre>
+<ul>
+<li>Arduino UNO</li>
+</ul>
 
 
-<p>Ahora tenemos que agregar a /etc/apt/apt.conf (crear el archivo si no existe) la siguiente línea:</p>
+<p><img class="center" src="http://c243421.r21.cf1.rackcdn.com/arduino_uno.jpg"></p>
 
-<pre lang="bash">APT::Default-Release "stable";</pre>
+<p>Lo siguiente lo compré en <a href="http://www.seeedstudio.com">seeedstudio.com</a></p>
+
+<ul>
+<li>Seeeduino stalker kit y que incluye
+
+<ul>
+<li>Seeeduino stalker v2.1</li>
+<li>Lithium Ion polymer Battery 980mAh</li>
+<li>SanDisk microSD Card 2Gb</li>
+<li>Mini USB cable</li>
+<li>UartSBee</li>
+<li>6 pin cable</li>
+<li>Seeeduino Stalker v2 enclosure</li>
+<li>0.5w Solar Panel</li>
+</ul>
+</li>
+<li>GPS Bee</li>
+<li>2 XBee shields</li>
+</ul>
 
 
-<p>si no agregamos esta línea a apt.conf, al momento de hacer apt-get upgrade el administrador de paquetes querrá actualizar los paquetes a testing.</p>
+<p><img class="center" src="http://c243421.r21.cf1.rackcdn.com/seeeduino_stalker_v21.jpg">
+<img class="center" src="http://c243421.r21.cf1.rackcdn.com/gps_bee.jpg"></p>
 
-<p>Ya con esto podemos instalar MySQL y PHP de los fuentes de testing:</p>
+<p>La siguiente compra fue en <a href="http://www.sparkfun.com">sparkfun.com</a></p>
 
-<pre># apt-get update
-# apt-get -t testing install mysql-server-5.0
-# apt-get -t testing install php5-mysql</pre>
+<ul>
+<li>2 XBee 2mW Chip Antenna - Series 2 (ZB)</li>
+</ul>
 
+
+<p><img class="center" src="http://c243421.r21.cf1.rackcdn.com/xbees.jpg"></p>
+
+<p>Aquí una foto con casi todo junto:</p>
+
+<p><img class="center" src="http://c243421.r21.cf1.rackcdn.com/arduino_shoppings.jpg"></p>
 </div>
 
 
@@ -147,15 +165,21 @@ deb-src http://nisamox.fciencias.unam.mx/debian/ testing main
 
   
 
-<time datetime="2006-09-09T00:00:00-05:00" pubdate>Sep 9<span>th</span>, 2006</time>
+<time datetime="2011-12-16T15:56:00-06:00" pubdate>Dec 16<span>th</span>, 2011</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/arduino/'>arduino</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2011/12/16/arduino-shippings/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2011/12/16/arduino-shippings/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -168,10 +192,8 @@ deb-src http://nisamox.fciencias.unam.mx/debian/ testing main
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2006/09/06/instalacion-de-mysql-php-y-jaws-en-openbsd/" title="Previous Post: Instalación de MySQL, PHP y Jaws en OpenBSD">&laquo; Instalación de MySQL, PHP y Jaws en OpenBSD</a>
+        <a class="basic-alignment left" href="/2011/09/21/macs-en-venta/" title="Previous Post: Macs usadas en Venta">&laquo; Macs usadas en Venta</a>
       
-      
-        <a class="basic-alignment right" href="/2006/09/14/bajate-cabron/" title="next Post: ¡Bajate cabrón!">¡Bajate cabrón! &raquo;</a>
       
     </p>
   </footer>
@@ -316,15 +338,15 @@ deb-src http://nisamox.fciencias.unam.mx/debian/ testing main
         if(typeof(custom_disqus_identifier) != "undefined") {
           var disqus_identifier = custom_disqus_identifier;
         } else {
-          //var disqus_identifier = 'http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian';
-          var disqus_identifier = 'http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian/';
+          //var disqus_identifier = 'http://jcastaneyra.com/2011/12/16/arduino-shippings';
+          var disqus_identifier = 'http://jcastaneyra.com/2011/12/16/arduino-shippings/';
         }
 
         if(typeof(custom_disqus_url) != "undefined") {
           var disqus_url = custom_disqus_url;
         } else {
-          //var disqus_url = 'http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian';
-          var disqus_url = 'http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian/';
+          //var disqus_url = 'http://jcastaneyra.com/2011/12/16/arduino-shippings';
+          var disqus_url = 'http://jcastaneyra.com/2011/12/16/arduino-shippings/';
         }
 
         var disqus_script = 'embed.js';

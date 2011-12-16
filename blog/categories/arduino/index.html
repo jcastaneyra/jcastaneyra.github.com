@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Instalando paquetes de stable y testing en Debian - JCastaneyra blog</title>
+  <title>Category: arduino - JCastaneyra blog</title>
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="Hace poco instalé la última versión stable de Debian, pero resulta que tenía interés de probar algunos paquetes más recientes de MySQL y de PHP, los &hellip;">
+  <meta name="description" content="Category: arduino">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian">
+  <link rel="canonical" href="http://jcastaneyra.comblog/categories/arduino">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -74,114 +74,36 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">Instalando paquetes de stable y testing en Debian</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-  
-
-<time datetime="2006-09-09T00:00:00-05:00" pubdate>Sep 9<span>th</span>, 2006</time>
-        
-         | <a href="#disqus_thread">Comments</a>
-        
-      </p>
+    <h1 class="entry-title">Category: arduino</h1>
     
   </header>
-
-
-<div class="entry-content"><p>Hace poco instalé la última versión stable de Debian, pero resulta que tenía interés de probar algunos paquetes más recientes de MySQL y de PHP, los cuáles se encontraban en la versión testing de los paquetes, así es que me puse a buscar en la red para saber como poder instalar desde la versión testing sin tener que mover todos mis paquetes a esta versión, o sin tener que estar modificando la lista de fuentes en sources.list a cada rato, y he aquí lo que se tiene que hacer.</p>
-
-<!-- more -->
-
-
-<p>Primero debemos tener la lista de fuentes de las versiones stable y testing en /etc/apt/sources.list. En mi caso apunto a los fuentes que están en un mirror de la UNAM:</p>
-
-<pre lang="bash"># sources for stable
-deb http://nisamox.fciencias.unam.mx/debian/ stable main
-deb-src http://nisamox.fciencias.unam.mx/debian/ stable main
-
-deb http://security.debian.org/ stable/updates main
-
-# sources for testing
-deb http://nisamox.fciencias.unam.mx/debian/ testing main
-deb-src http://nisamox.fciencias.unam.mx/debian/ testing main
-#deb http://security.debian.org/ stable/updates main</pre>
-
-
-<p>Ahora tenemos que agregar a /etc/apt/apt.conf (crear el archivo si no existe) la siguiente línea:</p>
-
-<pre lang="bash">APT::Default-Release "stable";</pre>
-
-
-<p>si no agregamos esta línea a apt.conf, al momento de hacer apt-get upgrade el administrador de paquetes querrá actualizar los paquetes a testing.</p>
-
-<p>Ya con esto podemos instalar MySQL y PHP de los fuentes de testing:</p>
-
-<pre># apt-get update
-# apt-get -t testing install mysql-server-5.0
-# apt-get -t testing install php5-mysql</pre>
-
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Jose Castaneyra</span></span>
-
-      
-
+  <div id="blog-archives" class="category">
 
 
 
   
+  <h2>2011</h2>
 
-<time datetime="2006-09-09T00:00:00-05:00" pubdate>Sep 9<span>th</span>, 2006</time>
-      
+<article>
+  
+<h1><a href="/2011/12/16/arduino-shippings/">Arduino shippings</a></h1>
+<time datetime="2011-12-16T15:56:00-06:00" pubdate><span class='month'>Dec</span> <span class='day'>16</span> <span class='year'>2011</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/arduino/'>arduino</a></span>
+</footer>
 
 
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/2006/09/06/instalacion-de-mysql-php-y-jaws-en-openbsd/" title="Previous Post: Instalación de MySQL, PHP y Jaws en OpenBSD">&laquo; Instalación de MySQL, PHP y Jaws en OpenBSD</a>
-      
-      
-        <a class="basic-alignment right" href="/2006/09/14/bajate-cabron/" title="next Post: ¡Bajate cabrón!">¡Bajate cabrón! &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
+
+  
+</article>
 
 </div>
 
@@ -312,22 +234,7 @@ deb-src http://nisamox.fciencias.unam.mx/debian/ testing main
       var disqus_shortname = 'jcastaneyra';
       
         
-        //var disqus_developer = 1;
-        if(typeof(custom_disqus_identifier) != "undefined") {
-          var disqus_identifier = custom_disqus_identifier;
-        } else {
-          //var disqus_identifier = 'http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian';
-          var disqus_identifier = 'http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian/';
-        }
-
-        if(typeof(custom_disqus_url) != "undefined") {
-          var disqus_url = custom_disqus_url;
-        } else {
-          //var disqus_url = 'http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian';
-          var disqus_url = 'http://jcastaneyra.com/2006/09/09/instalando-paquetes-de-stable-y-testing-en-debian/';
-        }
-
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
