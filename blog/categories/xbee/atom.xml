@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Arduino | JCastaneyra blog]]></title>
-  <link href="http://jcastaneyra.com/blog/categories/arduino/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Xbee | JCastaneyra blog]]></title>
+  <link href="http://jcastaneyra.com/blog/categories/xbee/atom.xml" rel="self"/>
   <link href="http://jcastaneyra.com/"/>
   <updated>2012-01-03T15:33:26-06:00</updated>
   <id>http://jcastaneyra.com/</id>
@@ -108,30 +108,6 @@ void buzz(int targetPin, long frequency, long length) {
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[DS3231 Library update for Arduino 1.0]]></title>
-    <link href="http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0/"/>
-    <updated>2012-01-02T20:06:00-06:00</updated>
-    <id>http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0</id>
-    <content type="html"><![CDATA[<p><img class="right" src="http://c243421.r21.cf1.rackcdn.com/ds3231.jpg">
-Ya les había mencionado de mi compra del Seeeduino Stalker, y obviamente empecé a hacer mis primeras pruebas.</p>
-
-<p>Este clon de Arduino trae un RTC DS3231 y en Seeedstudio.com puedes descargar la librería del mismo, pero resulta que con los cambios que se hicieron en el IDE 1.0 de Arduino los sketches que vienen con la librería no funcionan, así que tuve que hacer unos cambios, los cambios en específico sólo se hicieron al archivo DS3231.cpp.</p>
-
-<!--more-->
-
-
-<p>Toda la librería la subí aquí:</p>
-
-<p><a href="https://github.com/jcastaneyra/ds3231_library">https://github.com/jcastaneyra/ds3231_library</a></p>
-
-<p>Referencias:</p>
-
-<p><a href="http://www.seeedstudio.com/wiki/Seeeduino_Stalker_v2.1">http://www.seeedstudio.com/wiki/Seeeduino_Stalker_v2.1</a>
-<a href="http://blog.makezine.com/archive/2011/12/arduino-1-0-is-out-heres-what-you-need-to-know.html">http://blog.makezine.com/archive/2011/12/arduino-1-0-is-out-heres-what-you-need-to-know.html</a></p>
 ]]></content>
   </entry>
   
