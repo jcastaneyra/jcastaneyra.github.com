@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: arduino | JCastaneyra blog]]></title>
+  <title><![CDATA[Category: Arduino | JCastaneyra blog]]></title>
   <link href="http://jcastaneyra.com/blog/categories/arduino/atom.xml" rel="self"/>
   <link href="http://jcastaneyra.com/"/>
-  <updated>2011-12-16T17:09:20-06:00</updated>
+  <updated>2012-01-02T20:55:32-06:00</updated>
   <id>http://jcastaneyra.com/</id>
   <author>
     <name><![CDATA[Jose Castaneyra]]></name>
@@ -14,60 +14,26 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Arduino shippings]]></title>
-    <link href="http://jcastaneyra.com/2011/12/16/arduino-shippings/"/>
-    <updated>2011-12-16T15:56:00-06:00</updated>
-    <id>http://jcastaneyra.com/2011/12/16/arduino-shippings</id>
-    <content type="html"><![CDATA[<p>Hace unos 2 o 3 años escuché por primera vez sobre Arduino, y se me hizo una plataforma interesante. El punto es que traigo algunos proyectos personales en los cuáles quiero involucrar algo de interacción de software con hardware, por lo que presumo aquí mis más recientes adquisiciones, no entraré mucho en detalle técnico de las características de cada componente ya que estas pueden ser encontradas fácilmente en internet.</p>
+    <title type="html"><![CDATA[DS3231 Library update for Arduino 1.0]]></title>
+    <link href="http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0/"/>
+    <updated>2012-01-02T20:06:00-06:00</updated>
+    <id>http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0</id>
+    <content type="html"><![CDATA[<p><img class="right" src="http://c243421.r21.cf1.rackcdn.com/ds3231.jpg">
+Ya les había mencionado de mi compra del Seeeduino Stalker, y obviamente empecé a hacer mis primeras pruebas.</p>
 
-<!-- more -->
+<p>Este clon de Arduino trae un RTC DS3231 y en Seeedstudio.com puedes descargar la librería del mismo, pero resulta que con los cambios que se hicieron en el IDE 1.0 de Arduino los sketches que vienen con la librería no funcionan, así que tuve que hacer unos cambios, los cambios en específico sólo se hicieron al archivo DS3231.cpp.</p>
 
-
-<p>Lo que compré aquí en México (en el centro, en la calle de República de Uruguay creo).</p>
-
-<ul>
-<li>Arduino UNO</li>
-</ul>
+<!--more-->
 
 
-<p><img class="center" src="http://c243421.r21.cf1.rackcdn.com/arduino_uno.jpg"></p>
+<p>Toda la librería la subí aquí:</p>
 
-<p>Lo siguiente lo compré en <a href="http://www.seeedstudio.com">seeedstudio.com</a></p>
+<p><a href="https://github.com/jcastaneyra/ds3231_library">https://github.com/jcastaneyra/ds3231_library</a></p>
 
-<ul>
-<li>Seeeduino stalker kit y que incluye
+<p>Referencias:</p>
 
-<ul>
-<li>Seeeduino stalker v2.1</li>
-<li>Lithium Ion polymer Battery 980mAh</li>
-<li>SanDisk microSD Card 2Gb</li>
-<li>Mini USB cable</li>
-<li>UartSBee</li>
-<li>6 pin cable</li>
-<li>Seeeduino Stalker v2 enclosure</li>
-<li>0.5w Solar Panel</li>
-</ul>
-</li>
-<li>GPS Bee</li>
-<li>2 XBee shields</li>
-</ul>
-
-
-<p><img class="center" src="http://c243421.r21.cf1.rackcdn.com/seeeduino_stalker_v21.jpg">
-<img class="center" src="http://c243421.r21.cf1.rackcdn.com/gps_bee.jpg"></p>
-
-<p>La siguiente compra fue en <a href="http://www.sparkfun.com">sparkfun.com</a></p>
-
-<ul>
-<li>2 XBee 2mW Chip Antenna - Series 2 (ZB)</li>
-</ul>
-
-
-<p><img class="center" src="http://c243421.r21.cf1.rackcdn.com/xbees.jpg"></p>
-
-<p>Aquí una foto con casi todo junto:</p>
-
-<p><img class="center" src="http://c243421.r21.cf1.rackcdn.com/arduino_shoppings.jpg"></p>
+<p><a href="http://www.seeedstudio.com/wiki/Seeeduino_Stalker_v2.1">http://www.seeedstudio.com/wiki/Seeeduino_Stalker_v2.1</a>
+<a href="http://blog.makezine.com/archive/2011/12/arduino-1-0-is-out-heres-what-you-need-to-know.html">http://blog.makezine.com/archive/2011/12/arduino-1-0-is-out-heres-what-you-need-to-know.html</a></p>
 ]]></content>
   </entry>
   

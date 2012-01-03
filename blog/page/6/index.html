@@ -9,7 +9,7 @@
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="Este post se lo dedico a mi amigocha Lety, ya verás amigocha que te vas a divertir en tu paso por el hospital.Hace ya muchos años, cuando iba en la &hellip;">
+  <meta name="description" content="En esta ocasión voy a agregar una aplicación al menú de Gnome en Ubuntu, ya que hace unos días bajé el Azureus y para no tener que estar corriendolo &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -75,6 +75,67 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/11/23/agregando-una-aplicacion-al-menu-de-gnome/">Agregando una aplicación al menú de Gnome</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+  
+
+<time datetime="2006-11-23T00:00:00-06:00" pubdate>Nov 23<span>rd</span>, 2006</time>
+        
+         | <a href="/2006/11/23/agregando-una-aplicacion-al-menu-de-gnome/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>En esta ocasión voy a agregar una aplicación al menú de Gnome en Ubuntu, ya que hace unos días bajé el Azureus y para no tener que estar corriendolo desde línea de comandos a cada rato, me puse a investigar como meter la aplicación en el menú y así facilitarme la tarea de correrlo.</p>
+
+<p>Seguramente esto debe ser algo muy sencillo de hacer para algunos, pero en mi caso servirá de recordatorio para cuando vuelva a querer agregar una aplicación al menú.</p>
+
+<p>Bueno, en mi caso ya había bajado el azureus, pero para los que no lo hayan bajado puede ser bajado de <a href="http://azureus.sourceforge.net/download.php">http://azureus.sourceforge.net/download.php</a>.</p>
+
+<p>Este se puede descomprimir y colocar en /opt, es recomendable que tenga los permisos del usuario que normalmente lo corre en ubuntu, por eso de los updates.</p>
+
+<p>Una vez descomprimidos crear el siguiente archivo /usr/share/applications/azureus.desktop con el contenido siguiente:</p>
+
+<pre>
+[Desktop Entry]
+Name=Azureus
+Comment=P2P Client
+Exec=/opt/azureus/azureus
+Icon=/opt/azureus/Azureus.png
+Terminal=false
+Type=Application
+Categories=Application;Network;
+</pre>
+
+
+<p>Y ser vería más o menos así:</p>
+
+<p><img src="http://c243421.r21.cf1.rackcdn.com/menu_azureus.jpg" alt="Azureus en el menú" /></p>
+
+<p>Y si se quieren hacer más cosas para poner a punto Ubuntu, he aquí una muy buena guía:</p>
+
+<p><a href="http://cmaverick.wordpress.com/2006/10/29/edgy-optimizado/">http://cmaverick.wordpress.com/2006/10/29/edgy-optimizado/</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -396,6 +457,10 @@ Este nuevo disco duro vino a sustituir un par de discos (uno de 6 Gb en el que e
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/01/02/ds3231-library-update-for-arduino-1-dot-0/">DS3231 Library update for Arduino 1.0</a>
+      </li>
+    
+      <li class="post">
         <a href="/2011/12/16/arduino-shippings/">Arduino shippings</a>
       </li>
     
@@ -409,10 +474,6 @@ Este nuevo disco duro vino a sustituir un par de discos (uno de 6 Gb en el que e
     
       <li class="post">
         <a href="/2010/05/30/installing-rabbitmq-stomp-in-ubuntumac/">Installing RabbitMQ + Stomp in Ubuntu/Mac</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2010/02/12/bundler-gem-and-daemons-error-the-default-gemfile-was-not-found/">Bundler gem and Daemons error (The default Gemfile was not found)</a>
       </li>
     
   </ul>
@@ -504,7 +565,7 @@ Este nuevo disco duro vino a sustituir un par de discos (uno de 6 Gb en el que e
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2011 - Jose Castaneyra -
+  Copyright &copy; 2012 - Jose Castaneyra -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

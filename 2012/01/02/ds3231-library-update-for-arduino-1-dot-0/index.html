@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Desarrollando en Rails con Vim - JCastaneyra blog</title>
+  <title>DS3231 Library update for Arduino 1.0 - JCastaneyra blog</title>
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="Cuando empecé a meterme con Rails me encontré con que había unos cuantos IDE&#8217;s para desarrollar en este framework y algunos editores, digo como &hellip;">
+  <meta name="description" content="Ya les había mencionado de mi compra del Seeeduino Stalker, y obviamente empecé a hacer mis primeras pruebas. Este clon de Arduino trae un RTC &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim">
+  <link rel="canonical" href="http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -91,7 +91,7 @@
   
   <header>
     
-      <h1 class="entry-title">Desarrollando en Rails con Vim</h1>
+      <h1 class="entry-title">DS3231 Library update for Arduino 1.0</h1>
     
     
       <p class="meta">
@@ -102,7 +102,7 @@
 
   
 
-<time datetime="2008-12-14T00:00:00-06:00" pubdate>Dec 14<span>th</span>, 2008</time>
+<time datetime="2012-01-02T20:06:00-06:00" pubdate>Jan 2<span>nd</span>, 2012</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -111,27 +111,22 @@
   </header>
 
 
-<div class="entry-content"><p>Cuando empecé a meterme con Rails me encontré con que había unos cuantos IDE&#8217;s para desarrollar en este framework y algunos editores, digo como desarrollador de Java era obvio que esperaba un IDE y los disponibles eran o son <a href="http://www.netbeans.org">Netbeans</a>, <a href="http://www.aptana.com">Aptana</a>, <a href="http://www.activestate.com/Products/komodo_ide/index.mhtml">Komodo</a> y editores como <a href="http://www.jedit.org">JEdit</a>, <a href="http://macromates.com">TextMate</a>, <a href="http://www.vim.org">Vim</a>, <a href="http://www.gnu.org/software/emacs/">Emacs</a>, de los cuales el que de plano vi que era muy usado era el TextMate, en cada screencast que me encontraba veía que lo usaban, sólo había un problema, y digo un problema para mi, era que no era gratuito.</p>
+<div class="entry-content"><p><img class="right" src="http://c243421.r21.cf1.rackcdn.com/ds3231.jpg">
+Ya les había mencionado de mi compra del Seeeduino Stalker, y obviamente empecé a hacer mis primeras pruebas.</p>
 
-<p>Al ver esto me preguntaba porque era más usado un editor de texto turbocargado con comandos en la consola y no un IDE, y la respuesta de los expertos era que con la consola de comandos y un editor se tiene más control sobre el proyecto además de la experiencia que esto te deja en lugar de dejar a que el IDE automatice todo.</p>
+<p>Este clon de Arduino trae un RTC DS3231 y en Seeedstudio.com puedes descargar la librería del mismo, pero resulta que con los cambios que se hicieron en el IDE 1.0 de Arduino los sketches que vienen con la librería no funcionan, así que tuve que hacer unos cambios, los cambios en específico sólo se hicieron al archivo DS3231.cpp.</p>
 
-<!-- more -->
+<!--more-->
 
 
-<p>Pues bien, debido a una cuestión de $$ me puse a usar un rato Aptana y JEdit, con los cuales tuve buenas experiencias, pero recientemente vi el <a href="http://weblog.jamisbuck.org/2008/10/10/coming-home-to-vim">post</a> de un experto en Rails, creador de <a href="http://www.capify.org/">Capistrano</a>, Jamis Buck y que venía de trabajar con TextMate durante algunos años pero que previamente había trabajado con Vim, y que ahora estaba moviéndose de nueva cuenta a Vim. Jamis Buck como experto en Rails y TextMate, ahora que se estaba moviendo creó un plugin para Vim para tener ciertas funciones que TextMate tiene. Así es que cuando vi este post dije &#8220;de aquí soy&#8221;.</p>
+<p>Toda la librería la subí aquí:</p>
 
-<p>Vim siempre ha sido un editor muy poderoso, el cual he usado por años pero no como un usuario experto, porque la verdad tiene un buen de comandos, pero ahora estoy tratando de subirme en él para los desarrollos en Rails que estaré haciendo.</p>
+<p><a href="https://github.com/jcastaneyra/ds3231_library">https://github.com/jcastaneyra/ds3231_library</a></p>
 
-<p>Con el post de Jamis Buck y el plugin que hizo (<a href="http://github.com/jamis/fuzzyfinder_textmate/tree/master">FuzzyFinder_TextMate</a> que extendió de <a href="http://www.vim.org/scripts/script.php?script_id=1984">FuzzyFinder</a>) y a todas las respuestas que recibió en su blog, es como he levantado mi ambiente con Vim, en este caso lo he hecho en la Mac, pero en Linux deber ser casi igual.</p>
+<p>Referencias:</p>
 
-<p><img class="left" src="http://c243421.r21.cf1.rackcdn.com/imagen-1-300x277.png"></p>
-
-<p>En Leopard primero que nada me instalé MacVim bajándolo de <a href="http://code.google.com/p/macvim/">http://code.google.com/p/macvim/</a> y después con ayuda de los posts de Jamis Buck y de los comments ahí puestos logré levantar mi ambiente (<a href="http://weblog.jamisbuck.org/2008/10/10/coming-home-to-vim">Coming home to Vim</a> y <a href="http://weblog.jamisbuck.org/2008/11/17/vim-follow-up">Vim Follow-up</a>), también en los comments de estos posts encontré a una persona que puso en github su configuración de vim al igual que sus plugins de vim, que por cierto fue de bastante ayuda (<a href="http://github.com/manalang/vim-config/tree/master">http://github.com/manalang/vim-config/tree/master</a>). Se que en internet hay muchos recursos sobre comandos de Vim, pero aquí está uno que me encontré :) <a href="http://rayninfo.co.uk/vimtips.html">http://rayninfo.co.uk/vimtips.html</a></p>
-
-<p>En resumen, Vim es un editor muy potente, tan potente que se pueden hacer cosas que talvez en un IDE no se puedan hacer, para muestra este video.</p>
-
-<iframe width="420" height="315" src="http://www.youtube.com/embed/pCiVCiku3cM" frameborder="0" allowfullscreen></iframe>
-
+<p><a href="http://www.seeedstudio.com/wiki/Seeeduino_Stalker_v2.1">http://www.seeedstudio.com/wiki/Seeeduino_Stalker_v2.1</a>
+<a href="http://blog.makezine.com/archive/2011/12/arduino-1-0-is-out-heres-what-you-need-to-know.html">http://blog.makezine.com/archive/2011/12/arduino-1-0-is-out-heres-what-you-need-to-know.html</a></p>
 </div>
 
 
@@ -162,15 +157,21 @@
 
   
 
-<time datetime="2008-12-14T00:00:00-06:00" pubdate>Dec 14<span>th</span>, 2008</time>
+<time datetime="2012-01-02T20:06:00-06:00" pubdate>Jan 2<span>nd</span>, 2012</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/arduino/'>Arduino</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -183,10 +184,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2008/11/30/miscelanea-ror-i/" title="Previous Post: Miscelánea RoR I">&laquo; Miscelánea RoR I</a>
+        <a class="basic-alignment left" href="/2011/12/16/arduino-shippings/" title="Previous Post: Arduino shippings">&laquo; Arduino shippings</a>
       
-      
-        <a class="basic-alignment right" href="/2008/12/15/problemas-de-memoria-en-mi-256slice/" title="next Post: Problemas de memoria en mi 256slice">Problemas de memoria en mi 256slice &raquo;</a>
       
     </p>
   </footer>
@@ -331,15 +330,15 @@
         if(typeof(custom_disqus_identifier) != "undefined") {
           var disqus_identifier = custom_disqus_identifier;
         } else {
-          //var disqus_identifier = 'http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim';
-          var disqus_identifier = 'http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/';
+          //var disqus_identifier = 'http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0';
+          var disqus_identifier = 'http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0/';
         }
 
         if(typeof(custom_disqus_url) != "undefined") {
           var disqus_url = custom_disqus_url;
         } else {
-          //var disqus_url = 'http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim';
-          var disqus_url = 'http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/';
+          //var disqus_url = 'http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0';
+          var disqus_url = 'http://jcastaneyra.com/2012/01/02/ds3231-library-update-for-arduino-1-dot-0/';
         }
 
         var disqus_script = 'embed.js';
