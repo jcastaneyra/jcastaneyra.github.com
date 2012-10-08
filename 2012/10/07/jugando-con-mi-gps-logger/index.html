@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Como obtener una imagen ISO de un CD/DVD en Mac - JCastaneyra blog</title>
+  <title>Jugando con mi gps logger - JCastaneyra blog</title>
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="Hace poco un compañerito de la comunidad de México on Rails mencionó que tener una Mac es como tener lo mejor de ambos mundos (de Windows y Linux), y &hellip;">
+  <meta name="description" content="Tenía rato que no tocaba mis arduinos, ¡Desde enero! Pero recientemente
+en el trabajo empezamos a platicar sobre la plataforma de Arduino, y de
+como &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac">
+  <link rel="canonical" href="http://jcastaneyra.com/2012/10/07/jugando-con-mi-gps-logger">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -106,7 +108,7 @@
   
   <header>
     
-      <h1 class="entry-title">Como obtener una imagen ISO de un CD/DVD en Mac</h1>
+      <h1 class="entry-title">Jugando con mi gps logger</h1>
     
     
       <p class="meta">
@@ -117,7 +119,7 @@
 
   
 
-<time datetime="2009-01-30T00:00:00-06:00" pubdate>Jan 30<span>th</span>, 2009</time>
+<time datetime="2012-10-07T22:06:00-05:00" pubdate>Oct 7<span>th</span>, 2012</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -126,55 +128,131 @@
   </header>
 
 
-<div class="entry-content"><p>Hace poco un compañerito de la comunidad de <a href="http://www.mexicoonrails.com.mx">México on Rails</a> mencionó que tener una Mac es como tener lo mejor de ambos mundos (de Windows y Linux), y he aquí el porqué, resulta que quería obtener una imagen ISO de cierto DVD para respaldarlo y posiblemente después quemarlo, y aquí les muestro al más puro estilo Unix como se puede hacer.</p>
+<div class="entry-content"><p>Tenía rato que no tocaba mis arduinos, ¡Desde enero! Pero recientemente
+en el trabajo empezamos a platicar sobre la plataforma de Arduino, y de
+como a algunos les llamaba la atención, por lo que de regreso en casa,
+agarré mis arduinos, los desempolvé y los llevé al trabajo para
+mostrarlos.</p>
+
+<p><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/logger.jpg" alt="gps
+logger" /></p>
+
+<p>Pero precisamente ahora, que estaba por viajar, traté de hacer mi
+logger, digo, en realidad es simple lo que hace en general, pero la
+diversión ha sido grande.</p>
 
 <!-- more -->
 
 
-<p>Primero que nada hay que insertar el CD/DVD a extraer (duh! pero alguien podría no saber :) )</p>
+<h2>Materiales y código</h2>
 
-<p>Y ejecutando el siguiente comando obtenemos el status del CD/DVD a quemar:</p>
+<p>Lo que he usado ha sido:</p>
 
-<pre><code>jcastaneyra$ drutil status
-Vendor   Product           Rev
-OPTIARC  DVD RW AD-5630A   1CHQ
+<ol>
+<li>Seeeduino stalker v2.1</li>
+<li>GPS bee de Seeedstudio</li>
+<li>Lithium Ion Battery de 980 mAh</li>
+<li>Solar panel</li>
+<li>Micro SD card de 2Gb</li>
+<li>Seeeduino stalker enclosure</li>
+</ol>
 
-Type: DVD-ROM              Name: /dev/disk1
-Sessions: 1                  Tracks: 1
-Overwritable:   00:00:00         blocks:        0 /   0.00MB /   0.00MiB
-Space Free:   00:00:00         blocks:        0 /   0.00MB /   0.00MiB
-Space Used:  330:41:69         blocks:  1488144 /   3.05GB /   2.84GiB
-Writability:
-Book Type: DVD-ROM (v1)
-</code></pre>
 
-<p>Posteriormente desmontamos el CD/DVD:</p>
+<p><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/logger_components.jpg" alt="componentes" /></p>
 
-<pre><code>jcastaneyra$ diskutil unmountDisk /dev/disk1
-Unmount of all volumes on disk1 was successful
-</code></pre>
+<p>El código después de un rato de haber hecho pruebas parece simple, pero
+en realidad me encontré con algunos problemas que fui resolviendo sobre
+la marcha, problemas, que si me remonto a enero ya había visto y que no
+tenía ni idea de como resolver.</p>
 
-<p>Y ahora obtenemos la imagen con la utilidad dd:</p>
+<p>El programa utiliza las librerías de TinyGPS, Wire, DS3231 y SD.</p>
 
-<pre><code>jcastaneyra$ dd if=/dev/disk1 of=vista.iso bs=2048
-1488144+0 records in
-1488144+0 records out
-3047718912 bytes transferred in 1209.311307 secs (2520210 bytes/sec)
-</code></pre>
+<p>La librería de TinyGPS la uso para ayudarme a parsear las sentencias
+NMEA que va arrojando el gps, en un principio pensé que esta librería no
+me estaba ayudando, ya que el gps tardaba mucho en arrojar sentencias
+correctas, claro todas mis pruebas habían sido cerca de la ventana por
+lo que el gps no agarraba bien, ahora las pruebas fueron fuera de la
+ventana, y puedo decir que funciona muuuuy bien. Algo curioso fue que
+estuvo guardando coordenadas mientras estaba dentro del metro,
+interesante.</p>
 
-<p>Después para expulsar el CD/DVD lo que se hace es volverlo a montar (jejeje, talvez puede haber otra forma, posiblemente haya un comando eject, ya no lo probé):</p>
+<p>Con la librería de Wire, la verdad no se para que sirve, la habré sacado
+de algún sketch que vi en la red y ya no tuve tiempo para probar que
+pasaba si la quitaba de mi programa.</p>
 
-<pre><code>jcastaneyra$ diskutil mountDisk /dev/disk1
-Volume(s) mounted successfully
-</code></pre>
+<p>La librería DS3231 la utilizo para poderme comunicar con el chip que
+trae el seeeduino stalker, este chip es de tiempo real y además de
+temperatura, la librería ya la había modificado para que funcionara con
+Arduino 1.0, no se si Seeedstudio ya tenga una nueva librería, por lo
+que esta vez me fui rápido por lo que ya sabía que funcionaba, la
+librería modificada se encuentra
+<a href="https://github.com/jcastaneyra/ds3231_library">aquí</a>.</p>
 
-<p>Y por último probamos la imagen ISO:</p>
+<p>Y por último, la librería SD la utilicé para ir escribiendo a la sd
+card.</p>
 
-<pre><code>jcastaneyra$ hdid vista.iso
-/dev/disk2                                                 /Volumes/VISTA_32_BUSINESS
-</code></pre>
+<p>Algo con lo que me había encontrado también, era que no tenía ni idea de
+como convertir en Arduino un flotante a string, para así poderlo mandar
+por Serial, con este frágmento de código pude hacerlo:</p>
 
-<p>Y para poder quemar la imagen ISO se podría utilizar la aplicación &#8220;Utilidad de Discos&#8221;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>float current_lat = -99.123456;
+</span><span class='line'>static char dtostrfbuffer[8];
+</span><span class='line'>
+</span><span class='line'>// convert float to array of charts
+</span><span class='line'>dtostrf(current_lat,8, 6, dtostrfbuffer);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Aquí está el código completo.</p>
+
+<script src="https://gist.github.com/3845285.js"> </script>
+
+
+<p>El enclosure al final se veía así.</p>
+
+<p><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/logger_enclosure.jpg" alt="enclosure" /></p>
+
+<h2>Resultados</h2>
+
+<p>Algunos de los datos que arrojó (fecha, tiempo, temperatura, latitude y
+longitud):</p>
+
+<p>51012,22431200,28.50,19.389139,-99.187347
+51012,22432300,28.50,19.389179,-99.187309
+51012,22433300,28.50,19.389219,-99.187302
+51012,22434300,28.50,19.389210,-99.187302
+51012,22435300,28.50,19.389210,-99.187309
+51012,22440300,28.50,19.389191,-99.187279
+51012,22441400,28.50,19.389210,-99.187271
+51012,22442400,28.50,19.389219,-99.187309</p>
+
+<p>También vi, que para poder mostrar estos datos en un mapa no era
+necesario crear un programa, hay una página
+<a href="http://www.gpsvisualizer.com/">http://www.gpsvisualizer.com/</a>, en donde
+subes tu archivo con coordenadas, aquí también me topé con un problema,
+de que mi archivo lo estaba creando con datos de fecha y temperatura al
+principio de la línea y las coordenadas al final, gpsvisualizer.com
+requiere que el archivo tenga las coordenadas al principio de la línea
+(latitud, longitud).</p>
+
+<p><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/gps_logger_map.png" alt="map" /></p>
+
+<h2>Final</h2>
+
+<p>Al final no salieron todos las coordenadas hasta el final de mi viaje, y
+eso fue porque la batería del seeeduino se acabó, pero aún así, ha sido
+muy divertido ver esto funcionando, yo quería añadirle un xbee para que
+en cuanto este se conectara con el xbee coordinador pudiera transmitirle
+los datos o de menos su posición actual, pero no lo pude echar a andar y
+creo saber porqué, en el código, interactúo con el pin 10 para poder
+echar a andar la SD, y ahí precisamente es donde se conecta el xbee
+shield, por lo que creo que eso afectaba a que funcionara, por lo que va
+a ser necesario conectar el xbee a otros pines, pero eso será para
+después.</p>
 </div>
 
 
@@ -205,15 +283,21 @@ Volume(s) mounted successfully
 
   
 
-<time datetime="2009-01-30T00:00:00-06:00" pubdate>Jan 30<span>th</span>, 2009</time>
+<time datetime="2012-10-07T22:06:00-05:00" pubdate>Oct 7<span>th</span>, 2012</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/arduino/'>Arduino</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2012/10/07/jugando-con-mi-gps-logger/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2012/10/07/jugando-con-mi-gps-logger/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -226,10 +310,8 @@ Volume(s) mounted successfully
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2009/01/29/comunidades/" title="Previous Post: Comunidades">&laquo; Comunidades</a>
+        <a class="basic-alignment left" href="/2012/01/03/testing-range-between-xbees/" title="Previous Post: Testing range between xbee's">&laquo; Testing range between xbee's</a>
       
-      
-        <a class="basic-alignment right" href="/2009/02/10/mi-participacion-en-el-barcamp-2-mexico/" title="next Post: Mi participación en el BarCamp 2 México">Mi participación en el BarCamp 2 México &raquo;</a>
       
     </p>
   </footer>
@@ -374,15 +456,15 @@ Volume(s) mounted successfully
         if(typeof(custom_disqus_identifier) != "undefined") {
           var disqus_identifier = custom_disqus_identifier;
         } else {
-          //var disqus_identifier = 'http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac';
-          var disqus_identifier = 'http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/';
+          //var disqus_identifier = 'http://jcastaneyra.com/2012/10/07/jugando-con-mi-gps-logger';
+          var disqus_identifier = 'http://jcastaneyra.com/2012/10/07/jugando-con-mi-gps-logger/';
         }
 
         if(typeof(custom_disqus_url) != "undefined") {
           var disqus_url = custom_disqus_url;
         } else {
-          //var disqus_url = 'http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac';
-          var disqus_url = 'http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/';
+          //var disqus_url = 'http://jcastaneyra.com/2012/10/07/jugando-con-mi-gps-logger';
+          var disqus_url = 'http://jcastaneyra.com/2012/10/07/jugando-con-mi-gps-logger/';
         }
 
         var disqus_script = 'embed.js';

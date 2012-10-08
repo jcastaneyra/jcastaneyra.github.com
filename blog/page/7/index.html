@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Como obtener una imagen ISO de un CD/DVD en Mac - JCastaneyra blog</title>
+  <title>JCastaneyra blog</title>
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="Hace poco un compañerito de la comunidad de México on Rails mencionó que tener una Mac es como tener lo mejor de ambos mundos (de Windows y Linux), y &hellip;">
+  <meta name="description" content="OpenBSD es uno de los sistemas open source tipo unix más seguros que existen, y ¿porqué es uno de los mas seguros?, es porque la seguridad viene por &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac">
+  <link rel="canonical" href="http://jcastaneyra.com/blog/page/7">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -88,25 +88,15 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
-
-  <script type="text/javascript"><!--
-    google_ad_client = "ca-pub-1928761598459347";
-    /* post_header_large */
-    google_ad_slot = "9038941466";
-    google_ad_width = 728;
-    google_ad_height = 15;
-    //-->
-  </script>
-  <script type="text/javascript"
-    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-  </script>
-
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">Como obtener una imagen ISO de un CD/DVD en Mac</h1>
+      <h1 class="entry-title"><a href="/2006/09/05/instalacion-openbsd-apache-y-ddclient-dyndnsorg/">Instalación de OpenBSD, Apache y ddclient (dyndns.org)</a></h1>
     
     
       <p class="meta">
@@ -117,132 +107,36 @@
 
   
 
-<time datetime="2009-01-30T00:00:00-06:00" pubdate>Jan 30<span>th</span>, 2009</time>
+<time datetime="2006-09-05T00:00:00-05:00" pubdate>Sep 5<span>th</span>, 2006</time>
         
-         | <a href="#disqus_thread">Comments</a>
+         | <a href="/2006/09/05/instalacion-openbsd-apache-y-ddclient-dyndnsorg/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Hace poco un compañerito de la comunidad de <a href="http://www.mexicoonrails.com.mx">México on Rails</a> mencionó que tener una Mac es como tener lo mejor de ambos mundos (de Windows y Linux), y he aquí el porqué, resulta que quería obtener una imagen ISO de cierto DVD para respaldarlo y posiblemente después quemarlo, y aquí les muestro al más puro estilo Unix como se puede hacer.</p>
+  <div class="entry-content"><p>OpenBSD es uno de los sistemas open source tipo unix más seguros que existen, y ¿porqué es uno de los mas seguros?, es porque la seguridad viene por default (&#8220;secure by default&#8221;), es decir, en la instalación por default se tiene un sistema minimalista con tan sólo los servicios mínimos requeridos y eso lo hace muy seguro, es más, en la página de OpenBSD (<a href="http://www.openbsd.org" title="OpenBSD">http://www.openbsd.org</a>) aseguran que sólo han tenido un hueco remoto en la instalación por default en más de 8 años. Y claro, algo muy importante es que lo puedo instalar en mi máquina pentium a 200 Mhz, si lo se, corre muy lento, pero creo que es la mejor opción.</p>
 
-<!-- more -->
-
-
-<p>Primero que nada hay que insertar el CD/DVD a extraer (duh! pero alguien podría no saber :) )</p>
-
-<p>Y ejecutando el siguiente comando obtenemos el status del CD/DVD a quemar:</p>
-
-<pre><code>jcastaneyra$ drutil status
-Vendor   Product           Rev
-OPTIARC  DVD RW AD-5630A   1CHQ
-
-Type: DVD-ROM              Name: /dev/disk1
-Sessions: 1                  Tracks: 1
-Overwritable:   00:00:00         blocks:        0 /   0.00MB /   0.00MiB
-Space Free:   00:00:00         blocks:        0 /   0.00MB /   0.00MiB
-Space Used:  330:41:69         blocks:  1488144 /   3.05GB /   2.84GiB
-Writability:
-Book Type: DVD-ROM (v1)
-</code></pre>
-
-<p>Posteriormente desmontamos el CD/DVD:</p>
-
-<pre><code>jcastaneyra$ diskutil unmountDisk /dev/disk1
-Unmount of all volumes on disk1 was successful
-</code></pre>
-
-<p>Y ahora obtenemos la imagen con la utilidad dd:</p>
-
-<pre><code>jcastaneyra$ dd if=/dev/disk1 of=vista.iso bs=2048
-1488144+0 records in
-1488144+0 records out
-3047718912 bytes transferred in 1209.311307 secs (2520210 bytes/sec)
-</code></pre>
-
-<p>Después para expulsar el CD/DVD lo que se hace es volverlo a montar (jejeje, talvez puede haber otra forma, posiblemente haya un comando eject, ya no lo probé):</p>
-
-<pre><code>jcastaneyra$ diskutil mountDisk /dev/disk1
-Volume(s) mounted successfully
-</code></pre>
-
-<p>Y por último probamos la imagen ISO:</p>
-
-<pre><code>jcastaneyra$ hdid vista.iso
-/dev/disk2                                                 /Volumes/VISTA_32_BUSINESS
-</code></pre>
-
-<p>Y para poder quemar la imagen ISO se podría utilizar la aplicación &#8220;Utilidad de Discos&#8221;</p>
 </div>
-
-
-  <footer>
-
-    <script type="text/javascript"><!--
-      google_ad_client = "ca-pub-1928761598459347";
-      /* post_footer_large */
-      google_ad_slot = "8291555731";
-      google_ad_width = 728;
-      google_ad_height = 15;
-      //-->
-    </script>
-    <script type="text/javascript"
-      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-    </script>
-
-    <p class="meta">
-      
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/09/05/instalacion-openbsd-apache-y-ddclient-dyndnsorg/">Read on &rarr;</a>
+    </footer>
   
 
-<span class="byline author vcard">Posted by <span class="fn">Jose Castaneyra</span></span>
 
-      
-
-
-
-
+    </article>
   
-
-<time datetime="2009-01-30T00:00:00-06:00" pubdate>Jan 30<span>th</span>, 2009</time>
-      
-
-
-    </p>
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
+    <a href="/blog/archives">Blog Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/2009/01/29/comunidades/" title="Previous Post: Comunidades">&laquo; Comunidades</a>
-      
-      
-        <a class="basic-alignment right" href="/2009/02/10/mi-participacion-en-el-barcamp-2-mexico/" title="next Post: Mi participación en el BarCamp 2 México">Mi participación en el BarCamp 2 México &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a class="next" href="/blog/page/6/">Newer &rarr;</a>
+    
+  </div>
 </div>
-  </section>
-
-</div>
-
 <aside class="sidebar">
   
     <section>
@@ -254,7 +148,7 @@ Volume(s) mounted successfully
       </li>
     
       <li class="post">
-        <a href="/2012/01/03/testing-range-between-xbees/">Testing range between xbee's</a>
+        <a href="/2012/01/03/testing-range-between-xbees/">Testing range between xbee&#8217;s</a>
       </li>
     
       <li class="post">
@@ -275,7 +169,7 @@ Volume(s) mounted successfully
 <section>
   <h1>Github Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   
   <a href="https://github.com/jcastaneyra">@jcastaneyra</a> on Github
@@ -305,7 +199,7 @@ Volume(s) mounted successfully
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -355,7 +249,6 @@ Volume(s) mounted successfully
   
 </aside>
 
-
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -370,22 +263,7 @@ Volume(s) mounted successfully
       var disqus_shortname = 'jcastaneyra';
       
         
-        //var disqus_developer = 1;
-        if(typeof(custom_disqus_identifier) != "undefined") {
-          var disqus_identifier = custom_disqus_identifier;
-        } else {
-          //var disqus_identifier = 'http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac';
-          var disqus_identifier = 'http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/';
-        }
-
-        if(typeof(custom_disqus_url) != "undefined") {
-          var disqus_url = custom_disqus_url;
-        } else {
-          //var disqus_url = 'http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac';
-          var disqus_url = 'http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/';
-        }
-
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -4,7 +4,7 @@
   <title><![CDATA[JCastaneyra blog]]></title>
   <link href="http://jcastaneyra.com/atom.xml" rel="self"/>
   <link href="http://jcastaneyra.com/"/>
-  <updated>2012-01-03T15:33:26-06:00</updated>
+  <updated>2012-10-07T21:48:25-05:00</updated>
   <id>http://jcastaneyra.com/</id>
   <author>
     <name><![CDATA[Jose Castaneyra]]></name>
@@ -12,6 +12,139 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Jugando con mi gps logger]]></title>
+    <link href="http://jcastaneyra.com/2012/10/07/jugando-con-mi-gps-logger/"/>
+    <updated>2012-10-07T22:06:00-05:00</updated>
+    <id>http://jcastaneyra.com/2012/10/07/jugando-con-mi-gps-logger</id>
+    <content type="html"><![CDATA[<p>Tenía rato que no tocaba mis arduinos, ¡Desde enero! Pero recientemente
+en el trabajo empezamos a platicar sobre la plataforma de Arduino, y de
+como a algunos les llamaba la atención, por lo que de regreso en casa,
+agarré mis arduinos, los desempolvé y los llevé al trabajo para
+mostrarlos.</p>
+
+<p><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/logger.jpg" alt="gps
+logger" /></p>
+
+<p>Pero precisamente ahora, que estaba por viajar, traté de hacer mi
+logger, digo, en realidad es simple lo que hace en general, pero la
+diversión ha sido grande.</p>
+
+<!-- more -->
+
+
+<h2>Materiales y código</h2>
+
+<p>Lo que he usado ha sido:</p>
+
+<ol>
+<li>Seeeduino stalker v2.1</li>
+<li>GPS bee de Seeedstudio</li>
+<li>Lithium Ion Battery de 980 mAh</li>
+<li>Solar panel</li>
+<li>Micro SD card de 2Gb</li>
+<li>Seeeduino stalker enclosure</li>
+</ol>
+
+
+<p><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/logger_components.jpg" alt="componentes" /></p>
+
+<p>El código después de un rato de haber hecho pruebas parece simple, pero
+en realidad me encontré con algunos problemas que fui resolviendo sobre
+la marcha, problemas, que si me remonto a enero ya había visto y que no
+tenía ni idea de como resolver.</p>
+
+<p>El programa utiliza las librerías de TinyGPS, Wire, DS3231 y SD.</p>
+
+<p>La librería de TinyGPS la uso para ayudarme a parsear las sentencias
+NMEA que va arrojando el gps, en un principio pensé que esta librería no
+me estaba ayudando, ya que el gps tardaba mucho en arrojar sentencias
+correctas, claro todas mis pruebas habían sido cerca de la ventana por
+lo que el gps no agarraba bien, ahora las pruebas fueron fuera de la
+ventana, y puedo decir que funciona muuuuy bien. Algo curioso fue que
+estuvo guardando coordenadas mientras estaba dentro del metro,
+interesante.</p>
+
+<p>Con la librería de Wire, la verdad no se para que sirve, la habré sacado
+de algún sketch que vi en la red y ya no tuve tiempo para probar que
+pasaba si la quitaba de mi programa.</p>
+
+<p>La librería DS3231 la utilizo para poderme comunicar con el chip que
+trae el seeeduino stalker, este chip es de tiempo real y además de
+temperatura, la librería ya la había modificado para que funcionara con
+Arduino 1.0, no se si Seeedstudio ya tenga una nueva librería, por lo
+que esta vez me fui rápido por lo que ya sabía que funcionaba, la
+librería modificada se encuentra
+<a href="https://github.com/jcastaneyra/ds3231_library">aquí</a>.</p>
+
+<p>Y por último, la librería SD la utilicé para ir escribiendo a la sd
+card.</p>
+
+<p>Algo con lo que me había encontrado también, era que no tenía ni idea de
+como convertir en Arduino un flotante a string, para así poderlo mandar
+por Serial, con este frágmento de código pude hacerlo:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>float current_lat = -99.123456;
+</span><span class='line'>static char dtostrfbuffer[8];
+</span><span class='line'>
+</span><span class='line'>// convert float to array of charts
+</span><span class='line'>dtostrf(current_lat,8, 6, dtostrfbuffer);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Aquí está el código completo.</p>
+
+<script src="https://gist.github.com/3845285.js"> </script>
+
+
+<p>El enclosure al final se veía así.</p>
+
+<p><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/logger_enclosure.jpg" alt="enclosure" /></p>
+
+<h2>Resultados</h2>
+
+<p>Algunos de los datos que arrojó (fecha, tiempo, temperatura, latitude y
+longitud):</p>
+
+<p>51012,22431200,28.50,19.389139,-99.187347
+51012,22432300,28.50,19.389179,-99.187309
+51012,22433300,28.50,19.389219,-99.187302
+51012,22434300,28.50,19.389210,-99.187302
+51012,22435300,28.50,19.389210,-99.187309
+51012,22440300,28.50,19.389191,-99.187279
+51012,22441400,28.50,19.389210,-99.187271
+51012,22442400,28.50,19.389219,-99.187309</p>
+
+<p>También vi, que para poder mostrar estos datos en un mapa no era
+necesario crear un programa, hay una página
+<a href="http://www.gpsvisualizer.com/">http://www.gpsvisualizer.com/</a>, en donde
+subes tu archivo con coordenadas, aquí también me topé con un problema,
+de que mi archivo lo estaba creando con datos de fecha y temperatura al
+principio de la línea y las coordenadas al final, gpsvisualizer.com
+requiere que el archivo tenga las coordenadas al principio de la línea
+(latitud, longitud).</p>
+
+<p><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/gps_logger_map.png" alt="map" /></p>
+
+<h2>Final</h2>
+
+<p>Al final no salieron todos las coordenadas hasta el final de mi viaje, y
+eso fue porque la batería del seeeduino se acabó, pero aún así, ha sido
+muy divertido ver esto funcionando, yo quería añadirle un xbee para que
+en cuanto este se conectara con el xbee coordinador pudiera transmitirle
+los datos o de menos su posición actual, pero no lo pude echar a andar y
+creo saber porqué, en el código, interactúo con el pin 10 para poder
+echar a andar la SD, y ahí precisamente es donde se conecta el xbee
+shield, por lo que creo que eso afectaba a que funcionara, por lo que va
+a ser necesario conectar el xbee a otros pines, pero eso será para
+después.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Testing range between xbee's]]></title>
@@ -1876,35 +2009,6 @@ Volume(s) mounted successfully
 <p>Además, también instalé el plugin de wordpress <a href="http://wordpress.org/extend/plugins/wp-super-cache/">WP Super cache</a> para bajarle un poco al proceso de php con la base de datos.</p>
 
 <p>Espero que esto funcione, estoy intentando esto antes de subir a 512 Mb de memoria, y digo ojalá que esta experiencia pueda ayudar a alguien más que se encuentre en un problema parecido.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Desarrollando en Rails con Vim]]></title>
-    <link href="http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim/"/>
-    <updated>2008-12-14T00:00:00-06:00</updated>
-    <id>http://jcastaneyra.com/2008/12/14/desarrollando-en-rails-con-vim</id>
-    <content type="html"><![CDATA[<p>Cuando empecé a meterme con Rails me encontré con que había unos cuantos IDE&#8217;s para desarrollar en este framework y algunos editores, digo como desarrollador de Java era obvio que esperaba un IDE y los disponibles eran o son <a href="http://www.netbeans.org">Netbeans</a>, <a href="http://www.aptana.com">Aptana</a>, <a href="http://www.activestate.com/Products/komodo_ide/index.mhtml">Komodo</a> y editores como <a href="http://www.jedit.org">JEdit</a>, <a href="http://macromates.com">TextMate</a>, <a href="http://www.vim.org">Vim</a>, <a href="http://www.gnu.org/software/emacs/">Emacs</a>, de los cuales el que de plano vi que era muy usado era el TextMate, en cada screencast que me encontraba veía que lo usaban, sólo había un problema, y digo un problema para mi, era que no era gratuito.</p>
-
-<p>Al ver esto me preguntaba porque era más usado un editor de texto turbocargado con comandos en la consola y no un IDE, y la respuesta de los expertos era que con la consola de comandos y un editor se tiene más control sobre el proyecto además de la experiencia que esto te deja en lugar de dejar a que el IDE automatice todo.</p>
-
-<!-- more -->
-
-
-<p>Pues bien, debido a una cuestión de $$ me puse a usar un rato Aptana y JEdit, con los cuales tuve buenas experiencias, pero recientemente vi el <a href="http://weblog.jamisbuck.org/2008/10/10/coming-home-to-vim">post</a> de un experto en Rails, creador de <a href="http://www.capify.org/">Capistrano</a>, Jamis Buck y que venía de trabajar con TextMate durante algunos años pero que previamente había trabajado con Vim, y que ahora estaba moviéndose de nueva cuenta a Vim. Jamis Buck como experto en Rails y TextMate, ahora que se estaba moviendo creó un plugin para Vim para tener ciertas funciones que TextMate tiene. Así es que cuando vi este post dije &#8220;de aquí soy&#8221;.</p>
-
-<p>Vim siempre ha sido un editor muy poderoso, el cual he usado por años pero no como un usuario experto, porque la verdad tiene un buen de comandos, pero ahora estoy tratando de subirme en él para los desarrollos en Rails que estaré haciendo.</p>
-
-<p>Con el post de Jamis Buck y el plugin que hizo (<a href="http://github.com/jamis/fuzzyfinder_textmate/tree/master">FuzzyFinder_TextMate</a> que extendió de <a href="http://www.vim.org/scripts/script.php?script_id=1984">FuzzyFinder</a>) y a todas las respuestas que recibió en su blog, es como he levantado mi ambiente con Vim, en este caso lo he hecho en la Mac, pero en Linux deber ser casi igual.</p>
-
-<p><img class="left" src="http://c243421.r21.cf1.rackcdn.com/imagen-1-300x277.png"></p>
-
-<p>En Leopard primero que nada me instalé MacVim bajándolo de <a href="http://code.google.com/p/macvim/">http://code.google.com/p/macvim/</a> y después con ayuda de los posts de Jamis Buck y de los comments ahí puestos logré levantar mi ambiente (<a href="http://weblog.jamisbuck.org/2008/10/10/coming-home-to-vim">Coming home to Vim</a> y <a href="http://weblog.jamisbuck.org/2008/11/17/vim-follow-up">Vim Follow-up</a>), también en los comments de estos posts encontré a una persona que puso en github su configuración de vim al igual que sus plugins de vim, que por cierto fue de bastante ayuda (<a href="http://github.com/manalang/vim-config/tree/master">http://github.com/manalang/vim-config/tree/master</a>). Se que en internet hay muchos recursos sobre comandos de Vim, pero aquí está uno que me encontré :) <a href="http://rayninfo.co.uk/vimtips.html">http://rayninfo.co.uk/vimtips.html</a></p>
-
-<p>En resumen, Vim es un editor muy potente, tan potente que se pueden hacer cosas que talvez en un IDE no se puedan hacer, para muestra este video.</p>
-
-<iframe width="420" height="315" src="http://www.youtube.com/embed/pCiVCiku3cM" frameborder="0" allowfullscreen></iframe>
-
 ]]></content>
   </entry>
   
