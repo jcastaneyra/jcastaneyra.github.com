@@ -9,7 +9,7 @@
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="Cuando empecé a meterme con Rails me encontré con que había unos cuantos IDE&#8217;s para desarrollar en este framework y algunos editores, digo como &hellip;">
+  <meta name="description" content="No se si ya había comentado, pero mi blog lo tengo en un VPS de slicehost y tengo una 256slice es decir una partición virtual con 256 Mb de memoria, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/12/15/problemas-de-memoria-en-mi-256slice/">Problemas de memoria en mi 256slice</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+  
+
+<time datetime="2008-12-15T00:00:00-06:00" pubdate>Dec 15<span>th</span>, 2008</time>
+        
+         | <a href="/2008/12/15/problemas-de-memoria-en-mi-256slice/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>No se si ya había comentado, pero mi blog lo tengo en un VPS de slicehost y tengo una <a href="http://www.slicehost.com">256slice</a> es decir una partición virtual con 256 Mb de memoria, y recientemente debido al monto de memoria limitado (talvez debería pensar seriamente en subir el monto de memoria por unos cuántos dolares más al mes, ¿debería?) he experimentado algunos problemas ya que mi servidor se había estado muriendo, y en los logs estaba la evidencia:</p>
+
+<pre><code>Dec 15 08:27:59 ubuntu kernel:  [&lt;ffffffff8025d987&gt;] out_of_memory+0x2e/0x187
+</code></pre>
+
+<p>Por lo que me puse a investigar y encontré unos ajustes que se le tienen que hacer a la configuración del servidor apache2:</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/12/15/problemas-de-memoria-en-mi-256slice/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -435,44 +478,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/01/17/empezando-el-ano/">Empezando el año</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-  
-
-<time datetime="2008-01-17T00:00:00-06:00" pubdate>Jan 17<span>th</span>, 2008</time>
-        
-         | <a href="/2008/01/17/empezando-el-ano/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A 17 días de haber empezado el año, me siento muy bien, puedo decir que las vacaciones en las que estuve con la familia me la pasé muy relajado, muy contento, echándola casi todo el tiempo, leyendo, saliendo con la flaca y los amigos a la playa, conocí a mi sobrina que está hecha una hermosura, ay de mi hermana con su hija tan bonita, estoy seguro que le va a tocar espantar novios al por mayor, ahí vas a pagar todas carnala, y pues regresé por ahí del tres de enero de vacaciones y seguí descansando todavía unos días aquí en el depa.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/01/17/empezando-el-ano/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -490,6 +495,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/10/15/java-testing-oracle-scripts-compatible-h2/">Java Testing: Scripts hechos para oracle compatibles con H2</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/10/07/jugando-con-mi-gps-logger/">Jugando con mi gps logger</a>
       </li>
     
@@ -503,10 +512,6 @@
     
       <li class="post">
         <a href="/2011/12/16/arduino-shippings/">Arduino shippings</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/21/macs-en-venta/">Macs usadas en Venta</a>
       </li>
     
   </ul>

@@ -9,9 +9,9 @@
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="Tenía rato que no tocaba mis arduinos, ¡Desde enero! Pero recientemente
-en el trabajo empezamos a platicar sobre la plataforma de Arduino, y de
-como &hellip;">
+  <meta name="description" content="En nuestro desarrollo trabajamos con Oracle, y un tiempo estuvimos
+probando directamente con Oracle desde maven con JUnit y Mockito, todo
+esto &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,6 +92,63 @@ como &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/10/15/java-testing-oracle-scripts-compatible-h2/">Java Testing: Scripts hechos para oracle compatibles con H2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+  
+
+<time datetime="2012-10-15T17:30:00-05:00" pubdate>Oct 15<span>th</span>, 2012</time>
+        
+         | <a href="/2012/10/15/java-testing-oracle-scripts-compatible-h2/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img class="right" src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/jenkins_ci.png" width="320" height="224"></p>
+
+<p>En nuestro desarrollo trabajamos con Oracle, y un tiempo estuvimos
+probando directamente con Oracle desde maven con JUnit y Mockito, todo
+esto corriendo en un Jenkins, pero
+las pruebas tomaban mucho tiempo, varios minutos de hecho, pero en ese
+momento tuvimos que hacerlo para validar también los cambios que se
+hacían a base de datos, aunque a estas fechas no se bien si esto fue una
+buena decisión, posiblemente se pudieron también haber hecho pruebas
+sobre estos scripts en una base de datos de oracle aparte, e
+independiente de los tests del código.</p>
+
+<p>Después de un rato estas pruebas fueron ligeramente abandonadas, por lo
+que tiene meses que no han vuelto a estar en verde, entonces ahora es
+necesario retomarlas, pero el hecho de que tome bastante tiempo para
+realizarlas y el de tener una BD de Oracle real corriendo en donde se
+ejecutan las pruebas, en este caso un servidor de integración, lo hace
+un proceso algo engorroso, entonces ahora estamos buscando volver a
+trabajar con una DB en memoria para bajarle el tiempo a las pruebas, antes
+usábamos hsqldb, y ahora queremos probar H2.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/10/15/java-testing-oracle-scripts-compatible-h2/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -465,44 +522,6 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Como crear un archivo zip con ruby</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-  
-
-<time datetime="2009-11-16T00:00:00-06:00" pubdate>Nov 16<span>th</span>, 2009</time>
-        
-         | <a href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Hace unos días me encontré con el problema de generar archivos Zip que contuvieran archivos de un curso de SCORM, ¿Cómo hacerlo?, lo primero que me vino a la mente fue Ruby!!!</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2009/11/16/como-crear-un-archivo-zip-con-ruby/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -518,6 +537,10 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/10/15/java-testing-oracle-scripts-compatible-h2/">Java Testing: Scripts hechos para oracle compatibles con H2</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/10/07/jugando-con-mi-gps-logger/">Jugando con mi gps logger</a>
       </li>
     
@@ -531,10 +554,6 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
     
       <li class="post">
         <a href="/2011/12/16/arduino-shippings/">Arduino shippings</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/09/21/macs-en-venta/">Macs usadas en Venta</a>
       </li>
     
   </ul>
