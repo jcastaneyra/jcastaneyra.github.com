@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Como incrementar el root EBS de una instancia EC2 - JCastaneyra blog</title>
+  <meta name="author" content="Jose Castaneyra">
+
+  
+  <meta name="description" content="Las instancias de EC2 que corren con EBS (Elastic Block Storage) cuando
+se crean vienen con un tamaño relativamente pequeño (talvez 8 Gb o un
+poco &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jcastaneyra.com/2012/10/22/incrementar-root-ebs-en-ec2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="JCastaneyra blog" type="application/atom+xml">
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3233987-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div style="float: right; margin-top: 40px; z-index: -1;">
+    <script type="text/javascript"><!--
+      google_ad_client = "ca-pub-1928761598459347";
+      /* banner */
+      google_ad_slot = "4694977461";
+      google_ad_width = 468;
+      google_ad_height = 60;
+      //-->
+    </script>
+    <script type="text/javascript"
+      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script>
+  </div>
+
+  <h1><a href="/">JCastaneyra blog</a></h1>
+  
+    <h2>My ideas repo</h2>
+  
+</hgroup>
+
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:jcastaneyra.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul role=main-navigation>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+
+  <script type="text/javascript"><!--
+    google_ad_client = "ca-pub-1928761598459347";
+    /* post_header_large */
+    google_ad_slot = "9038941466";
+    google_ad_width = 728;
+    google_ad_height = 15;
+    //-->
+  </script>
+  <script type="text/javascript"
+    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+  </script>
+
+  
+  <header>
+    
+      <h1 class="entry-title">Como incrementar el root EBS de una instancia EC2</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+  
+
+<time datetime="2012-10-22T12:06:00-05:00" pubdate>Oct 22<span>nd</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img class="right" src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/aws_logo.jpeg"></p>
+
+<p>Las instancias de EC2 que corren con EBS (Elastic Block Storage) cuando
+se crean vienen con un tamaño relativamente pequeño (talvez 8 Gb o un
+poco más), ¿que hay si este tamaño lo quiero incrementar?, ¿que tengo que
+hacer?</p>
+
+<!--more-->
+
+
+<p><em>Assumptions</em>: Se asume  de que ya se tienen instaladas y configuradas las herramientas
+de línea de comandos de AWS, también cabe mencionar que los comandos que
+aquí aparecen les precede el prompt $, en el caso de la instancia remota
+también precedido por el host.</p>
+
+<p>Backups: Respaldar información sensible, si se tiene información
+importante en /mnt respaldarla ya que esta se perderá al hacer este
+proceso.</p>
+
+<p>Al conectarme por ssh a mi instancia y verificar el tamaño del
+filesystem veo que tan sólo tiene 7.9G.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ubuntu@ip-10-170-185-61:~$ df -h
+</span><span class='line'>Filesystem      Size  Used Avail Use% Mounted on
+</span><span class='line'>/dev/xvda1      7.9G  773M  6.8G  11% /
+</span><span class='line'>udev            288M  8.0K  288M   1% /dev
+</span><span class='line'>tmpfs           119M  160K  118M   1% /run
+</span><span class='line'>none            5.0M     0  5.0M   0% /run/lock
+</span><span class='line'>none            296M     0  296M   0% /run/shm</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Siguiendo el tutorial de Eric Hammond de alestic.com (y modificado
+ligeramente ya que algunas cosas no corrieron), desde mi lap donde
+tengo instalada la herramienta de aws, corro lo siguiente, primero
+hay que obtener el id de instancia.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-describe-instances                                                                            
+</span><span class='line'>RESERVATION   r-54a9ea12  672080195794    default
+</span><span class='line'>INSTANCE  i-2ddc0374  ami-0d153248    ec2-50-18-95-56.us-west-1.compute.amazonaws.com ip-10-170-185-61.us-west-1.compute.internal running jcastaneyra_west    0       t1.micro    2012-10-12T14:47:45+0000    us-west-1c  aki-8d396bc8        monitoring-disabled 50.18.95.56 10.170.185.61           ebs                 paravirtual xen vcdyJ1350053264046  sg-6b43132e default
+</span><span class='line'>BLOCKDEVICE   /dev/sda1   vol-3885d716    2012-10-12T14:47:49.000Z    true
+</span><span class='line'>TAG   instance    i-2ddc0374  Name    
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>El id es i-2ddc0374, y el tamaño al que quiero llegar es de 20 Gb, por
+lo que voy a correr lo siguiente desde línea de comandos.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ instanceid=i-2ddc0374
+</span><span class='line'>$ size=20</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hay que obtener el volumen y la zona actual de la instancia.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ oldvolumeid=$(ec2-describe-instances $instanceid | egrep "^BLOCKDEVICE./dev/sda1" | cut -f3)
+</span><span class='line'>$ zone=$(ec2-describe-instances $instanceid | egrep "^INSTANCE" | cut -f12)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Si se ejecuta el siguiente comando debería aparecer.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ echo "instance $instanceid in $zone with original volume $oldvolumeid"
+</span><span class='line'>instance i-2ddc0374 in us-west-1c with original volume vol-3885d716</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora, hay que detener la instancia (ojo, detener no terminar).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-stop-instances $instanceid
+</span><span class='line'>INSTANCE  i-2ddc0374  running stopping</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Desasociar el volumen actual de la instancia.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ while ! ec2-detach-volume $oldvolumeid; do sleep 1; done
+</span><span class='line'>ATTACHMENT    vol-3885d716    i-2ddc0374  /dev/sda1   detaching   2012-10-12T14:47:49+0000</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Crear un snapshot del volumen actual.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ snapshotid=$(ec2-create-snapshot $oldvolumeid | cut -f2)
+</span><span class='line'>$ while ec2-describe-snapshots $snapshotid | grep -q pending; do sleep 1; done
+</span><span class='line'>$ echo "snapshot: $snapshotid"
+</span><span class='line'>snapshot: snap-5d91ed71</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Crear un nuevo volumen basado en el snapshot recien creado.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ newvolumeid=$(ec2-create-volume   --availability-zone $zone   --size $size   --snapshot $snapshotid | cut -f2)
+</span><span class='line'>$ echo "new volume: $newvolumeid"
+</span><span class='line'>new volume: vol-e6b0e2c8</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Asociar el nuevo volumen a la instancia.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-attach-volume   --instance $instanceid   --device /dev/sda1   $newvolumeid
+</span><span class='line'>ATTACHMENT    vol-e6b0e2c8    i-2ddc0374  /dev/sda1   attaching   2012-10-12T15:25:12+0000
+</span><span class='line'>$ while ! ec2-describe-volumes $newvolumeid | grep -q attached; do sleep 1; done</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora bien, se arranca la instancia.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-start-instances $instanceid
+</span><span class='line'>INSTANCE  i-2ddc0374  stopped pending
+</span><span class='line'>$ while ! ec2-describe-instances $instanceid | grep -q running; do sleep 1; done</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Buscamos ahora la nueva ip pública.</p>
+
+<p><em>NOTA</em>: si la instancia tenía una elastic ip
+asociada tendremos que volverla a asociar de nuevo.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-describe-instances $instanceid
+</span><span class='line'>RESERVATION   r-54a9ea12  672080195794    default
+</span><span class='line'>INSTANCE  i-2ddc0374  ami-0d153248    ec2-50-18-24-164.us-west-1.compute.amazonaws.com    ip-10-170-201-117.us-west-1.compute.internal    running jcastaneyra_west    0       t1.micro    2012-10-12T15:26:54+0000    us-west-1c  aki-8d396bc8            monitoring-disabled 50.18.24.164    10.170.201.117          ebs                 paravirtual xen vcdyJ1350053264046  sg-6b43132e default
+</span><span class='line'>BLOCKDEVICE   /dev/sda1   vol-e6b0e2c8    2012-10-12T15:25:12.000Z    false
+</span><span class='line'>TAG   instance    i-2ddc0374  Name    </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Al conectarnos de nueva cuenta con ssh vemos que el filesystem ya está
+con un nuevo tamaño.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ubuntu@ip-10-170-201-117:~$ df -h
+</span><span class='line'>Filesystem      Size  Used Avail Use% Mounted on
+</span><span class='line'>/dev/xvda1       20G  777M   18G   5% /
+</span><span class='line'>udev            288M  8.0K  288M   1% /dev
+</span><span class='line'>tmpfs           119M  160K  118M   1% /run
+</span><span class='line'>none            5.0M     0  5.0M   0% /run/lock
+</span><span class='line'>none            296M     0  296M   0% /run/shm</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Después de esto ya podríamos borrar el volumen viejo, e incluso si
+estamos seguros que todo quedó bien podríamos también borrar el
+snapshot.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-delete-volume $oldvolumeid
+</span><span class='line'>VOLUME    vol-3885d716
+</span><span class='line'>$ ec2-delete-snapshot $snapshotid
+</span><span class='line'>SNAPSHOT  snap-5d91ed71</span></code></pre></td></tr></table></div></figure>
+
+
+<p>NOTA: Como el nuevo volumen fue creado manualmente, al momento de
+terminar la instancia este no se borra automáticamente, creo que hay un
+parametro en los atributos de la instancia para volver a habilitar el
+borrado automático, pero yo no lo encontré, pero digo, borrarlo
+manualmente tampoco me llevó mucho tiempo.</p>
+
+<p>LINKS.</p>
+
+<p><a href="http://alestic.com/2010/02/ec2-resize-running-ebs-root">alestic blog</a></p>
+</div>
+
+
+  <footer>
+
+    <script type="text/javascript"><!--
+      google_ad_client = "ca-pub-1928761598459347";
+      /* post_footer_large */
+      google_ad_slot = "8291555731";
+      google_ad_width = 728;
+      google_ad_height = 15;
+      //-->
+    </script>
+    <script type="text/javascript"
+      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jose Castaneyra</span></span>
+
+      
+
+
+
+
+  
+
+<time datetime="2012-10-22T12:06:00-05:00" pubdate>Oct 22<span>nd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/aws/'>aws</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2012/10/22/incrementar-root-ebs-en-ec2/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2012/10/22/incrementar-root-ebs-en-ec2/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/10/15/java-testing-oracle-scripts-compatible-htwo/" title="Previous Post: Java Testing: Scripts hechos para oracle compatibles con H2">&laquo; Java Testing: Scripts hechos para oracle compatibles con H2</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/10/22/incrementar-root-ebs-en-ec2/">Como incrementar el root EBS de una instancia EC2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/10/15/java-testing-oracle-scripts-compatible-htwo/">Java Testing: Scripts hechos para oracle compatibles con H2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/10/07/jugando-con-mi-gps-logger/">Jugando con mi gps logger</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/01/03/testing-range-between-xbees/">Testing range between xbee's</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/01/02/ds3231-library-update-for-arduino-1-dot-0/">DS3231 Library update for Arduino 1.0</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jcastaneyra">@jcastaneyra</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jcastaneyra',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jcastaneyra", 4, true);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jcastaneyra" class="twitter-follow-button" data-width="208px" data-show-count="true">Follow @jcastaneyra</a>
+  
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/jcastaneyra?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/jcastaneyra">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/112262934273275148051?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+<section>
+  <h1>AdSense</h1>
+  <script type="text/javascript"><!--
+    google_ad_client = "ca-pub-1928761598459347";
+    /* 160x600, creado 13/09/08 */
+    google_ad_slot = "8245795082";
+    google_ad_width = 160;
+    google_ad_height = 600;
+    //-->
+  </script>
+  <script type="text/javascript"
+    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+  </script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Jose Castaneyra -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'jcastaneyra';
+      
+        
+        //var disqus_developer = 1;
+        if(typeof(custom_disqus_identifier) != "undefined") {
+          var disqus_identifier = custom_disqus_identifier;
+        } else {
+          //var disqus_identifier = 'http://jcastaneyra.com/2012/10/22/incrementar-root-ebs-en-ec2';
+          var disqus_identifier = 'http://jcastaneyra.com/2012/10/22/incrementar-root-ebs-en-ec2/';
+        }
+
+        if(typeof(custom_disqus_url) != "undefined") {
+          var disqus_url = custom_disqus_url;
+        } else {
+          //var disqus_url = 'http://jcastaneyra.com/2012/10/22/incrementar-root-ebs-en-ec2';
+          var disqus_url = 'http://jcastaneyra.com/2012/10/22/incrementar-root-ebs-en-ec2/';
+        }
+
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

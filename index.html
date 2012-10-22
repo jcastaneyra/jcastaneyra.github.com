@@ -9,9 +9,9 @@
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="En nuestro desarrollo trabajamos con Oracle, y un tiempo estuvimos
-probando directamente con Oracle desde maven con JUnit y Mockito, todo
-esto &hellip;">
+  <meta name="description" content="Las instancias de EC2 que corren con EBS (Elastic Block Storage) cuando
+se crean vienen con un tamaño relativamente pequeño (talvez 8 Gb o un
+poco &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,6 +92,49 @@ esto &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/10/22/incrementar-root-ebs-en-ec2/">Como incrementar el root EBS de una instancia EC2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+  
+
+<time datetime="2012-10-22T12:06:00-05:00" pubdate>Oct 22<span>nd</span>, 2012</time>
+        
+         | <a href="/2012/10/22/incrementar-root-ebs-en-ec2/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img class="right" src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/aws_logo.jpeg"></p>
+
+<p>Las instancias de EC2 que corren con EBS (Elastic Block Storage) cuando
+se crean vienen con un tamaño relativamente pequeño (talvez 8 Gb o un
+poco más), ¿que hay si este tamaño lo quiero incrementar?, ¿que tengo que
+hacer?</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/10/22/incrementar-root-ebs-en-ec2/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -482,46 +525,6 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Table names case insensitive for MySQL Linux</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-  
-
-<time datetime="2010-01-07T00:00:00-06:00" pubdate>Jan 7<span>th</span>, 2010</time>
-        
-         | <a href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Hola a todos, feliz año 2010, que tal se pasaron estas fechas? descansaron bastante? Pues yo más o menos, unos ratos descansaba y otros trabajaba, y para variar me encontré con esto en el trabajo.</p>
-
-<p>Resulta que estaba montando un servidor de Weblogic y MySQL en Linux, para instalar una aplicación que originalmente estaba con Weblogic y Oracle, y resulta que al cargar las tablas de esta aplicación en MySQL empecé a encontrarme problemas con los nombres de las tablas (entre otras cosas, como los tipos de datos entre Oracle y MySQL), yo no sabía que MySQL por default en Linux es case sensitive, por lo que me di a la tarea de investigar y buscar como deshabilitar esta función.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2010/01/07/table-names-case-insensitive-for-mysql-linux/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -537,6 +540,10 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/10/22/incrementar-root-ebs-en-ec2/">Como incrementar el root EBS de una instancia EC2</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/10/15/java-testing-oracle-scripts-compatible-htwo/">Java Testing: Scripts hechos para oracle compatibles con H2</a>
       </li>
     
@@ -550,10 +557,6 @@ Después de tanto tiempo heme aquí de vuelta, ha pasado casi un año y medio si
     
       <li class="post">
         <a href="/2012/01/02/ds3231-library-update-for-arduino-1-dot-0/">DS3231 Library update for Arduino 1.0</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/12/16/arduino-shippings/">Arduino shippings</a>
       </li>
     
   </ul>

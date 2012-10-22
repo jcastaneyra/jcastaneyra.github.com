@@ -9,7 +9,7 @@
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="¿Te has preguntado de donde vienes?, ¿De donde vienen tus padres?, ¿Cómo se conocieron tus padres? Estas mismas preguntas trata de resolver Aurora &hellip;">
+  <meta name="description" content="Hace unos días me encontré con el problema de que quería cambiar los permisos a todos los archivos con extensión .sh en un sistema HP-UX, pero me &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/07/02/cambiar-recursivamente-permisos-a-archivos-con-extension-en-linuxunix/">Cambiar recursivamente permisos a archivos con extensión en Linux/Unix</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+  
+
+<time datetime="2007-07-02T00:00:00-05:00" pubdate>Jul 2<span>nd</span>, 2007</time>
+        
+         | <a href="/2007/07/02/cambiar-recursivamente-permisos-a-archivos-con-extension-en-linuxunix/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hace unos días me encontré con el problema de que quería cambiar los permisos a todos los archivos con extensión .sh en un sistema HP-UX, pero me encontré con que el comando</p>
+
+<p><code>chmod -R 300 *.sh</code></p>
+
+<p>no funciona para estos casos, por lo que me puse a investigar un poquillo como poder hacer esto, y he aquí la solución que encontré.</p>
+
+<p><code>find . -type f -name '*.sh' -exec chmod 300 {} \;</code></p>
+
+<p>Un apunte más para recordar.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -437,43 +478,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/02/21/transmitiendo-desde-la-capital/">Transmitiendo desde la capital</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-  
-
-<time datetime="2007-02-21T00:00:00-06:00" pubdate>Feb 21<span>st</span>, 2007</time>
-        
-         | <a href="/2007/02/21/transmitiendo-desde-la-capital/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Ya estoy en la capital mexicana, en el segundo día de trabajo, todo pinta bastante bien, los compañeros son muy accesibles y buena onda además de que les gusta echar carrilla cabrón, vamos, me la paso muy divertido, y lo mejor de todo es que hasta juegan basquetbol los martes y jueves.</p>
-
-<p>El único problema es andar por la ciudad sin saber a donde madres ir, subirse a los camiones, preguntar y aún así pasarse dos cuadras donde se supone me debo de bajar, subirse al metrobus por las tardes y parecer sardinas, y ponerse muy abusado con la terminal donde se va a bajar uno, porque igual y si hay mucha gente, facil se la lleva uno hasta dos terminales después, ir a comer y tener que esperar unos veinte minutos para que haya mesa disponible, en fin, creo que esas son las pocas cosas que me han pasado en tan sólo dos días de trabajo, y todavía lo que falta, obviamente, ha sido un cambio muy radical en la rutina tan tranquila que tenía yo en otras tierras, creo que tendré que tener control de varias cosas, espero que para el fin que viene que ya me cambiaré al nuevo departamento que he rentado el fin pasado pueda empezar a controlar todas esas cosas.</p>
-
-<p>Hay muchas cosas por contar, pero hoy ya fue un día pesado con mis nuevas actividades y ya tengo un sueño de la chifusca, es momento de irse a dormir.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -491,6 +495,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2012/10/22/incrementar-root-ebs-en-ec2/">Como incrementar el root EBS de una instancia EC2</a>
+      </li>
+    
+      <li class="post">
         <a href="/2012/10/15/java-testing-oracle-scripts-compatible-htwo/">Java Testing: Scripts hechos para oracle compatibles con H2</a>
       </li>
     
@@ -504,10 +512,6 @@
     
       <li class="post">
         <a href="/2012/01/02/ds3231-library-update-for-arduino-1-dot-0/">DS3231 Library update for Arduino 1.0</a>
-      </li>
-    
-      <li class="post">
-        <a href="/2011/12/16/arduino-shippings/">Arduino shippings</a>
       </li>
     
   </ul>

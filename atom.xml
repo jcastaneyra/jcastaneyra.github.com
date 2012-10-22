@@ -4,7 +4,7 @@
   <title><![CDATA[JCastaneyra blog]]></title>
   <link href="http://jcastaneyra.com/atom.xml" rel="self"/>
   <link href="http://jcastaneyra.com/"/>
-  <updated>2012-10-15T17:55:11-05:00</updated>
+  <updated>2012-10-22T11:54:50-05:00</updated>
   <id>http://jcastaneyra.com/</id>
   <author>
     <name><![CDATA[Jose Castaneyra]]></name>
@@ -12,6 +12,212 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Como incrementar el root EBS de una instancia EC2]]></title>
+    <link href="http://jcastaneyra.com/2012/10/22/incrementar-root-ebs-en-ec2/"/>
+    <updated>2012-10-22T12:06:00-05:00</updated>
+    <id>http://jcastaneyra.com/2012/10/22/incrementar-root-ebs-en-ec2</id>
+    <content type="html"><![CDATA[<p><img class="right" src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/aws_logo.jpeg"></p>
+
+<p>Las instancias de EC2 que corren con EBS (Elastic Block Storage) cuando
+se crean vienen con un tamaño relativamente pequeño (talvez 8 Gb o un
+poco más), ¿que hay si este tamaño lo quiero incrementar?, ¿que tengo que
+hacer?</p>
+
+<!--more-->
+
+
+<p><em>Assumptions</em>: Se asume  de que ya se tienen instaladas y configuradas las herramientas
+de línea de comandos de AWS, también cabe mencionar que los comandos que
+aquí aparecen les precede el prompt $, en el caso de la instancia remota
+también precedido por el host.</p>
+
+<p>Backups: Respaldar información sensible, si se tiene información
+importante en /mnt respaldarla ya que esta se perderá al hacer este
+proceso.</p>
+
+<p>Al conectarme por ssh a mi instancia y verificar el tamaño del
+filesystem veo que tan sólo tiene 7.9G.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ubuntu@ip-10-170-185-61:~$ df -h
+</span><span class='line'>Filesystem      Size  Used Avail Use% Mounted on
+</span><span class='line'>/dev/xvda1      7.9G  773M  6.8G  11% /
+</span><span class='line'>udev            288M  8.0K  288M   1% /dev
+</span><span class='line'>tmpfs           119M  160K  118M   1% /run
+</span><span class='line'>none            5.0M     0  5.0M   0% /run/lock
+</span><span class='line'>none            296M     0  296M   0% /run/shm</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Siguiendo el tutorial de Eric Hammond de alestic.com (y modificado
+ligeramente ya que algunas cosas no corrieron), desde mi lap donde
+tengo instalada la herramienta de aws, corro lo siguiente, primero
+hay que obtener el id de instancia.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-describe-instances                                                                            
+</span><span class='line'>RESERVATION   r-54a9ea12  672080195794    default
+</span><span class='line'>INSTANCE  i-2ddc0374  ami-0d153248    ec2-50-18-95-56.us-west-1.compute.amazonaws.com ip-10-170-185-61.us-west-1.compute.internal running jcastaneyra_west    0       t1.micro    2012-10-12T14:47:45+0000    us-west-1c  aki-8d396bc8        monitoring-disabled 50.18.95.56 10.170.185.61           ebs                 paravirtual xen vcdyJ1350053264046  sg-6b43132e default
+</span><span class='line'>BLOCKDEVICE   /dev/sda1   vol-3885d716    2012-10-12T14:47:49.000Z    true
+</span><span class='line'>TAG   instance    i-2ddc0374  Name    
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>El id es i-2ddc0374, y el tamaño al que quiero llegar es de 20 Gb, por
+lo que voy a correr lo siguiente desde línea de comandos.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ instanceid=i-2ddc0374
+</span><span class='line'>$ size=20</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hay que obtener el volumen y la zona actual de la instancia.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ oldvolumeid=$(ec2-describe-instances $instanceid | egrep "^BLOCKDEVICE./dev/sda1" | cut -f3)
+</span><span class='line'>$ zone=$(ec2-describe-instances $instanceid | egrep "^INSTANCE" | cut -f12)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Si se ejecuta el siguiente comando debería aparecer.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ echo "instance $instanceid in $zone with original volume $oldvolumeid"
+</span><span class='line'>instance i-2ddc0374 in us-west-1c with original volume vol-3885d716</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora, hay que detener la instancia (ojo, detener no terminar).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-stop-instances $instanceid
+</span><span class='line'>INSTANCE  i-2ddc0374  running stopping</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Desasociar el volumen actual de la instancia.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ while ! ec2-detach-volume $oldvolumeid; do sleep 1; done
+</span><span class='line'>ATTACHMENT    vol-3885d716    i-2ddc0374  /dev/sda1   detaching   2012-10-12T14:47:49+0000</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Crear un snapshot del volumen actual.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ snapshotid=$(ec2-create-snapshot $oldvolumeid | cut -f2)
+</span><span class='line'>$ while ec2-describe-snapshots $snapshotid | grep -q pending; do sleep 1; done
+</span><span class='line'>$ echo "snapshot: $snapshotid"
+</span><span class='line'>snapshot: snap-5d91ed71</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Crear un nuevo volumen basado en el snapshot recien creado.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ newvolumeid=$(ec2-create-volume   --availability-zone $zone   --size $size   --snapshot $snapshotid | cut -f2)
+</span><span class='line'>$ echo "new volume: $newvolumeid"
+</span><span class='line'>new volume: vol-e6b0e2c8</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Asociar el nuevo volumen a la instancia.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-attach-volume   --instance $instanceid   --device /dev/sda1   $newvolumeid
+</span><span class='line'>ATTACHMENT    vol-e6b0e2c8    i-2ddc0374  /dev/sda1   attaching   2012-10-12T15:25:12+0000
+</span><span class='line'>$ while ! ec2-describe-volumes $newvolumeid | grep -q attached; do sleep 1; done</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora bien, se arranca la instancia.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-start-instances $instanceid
+</span><span class='line'>INSTANCE  i-2ddc0374  stopped pending
+</span><span class='line'>$ while ! ec2-describe-instances $instanceid | grep -q running; do sleep 1; done</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Buscamos ahora la nueva ip pública.</p>
+
+<p><em>NOTA</em>: si la instancia tenía una elastic ip
+asociada tendremos que volverla a asociar de nuevo.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-describe-instances $instanceid
+</span><span class='line'>RESERVATION   r-54a9ea12  672080195794    default
+</span><span class='line'>INSTANCE  i-2ddc0374  ami-0d153248    ec2-50-18-24-164.us-west-1.compute.amazonaws.com    ip-10-170-201-117.us-west-1.compute.internal    running jcastaneyra_west    0       t1.micro    2012-10-12T15:26:54+0000    us-west-1c  aki-8d396bc8            monitoring-disabled 50.18.24.164    10.170.201.117          ebs                 paravirtual xen vcdyJ1350053264046  sg-6b43132e default
+</span><span class='line'>BLOCKDEVICE   /dev/sda1   vol-e6b0e2c8    2012-10-12T15:25:12.000Z    false
+</span><span class='line'>TAG   instance    i-2ddc0374  Name    </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Al conectarnos de nueva cuenta con ssh vemos que el filesystem ya está
+con un nuevo tamaño.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ubuntu@ip-10-170-201-117:~$ df -h
+</span><span class='line'>Filesystem      Size  Used Avail Use% Mounted on
+</span><span class='line'>/dev/xvda1       20G  777M   18G   5% /
+</span><span class='line'>udev            288M  8.0K  288M   1% /dev
+</span><span class='line'>tmpfs           119M  160K  118M   1% /run
+</span><span class='line'>none            5.0M     0  5.0M   0% /run/lock
+</span><span class='line'>none            296M     0  296M   0% /run/shm</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Después de esto ya podríamos borrar el volumen viejo, e incluso si
+estamos seguros que todo quedó bien podríamos también borrar el
+snapshot.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ec2-delete-volume $oldvolumeid
+</span><span class='line'>VOLUME    vol-3885d716
+</span><span class='line'>$ ec2-delete-snapshot $snapshotid
+</span><span class='line'>SNAPSHOT  snap-5d91ed71</span></code></pre></td></tr></table></div></figure>
+
+
+<p>NOTA: Como el nuevo volumen fue creado manualmente, al momento de
+terminar la instancia este no se borra automáticamente, creo que hay un
+parametro en los atributos de la instancia para volver a habilitar el
+borrado automático, pero yo no lo encontré, pero digo, borrarlo
+manualmente tampoco me llevó mucho tiempo.</p>
+
+<p>LINKS.</p>
+
+<p><a href="http://alestic.com/2010/02/ec2-resize-running-ebs-root">alestic blog</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java Testing: Scripts hechos para oracle compatibles con H2]]></title>
@@ -2057,24 +2263,6 @@ Volume(s) mounted successfully
 </code></pre>
 
 <p>Y para poder quemar la imagen ISO se podría utilizar la aplicación &#8220;Utilidad de Discos&#8221;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Comunidades]]></title>
-    <link href="http://jcastaneyra.com/2009/01/29/comunidades/"/>
-    <updated>2009-01-29T00:00:00-06:00</updated>
-    <id>http://jcastaneyra.com/2009/01/29/comunidades</id>
-    <content type="html"><![CDATA[<p>El domingo pasado fui a la primer reunión de la comunidad de <a href="http://www.mexicoonrails.com.mx">México On Rails</a>, y también es para mi la primer comunidad en la que estoy, desde hace tiempo había querido integrarme a una comunidad pero en su momento no encontré una cerca a donde estaba viviendo, y también había leído de un buen de gurús de software que recomendaban el unirse a una comunidad que siguieran la tecnología o corriente que uno quería seguir o de la cual aprender, al seguir este consejo me di cuenta a lo que realmente se referían, en esta comunidad de <a href="http://www.mexicoonrails.com.mx">México On Rails</a> a pesar de que fuimos pocas personas, realmente pude ver el talento que hay aquí en México y con personas de todas las edades, la apertura que hay para aprender y compartir conocimiento, y con respecto a esto último, dentro de unos días será el <a href="http://barcamp.org/BarCampMexico">Barcamp México</a> al cual iré y contribuiré con mi granito de arena haciendo una ponencia, algo sencilla, pero la finalidad es compartir y aprender, y enseñando también se aprende mucho, la ponencia será cómo instalar Rails en Windows, por cierto <a href="http://groups.google.com/group/mxor/browse_thread/thread/b9b872ae2360baf8#">aquí está la lista de ponencias</a> que se planean dar por los demás miembros del grupo.</p>
-
-<!-- more -->
-
-
-<p>Por cierto a la otra convivencia de la comunidad a la que me gustaría asistir es la de <a href="http://shdhmexicocity.org/">Super Happy Dev House México</a>, espero poder ir pronto.</p>
-
-<p>Les dejo unas fotos del primer evento de MXOR (dar click en la foto para ir a Flickr):</p>
-
-<p><a href="http://flickr.com/search/?q=Mexico%20on%20rails&amp;w=41496390%40N00"><img class="alignnone" src="http://farm4.static.flickr.com/3121/3236190410_84a244660c_m.jpg" alt="" width="240" height="180" /></a></p>
 ]]></content>
   </entry>
   
