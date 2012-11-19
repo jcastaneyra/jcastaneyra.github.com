@@ -4,7 +4,7 @@
   <title><![CDATA[JCastaneyra blog]]></title>
   <link href="http://jcastaneyra.com/atom.xml" rel="self"/>
   <link href="http://jcastaneyra.com/"/>
-  <updated>2012-10-22T11:54:50-05:00</updated>
+  <updated>2012-11-19T11:11:10-06:00</updated>
   <id>http://jcastaneyra.com/</id>
   <author>
     <name><![CDATA[Jose Castaneyra]]></name>
@@ -12,6 +12,154 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry PI primer contacto]]></title>
+    <link href="http://jcastaneyra.com/2012/11/19/raspberry-primer-contacto/"/>
+    <updated>2012-11-19T12:06:00-06:00</updated>
+    <id>http://jcastaneyra.com/2012/11/19/raspberry-primer-contacto</id>
+    <content type="html"><![CDATA[<p><img class="right" src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_02.jpg" width="260" height="180">
+Por azares del destino tuve un primer contacto con la Raspberry PI, de
+hecho yo quería comprarme una, pero no la había encontrado disponible, y
+de repente se me aparece una en las manos.</p>
+
+<!--more-->
+
+
+<h2>Características</h2>
+
+<h3>Primero, ¿Qué es una Raspberry PI?</h3>
+
+<p>De la página de <a href="http://www.raspberrypi.org/faqs">raspberrypi.org</a>:</p>
+
+<blockquote><p>The Raspberry Pi is a credit-card sized computer that plugs into your
+TV and a keyboard. It’s a capable little PC which can be used for many
+of the things that your desktop PC does, like spreadsheets,
+word-processing and games. It also plays high-definition video. We want
+to see it being used by kids all over the world to learn programming.</p></blockquote>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/Raspi_Iso_Blue.png"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/Raspi_Iso_Blue.png"></a></p>
+
+<h3>¿Qué SoC (System on chip) se usa?</h3>
+
+<blockquote><p>The SoC is a Broadcom BCM2835. This contains an ARM1176JZFS, with
+floating point, running at 700Mhz, and a Videocore 4 GPU. The GPU is
+capable of BluRay quality playback, using H.264 at 40MBits/s. It has a
+fast 3D core accessed using the supplied OpenGL ES2.0 and OpenVG
+libraries.</p></blockquote>
+
+<h3>¿Qué tan poderoso es?</h3>
+
+<blockquote><p>The GPU provides Open GL ES 2.0, hardware-accelerated OpenVG, and
+1080p30 H.264 high-profile decode.</p>
+
+<p>The GPU is capable of 1Gpixel/s, 1.5Gtexel/s or 24 GFLOPs of general
+purpose compute and features a bunch of texture filtering and DMA
+infrastructure.</p>
+
+<p>That is, graphics capabilities are roughly equivalent to Xbox 1 level of
+performance. Overall real world performance is something like a 300MHz
+Pentium 2, only with much, much swankier graphics.</p></blockquote>
+
+<h3>Además</h3>
+
+<ul>
+<li>512MB RAM</li>
+<li>Arranca desde una SD card, corriendo una distribución de Linux</li>
+<li>10/100 BaseT Ethernet socket</li>
+<li>Tiene GPIO (General purpose input/output). Son unos pines para poder
+programarlos y que interactúen con otros dispositivos, sensores por
+ejemplo.</li>
+</ul>
+
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_02.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_02.jpg"></a></p>
+
+<h2>Conectando y arrancando la Raspberry PI</h2>
+
+<h3>Lista de dispositivos y cables.</h3>
+
+<ol>
+<li>Obvio una Raspberry PI</li>
+<li>SD card con distribución de Linux para RPI (esta ya venía incluída)</li>
+<li>Teclado y mouse usb</li>
+<li>Cable de red</li>
+<li>Cable hdmi</li>
+<li>Cable de USB a micro USB</li>
+<li>Macbook para compartir internet</li>
+</ol>
+
+
+<h3>Prueba</h3>
+
+<p>En mi caso, yo sólo lo quería echar a andar, ya venía con una SD card
+con la distribución de linux de Raspberry precargada, por lo que me tuve
+que saltar el paso de cargarsela, todo fue más simple. El mouse y
+teclado usb que encontré lo tenía guardado entre las cosas viejas que
+tenía, en las fotos verán que están todavía con polvo.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_mouse.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_mouse.jpg"></a></p>
+
+<p>La alimentación y la red se la proporcioné desde la macbook, por usb y
+compartiendo la red inalámbrica.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_con.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_con.jpg"></a></p>
+
+<p>Por medio de hdmi conecté la TV de la sala para poder ver la salida, y
+así se ve cuando está iniciando la raspberry.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_init.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_init.jpg"></a></p>
+
+<p>La primera vez que arranca aparece un menú para configurar ciertas
+cosas, a ese menú no le tomé foto pero de las cosas que puedes
+configurar es, el layout de tu teclado, habilitar o deshabilitar el
+arranque de servidor de ssh, el password de usuario pi, etc. Después de
+configurar la Raspberry se reinició.</p>
+
+<p>Luego me apareció el login (el usuario es pi y el password por default
+es raspberry) y a lo que inmediatamente después vi el
+espacio libre de la SD.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_sdsize.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_sdsize.jpg"></a></p>
+
+<p>Inicialmente la compartición de la red no la configuré bien, por lo que
+no tenía salida a internet.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_error_net.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_error_net.jpg"></a></p>
+
+<p>Una vez que configuré bien la compartición de internet en la macbook, lo
+que hice en la consola de la raspberry fue correr el comando.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo dhclient eth0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Con este comando adquirió una IP dinámica del servidor de DHCP que se
+tiene corriendo en la macbook para compartir internet.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_dhclient.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_dhclient.jpg"></a></p>
+
+<p>Una vez hecho esto, ya pude navegar.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_browsing.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_browsing.jpg"></a></p>
+
+<h2>Final</h2>
+
+<p>Es impresionante lo que han hecho los de Raspberry, tener una
+computadora de ese tamaño capaz de reproducir video con calidad de
+blueray y además de poder ejecutar juegos que requieran de alto
+desempeño gráfico, y por un precio bajo.</p>
+
+<p>La otra parte interesante es para poder progamarla e interfazarla con
+dispositivos externos o bien como para enseñar a niños a usar y a
+programar una computadora, ahora si no creo que haya tanto problema cuando nos
+digan &#8220;tu hijo tiró la computadora, y luego la metio al agua&#8221;.</p>
+
+<h2>LINKS</h2>
+
+<p><a href="http://www.raspberrypi.org/faqs">Raspberry FAQs</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Como incrementar el root EBS de una instancia EC2]]></title>
@@ -2206,63 +2354,6 @@ Solo en español para empezar</p>
 <div style="font-size: 11px; font-family: tahoma,arial; height: 26px; padding-top: 2px;">View more <a style="text-decoration:underline;" href="http://www.slideshare.net/">presentations</a> from <a style="text-decoration:underline;" href="http://www.slideshare.net/jcastaneyra">jcastaneyra</a>. (tags: <a style="text-decoration:underline;" href="http://slideshare.net/tag/ruby">ruby</a> <a style="text-decoration:underline;" href="http://slideshare.net/tag/on">on</a>)</div>
 </div>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Como obtener una imagen ISO de un CD/DVD en Mac]]></title>
-    <link href="http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac/"/>
-    <updated>2009-01-30T00:00:00-06:00</updated>
-    <id>http://jcastaneyra.com/2009/01/30/como-obtener-una-imagen-iso-de-un-cddvd-en-mac</id>
-    <content type="html"><![CDATA[<p>Hace poco un compañerito de la comunidad de <a href="http://www.mexicoonrails.com.mx">México on Rails</a> mencionó que tener una Mac es como tener lo mejor de ambos mundos (de Windows y Linux), y he aquí el porqué, resulta que quería obtener una imagen ISO de cierto DVD para respaldarlo y posiblemente después quemarlo, y aquí les muestro al más puro estilo Unix como se puede hacer.</p>
-
-<!-- more -->
-
-
-<p>Primero que nada hay que insertar el CD/DVD a extraer (duh! pero alguien podría no saber :) )</p>
-
-<p>Y ejecutando el siguiente comando obtenemos el status del CD/DVD a quemar:</p>
-
-<pre><code>jcastaneyra$ drutil status
-Vendor   Product           Rev
-OPTIARC  DVD RW AD-5630A   1CHQ
-
-Type: DVD-ROM              Name: /dev/disk1
-Sessions: 1                  Tracks: 1
-Overwritable:   00:00:00         blocks:        0 /   0.00MB /   0.00MiB
-Space Free:   00:00:00         blocks:        0 /   0.00MB /   0.00MiB
-Space Used:  330:41:69         blocks:  1488144 /   3.05GB /   2.84GiB
-Writability:
-Book Type: DVD-ROM (v1)
-</code></pre>
-
-<p>Posteriormente desmontamos el CD/DVD:</p>
-
-<pre><code>jcastaneyra$ diskutil unmountDisk /dev/disk1
-Unmount of all volumes on disk1 was successful
-</code></pre>
-
-<p>Y ahora obtenemos la imagen con la utilidad dd:</p>
-
-<pre><code>jcastaneyra$ dd if=/dev/disk1 of=vista.iso bs=2048
-1488144+0 records in
-1488144+0 records out
-3047718912 bytes transferred in 1209.311307 secs (2520210 bytes/sec)
-</code></pre>
-
-<p>Después para expulsar el CD/DVD lo que se hace es volverlo a montar (jejeje, talvez puede haber otra forma, posiblemente haya un comando eject, ya no lo probé):</p>
-
-<pre><code>jcastaneyra$ diskutil mountDisk /dev/disk1
-Volume(s) mounted successfully
-</code></pre>
-
-<p>Y por último probamos la imagen ISO:</p>
-
-<pre><code>jcastaneyra$ hdid vista.iso
-/dev/disk2                                                 /Volumes/VISTA_32_BUSINESS
-</code></pre>
-
-<p>Y para poder quemar la imagen ISO se podría utilizar la aplicación &#8220;Utilidad de Discos&#8221;</p>
 ]]></content>
   </entry>
   

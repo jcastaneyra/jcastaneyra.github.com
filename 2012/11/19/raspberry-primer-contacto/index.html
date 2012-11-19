@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Removiendo ^M con VI en Unix/Linux - JCastaneyra blog</title>
+  <title>Raspberry PI primer contacto - JCastaneyra blog</title>
   <meta name="author" content="Jose Castaneyra">
 
   
-  <meta name="description" content="Después de un rato de estar ausente (por múltiples ocupaciones), sólo me tomo un pequeño momento para postear algo que puede ayudarnos a salir del &hellip;">
+  <meta name="description" content="Por azares del destino tuve un primer contacto con la Raspberry PI, de
+hecho yo quería comprarme una, pero no la había encontrado disponible, y
+de &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://jcastaneyra.com/2007/09/12/removiendo-m-con-vi-en-unixlinux">
+  <link rel="canonical" href="http://jcastaneyra.com/2012/11/19/raspberry-primer-contacto">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -106,7 +108,7 @@
   
   <header>
     
-      <h1 class="entry-title">Removiendo ^M con VI en Unix/Linux</h1>
+      <h1 class="entry-title">Raspberry PI primer contacto</h1>
     
     
       <p class="meta">
@@ -117,7 +119,7 @@
 
   
 
-<time datetime="2007-09-12T00:00:00-05:00" pubdate>Sep 12<span>th</span>, 2007</time>
+<time datetime="2012-11-19T12:06:00-06:00" pubdate>Nov 19<span>th</span>, 2012</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -126,15 +128,146 @@
   </header>
 
 
-<div class="entry-content"><p>Después de un rato de estar ausente (por múltiples ocupaciones), sólo me tomo un pequeño momento para postear algo que puede ayudarnos a salir del hoyo cuando tengamos problemas con scripts y con los carácteres ^M al final de cada línea. El comando de VI para solucionar esto sería:</p>
+<div class="entry-content"><p><img class="right" src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_02.jpg" width="260" height="180">
+Por azares del destino tuve un primer contacto con la Raspberry PI, de
+hecho yo quería comprarme una, pero no la había encontrado disponible, y
+de repente se me aparece una en las manos.</p>
 
-<p><code>:%s/<sup>M$//g</code></sup></p>
+<!--more-->
 
-<p>Hay que asegurarse que para obtener ^M se utilicen la conbinación de teclas CONTROL + V y CONTROL + M. Con este comando se reemplazan todos los ^M por nada.</p>
 
-<p>Referencia:</p>
+<h2>Características</h2>
 
-<p>http://www.vim.org/tips/tip.php?tip_id=26</p>
+<h3>Primero, ¿Qué es una Raspberry PI?</h3>
+
+<p>De la página de <a href="http://www.raspberrypi.org/faqs">raspberrypi.org</a>:</p>
+
+<blockquote><p>The Raspberry Pi is a credit-card sized computer that plugs into your
+TV and a keyboard. It’s a capable little PC which can be used for many
+of the things that your desktop PC does, like spreadsheets,
+word-processing and games. It also plays high-definition video. We want
+to see it being used by kids all over the world to learn programming.</p></blockquote>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/Raspi_Iso_Blue.png"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/Raspi_Iso_Blue.png"></a></p>
+
+<h3>¿Qué SoC (System on chip) se usa?</h3>
+
+<blockquote><p>The SoC is a Broadcom BCM2835. This contains an ARM1176JZFS, with
+floating point, running at 700Mhz, and a Videocore 4 GPU. The GPU is
+capable of BluRay quality playback, using H.264 at 40MBits/s. It has a
+fast 3D core accessed using the supplied OpenGL ES2.0 and OpenVG
+libraries.</p></blockquote>
+
+<h3>¿Qué tan poderoso es?</h3>
+
+<blockquote><p>The GPU provides Open GL ES 2.0, hardware-accelerated OpenVG, and
+1080p30 H.264 high-profile decode.</p>
+
+<p>The GPU is capable of 1Gpixel/s, 1.5Gtexel/s or 24 GFLOPs of general
+purpose compute and features a bunch of texture filtering and DMA
+infrastructure.</p>
+
+<p>That is, graphics capabilities are roughly equivalent to Xbox 1 level of
+performance. Overall real world performance is something like a 300MHz
+Pentium 2, only with much, much swankier graphics.</p></blockquote>
+
+<h3>Además</h3>
+
+<ul>
+<li>512MB RAM</li>
+<li>Arranca desde una SD card, corriendo una distribución de Linux</li>
+<li>10/100 BaseT Ethernet socket</li>
+<li>Tiene GPIO (General purpose input/output). Son unos pines para poder
+programarlos y que interactúen con otros dispositivos, sensores por
+ejemplo.</li>
+</ul>
+
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_02.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_02.jpg"></a></p>
+
+<h2>Conectando y arrancando la Raspberry PI</h2>
+
+<h3>Lista de dispositivos y cables.</h3>
+
+<ol>
+<li>Obvio una Raspberry PI</li>
+<li>SD card con distribución de Linux para RPI (esta ya venía incluída)</li>
+<li>Teclado y mouse usb</li>
+<li>Cable de red</li>
+<li>Cable hdmi</li>
+<li>Cable de USB a micro USB</li>
+<li>Macbook para compartir internet</li>
+</ol>
+
+
+<h3>Prueba</h3>
+
+<p>En mi caso, yo sólo lo quería echar a andar, ya venía con una SD card
+con la distribución de linux de Raspberry precargada, por lo que me tuve
+que saltar el paso de cargarsela, todo fue más simple. El mouse y
+teclado usb que encontré lo tenía guardado entre las cosas viejas que
+tenía, en las fotos verán que están todavía con polvo.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_mouse.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_mouse.jpg"></a></p>
+
+<p>La alimentación y la red se la proporcioné desde la macbook, por usb y
+compartiendo la red inalámbrica.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_con.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_con.jpg"></a></p>
+
+<p>Por medio de hdmi conecté la TV de la sala para poder ver la salida, y
+así se ve cuando está iniciando la raspberry.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_init.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_init.jpg"></a></p>
+
+<p>La primera vez que arranca aparece un menú para configurar ciertas
+cosas, a ese menú no le tomé foto pero de las cosas que puedes
+configurar es, el layout de tu teclado, habilitar o deshabilitar el
+arranque de servidor de ssh, el password de usuario pi, etc. Después de
+configurar la Raspberry se reinició.</p>
+
+<p>Luego me apareció el login (el usuario es pi y el password por default
+es raspberry) y a lo que inmediatamente después vi el
+espacio libre de la SD.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_sdsize.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_sdsize.jpg"></a></p>
+
+<p>Inicialmente la compartición de la red no la configuré bien, por lo que
+no tenía salida a internet.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_error_net.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_error_net.jpg"></a></p>
+
+<p>Una vez que configuré bien la compartición de internet en la macbook, lo
+que hice en la consola de la raspberry fue correr el comando.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo dhclient eth0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Con este comando adquirió una IP dinámica del servidor de DHCP que se
+tiene corriendo en la macbook para compartir internet.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_dhclient.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_dhclient.jpg"></a></p>
+
+<p>Una vez hecho esto, ya pude navegar.</p>
+
+<p><a href="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_browsing.jpg"><img src="https://s3-us-west-1.amazonaws.com/jcastaneyra-blog/images/rpi_browsing.jpg"></a></p>
+
+<h2>Final</h2>
+
+<p>Es impresionante lo que han hecho los de Raspberry, tener una
+computadora de ese tamaño capaz de reproducir video con calidad de
+blueray y además de poder ejecutar juegos que requieran de alto
+desempeño gráfico, y por un precio bajo.</p>
+
+<p>La otra parte interesante es para poder progamarla e interfazarla con
+dispositivos externos o bien como para enseñar a niños a usar y a
+programar una computadora, ahora si no creo que haya tanto problema cuando nos
+digan &#8220;tu hijo tiró la computadora, y luego la metio al agua&#8221;.</p>
+
+<h2>LINKS</h2>
+
+<p><a href="http://www.raspberrypi.org/faqs">Raspberry FAQs</a></p>
 </div>
 
 
@@ -165,15 +298,21 @@
 
   
 
-<time datetime="2007-09-12T00:00:00-05:00" pubdate>Sep 12<span>th</span>, 2007</time>
+<time datetime="2012-11-19T12:06:00-06:00" pubdate>Nov 19<span>th</span>, 2012</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/raspberry/'>raspberry</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2007/09/12/removiendo-m-con-vi-en-unixlinux/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2007/09/12/removiendo-m-con-vi-en-unixlinux/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://jcastaneyra.com/2012/11/19/raspberry-primer-contacto/" data-via="jcastaneyra" data-counturl="http://jcastaneyra.com/2012/11/19/raspberry-primer-contacto/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -186,10 +325,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2007/08/11/complot-mongol/" title="Previous Post: Complot mongol">&laquo; Complot mongol</a>
+        <a class="basic-alignment left" href="/2012/10/22/incrementar-root-ebs-en-ec2/" title="Previous Post: Como incrementar el root EBS de una instancia EC2">&laquo; Como incrementar el root EBS de una instancia EC2</a>
       
-      
-        <a class="basic-alignment right" href="/2007/11/14/no-andaba-muerto-andaba-certificandome/" title="next Post: No andaba muerto, andaba certificándome">No andaba muerto, andaba certificándome &raquo;</a>
       
     </p>
   </footer>
@@ -334,15 +471,15 @@
         if(typeof(custom_disqus_identifier) != "undefined") {
           var disqus_identifier = custom_disqus_identifier;
         } else {
-          //var disqus_identifier = 'http://jcastaneyra.com/2007/09/12/removiendo-m-con-vi-en-unixlinux';
-          var disqus_identifier = 'http://jcastaneyra.com/2007/09/12/removiendo-m-con-vi-en-unixlinux/';
+          //var disqus_identifier = 'http://jcastaneyra.com/2012/11/19/raspberry-primer-contacto';
+          var disqus_identifier = 'http://jcastaneyra.com/2012/11/19/raspberry-primer-contacto/';
         }
 
         if(typeof(custom_disqus_url) != "undefined") {
           var disqus_url = custom_disqus_url;
         } else {
-          //var disqus_url = 'http://jcastaneyra.com/2007/09/12/removiendo-m-con-vi-en-unixlinux';
-          var disqus_url = 'http://jcastaneyra.com/2007/09/12/removiendo-m-con-vi-en-unixlinux/';
+          //var disqus_url = 'http://jcastaneyra.com/2012/11/19/raspberry-primer-contacto';
+          var disqus_url = 'http://jcastaneyra.com/2012/11/19/raspberry-primer-contacto/';
         }
 
         var disqus_script = 'embed.js';
